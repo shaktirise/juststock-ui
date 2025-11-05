@@ -50,12 +50,12 @@ Widget button({required String text}) {
     height: 50,
     // width: 330,
     decoration: BoxDecoration(
-        color: Colors.deepPurple, borderRadius: BorderRadius.circular(15)),
+        color: const Color(0xFF8B0000), borderRadius: BorderRadius.circular(15)),
     child: ElevatedButton(
       onPressed: () {
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: const Color(0xFF8B0000),
           shape: RoundedRectangleBorder(
               side: const BorderSide(width: 300),
               borderRadius: BorderRadius.circular(15))),
@@ -70,12 +70,13 @@ Widget button1({required String text,required onPressed}){
     height: 50,
     width: 330,
     decoration: BoxDecoration(
-        color: const Color(0xFFD32F2F),
+        color: const Color(0xFF8B0000),
         borderRadius: BorderRadius.circular(15)
     ),
     child: ElevatedButton(
       onPressed: (){},
       style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF8B0000),
           shape: RoundedRectangleBorder(
               side: const BorderSide(width: 300),
               borderRadius: BorderRadius.circular(15)

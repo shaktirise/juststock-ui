@@ -96,7 +96,7 @@ class _phoneState extends State<phone> {
               },
               child: Container(
                 height: height/11,
-                decoration: BoxDecoration(color: const Color(0xff6B39F4),borderRadius: BorderRadius.circular(15)),
+                decoration: BoxDecoration(color: const Color(0xFF8B0000),borderRadius: BorderRadius.circular(15)),
                 child:const Center(child: Text("Continue",style: TextStyle(fontSize: 16,color: Colors.white,fontFamily: "Manrope-Bold"))) ,
               ),
             ),

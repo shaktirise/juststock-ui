@@ -60,7 +60,7 @@ class TopupHelper {
       'amount': amountPaise,
       'currency': currency,
       'name': 'Wallet Top-up',
-      'description': 'Crowwn trading advisory',
+      'description': 'JustStock education',
       'order_id': orderId,
       'timeout': 120,
     };

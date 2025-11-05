@@ -78,7 +78,7 @@ class _FingerState extends State<Finger> {
               child: Container(
                 height: MediaQuery.of(context).size.height / 12,
                 width: double.infinity,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xff6B39F4),),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xFF8B0000),),
                 child: const Center(
                   child: Text(
                     "Continue",
@@ -102,7 +102,7 @@ class _FingerState extends State<Finger> {
                   child: Text(
                     "Skip for now",
                     style: TextStyle(
-                        color: Color(0xff6B39F4),
+                        color: Color(0xFF8B0000),
                         fontSize: 17,
                         fontFamily: "Manrope-Bold"),
                   ),
@@ -117,7 +117,7 @@ class _FingerState extends State<Finger> {
   Widget indicator({required double value}){
     return  LinearProgressIndicator(
       value: value,
-      color: const Color(0xff6B39F4),
+      color: const Color(0xFF8B0000),
       backgroundColor: notifier.linerIndicator,
     );
   }

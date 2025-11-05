@@ -115,16 +115,9 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
           title: Row(
             children: [
               Image.asset(
-                "assets/images/Crowwn.png",
-                scale: 55,
-              ),
-              SizedBox(width: width / 45),
-              Text(
-                'JustStock',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: notifier.textColor,
-                ),
+                'lib/assets/inside-logo.png',
+                width: 140, // horizontal logo for white app bar
+                fit: BoxFit.contain,
               ),
             ],
           ),

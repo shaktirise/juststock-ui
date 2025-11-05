@@ -585,7 +585,7 @@ class _ReasonState extends State<Reason> {
                   Radius.circular(20),
                 ),
               ),
-              backgroundColor: const Color(0xff6B39F4),
+              backgroundColor: const Color(0xFF8B0000),
             ),
             onPressed: () {
               Navigator.push(
@@ -612,7 +612,7 @@ class _ReasonState extends State<Reason> {
   Widget indicator({required double value}) {
     return LinearProgressIndicator(
       value: value,
-      color: const Color(0xff6B39F4),
+      color: const Color(0xFF8B0000),
       backgroundColor: notifier.linerIndicator,
     );
   }

@@ -274,7 +274,7 @@ class _Order_goldState extends State<Order_gold> {
           child: Container(
             height: 56,
             // width: 370,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xff6B39F4),),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xFF8B0000),),
             child: const Center(child: Text("Preview Buy",style: TextStyle(fontSize: 16,color: Colors.white,fontFamily: "̌Manrope-Bold"))),
           ),
         ),

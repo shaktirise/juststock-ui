@@ -64,7 +64,7 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                     const Spacer(),
-                    Image.asset("assets/images/Crowwn.png",color: notifier.isDark ? Colors.white : null,height: height/10),
+                    Image.asset('lib/assets/inside-logo.png', height: height/8, fit: BoxFit.contain),
                     const Spacer(),
                     const Text('Welcome Back!',
                         style: TextStyle(
@@ -158,7 +158,7 @@ class _LoginState extends State<Login> {
                     onTap: _submitting ? null : _submitLogin,
                     child: Container(
                       height: height/12,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xff6B39F4),),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xFF8B0000),),
                       child: Center(
                         child: _submitting
                             ? const SizedBox(
@@ -234,8 +234,8 @@ class _LoginState extends State<Login> {
                                 children: [
                                   const Image(
                                     image: AssetImage("assets/images/google.png"),
-                                    height: 19,
-                                    width: 16,
+                                    height: 22,
+                                    width: 22,
                                   ),
                                   Text(
                                     " Google",
@@ -323,11 +323,10 @@ extension on _LoginState {
       );
 
       // Proceed to next step in the existing flow
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(
-          builder: (context) => const Face(),
-        ),
+        MaterialPageRoute(builder: (context) => const Face()),
+        (route) => false,
       );
     } catch (e) {
       final msg = e.toString().replaceFirst('Exception: ', '');

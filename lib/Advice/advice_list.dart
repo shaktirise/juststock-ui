@@ -102,7 +102,7 @@ class _AdviceListPageState extends State<AdviceListPage> {
               padding: const EdgeInsets.only(right: 12),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFD32F2F),
+                  backgroundColor: const Color(0xFF8B0000),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 ),
                 onPressed: _unlockLatest,
@@ -143,7 +143,7 @@ class _AdviceListPageState extends State<AdviceListPage> {
               itemCount: items.length,
               itemBuilder: (context, index) {
                 final m = items[index];
-                final paid = _unlocked.contains(m.id);
+                final paid = _unlocked.contains(m.id) || (m.price <= 0);
                 return Container(
                   margin: const EdgeInsets.only(bottom: 12),
                   padding: const EdgeInsets.all(12),
@@ -187,7 +187,7 @@ class _AdviceListPageState extends State<AdviceListPage> {
                       paid
                           ? ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF4F46E5),
+                                backgroundColor: const Color(0xFF16A34A),
                                 minimumSize: const Size(0, 36),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                               ),
@@ -210,7 +210,7 @@ class _AdviceListPageState extends State<AdviceListPage> {
                             )
                           : ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFD32F2F),
+                                backgroundColor: const Color(0xFF8B0000),
                                 minimumSize: const Size(0, 36),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                               ),
@@ -228,4 +228,3 @@ class _AdviceListPageState extends State<AdviceListPage> {
     );
   }
 }
-

@@ -30,10 +30,13 @@ class _MyAppState extends State<MyApp> {
         return MaterialApp(
           theme: ThemeData(
             useMaterial3: false,
-            primaryColor: const Color(0xFFD32F2F),
+            primaryColor: const Color(0xFF8B0000),
             colorScheme: const ColorScheme.light(
-              primary: Color(0xFFD32F2F),
-              secondary: Color(0xFFD32F2F),
+              primary: Color(0xFF8B0000),
+              secondary: Color(0xFF8B0000),
+            ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF8B0000)),
             ),
             appBarTheme: const AppBarTheme(
               backgroundColor: Colors.white,

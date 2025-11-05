@@ -615,8 +615,8 @@ class _ProfileState extends State<Profile> {
                           ));
                     },
                     child: accountDetails2(
-                      image: "assets/images/Crowwn.png",
-                      name: "About App",
+                      image: 'lib/assets/inside-logo.png',
+                      name: "About JustStock",
                       desc: "About Us",
                       onPress: () {
                         Navigator.push(

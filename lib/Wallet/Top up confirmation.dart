@@ -171,7 +171,7 @@ class _Top_confirmationState extends State<Top_confirmation> {
          child: Container(
            height: 56,
            // width: 370,
-           decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xff6B39F4),),
+           decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xFF8B0000),),
            child: const Center(child: Text("Deposit Now",style: TextStyle(fontSize: 16,color: Colors.white,fontFamily: "̌Manrope-Bold"))),
          ),
        );

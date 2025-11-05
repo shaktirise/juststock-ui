@@ -135,7 +135,7 @@ class _PinState extends State<Pin> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: const Color(0xff6B39F4),
+                  color: const Color(0xFF8B0000),
                 ),
                 child: const Center(
                   child: Text(
@@ -187,7 +187,7 @@ class _PinState extends State<Pin> {
   Widget indicator({required double value}) {
     return LinearProgressIndicator(
       value: value,
-      color: const Color(0xff6B39F4),
+      color: const Color(0xFF8B0000),
       backgroundColor: notifier.linerIndicator,
     );
   }

@@ -47,7 +47,7 @@ class _WalletState extends State<Wallet> {
             color: Colors.white,
           ),
         ),
-        backgroundColor: const Color(0xff6B39F4),
+        backgroundColor: const Color(0xFF8B0000),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -153,7 +153,7 @@ class _WalletState extends State<Wallet> {
                               width: 56,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(28),
-                                  color: Colors.purpleAccent.withOpacity(0.3)),
+                                  color: Color(0xFF8B0000).withOpacity(0.25)),
                               child: const Center(
                                   child: Icon(
                                 Icons.add_circle_outline,
@@ -186,7 +186,7 @@ class _WalletState extends State<Wallet> {
                               width: 56,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(28),
-                                  color: Colors.purpleAccent.withOpacity(0.3)),
+                                  color: Color(0xFF8B0000).withOpacity(0.25)),
                               child: Center(
                                   child: Image.asset(
                                       "assets/images/Recieve.png",
@@ -219,7 +219,7 @@ class _WalletState extends State<Wallet> {
                               width: 56,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(28),
-                                  color: Colors.purpleAccent.withOpacity(0.3),),
+                                  color: Color(0xFF8B0000).withOpacity(0.25),),
                               child: Center(
                                   child: Image.asset("assets/images/logout.png",
                                       scale: 2.5,),),
@@ -251,7 +251,7 @@ class _WalletState extends State<Wallet> {
                               width: 56,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(28),
-                                  color: Colors.purpleAccent.withOpacity(0.3)),
+                                  color: Color(0xFF8B0000).withOpacity(0.25)),
                               child: Center(
                                   child: Image.asset(
                                       "assets/images/coin white.png",

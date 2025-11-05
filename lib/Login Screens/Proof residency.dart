@@ -258,7 +258,7 @@ class _ProofState extends State<Proof> {
                   Radius.circular(20),
                 ),
               ),
-              backgroundColor: const Color(0xff6B39F4),
+              backgroundColor: const Color(0xFF8B0000),
             ),
             onPressed: () {
               Navigator.push(
@@ -288,7 +288,7 @@ class _ProofState extends State<Proof> {
                 height: 50,
                 // width: 330,
                 decoration: BoxDecoration(
-                    color: const Color(0xff6B39F4),
+                    color: const Color(0xFF8B0000),
                     borderRadius: BorderRadius.circular(15)),
                 child: ElevatedButton(
                   onPressed: () {
@@ -299,7 +299,7 @@ class _ProofState extends State<Proof> {
                         ));
                   },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff6B39F4),
+                      backgroundColor: const Color(0xFF8B0000),
                       shape: RoundedRectangleBorder(
                           side: const BorderSide(width: 300),
                           borderRadius: BorderRadius.circular(15))),

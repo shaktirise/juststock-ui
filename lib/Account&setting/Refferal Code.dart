@@ -5,6 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crowwn/config/common.dart';
+import 'package:flutter/services.dart';
+import 'package:crowwn/api/deeplink_api.dart';
 
 import '../Dark mode.dart';
 
@@ -17,6 +19,29 @@ class Reffle_code extends StatefulWidget {
 
 class _Reffle_codeState extends State<Reffle_code> {
   ColorNotifire notifier = ColorNotifire();
+  static const String _refCode = '63LZNWKX';
+  bool _loading = false;
+
+  Future<void> _invite() async {
+    if (_loading) return;
+    setState(() => _loading = true);
+    try {
+      final res = await DeepLinkApi.createReferral(_refCode);
+      final share = (res['shareUrl'] ?? res['appUrl'] ?? '').toString();
+      if (share.isNotEmpty) {
+        await Clipboard.setData(ClipboardData(text: share));
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Invite link copied to clipboard')));
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to create invite: $e')));
+      }
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     notifier = Provider.of<ColorNotifire>(context, listen: true);
@@ -99,13 +124,13 @@ class _Reffle_codeState extends State<Reffle_code> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const Text("Use @username as a refferal code",
+                                      const Text("Your referral code",
                                           style: TextStyle(
                                               color: Color(0xff64748B),
                                               fontSize: 13,
                                               fontFamily: "Manrope-Regular")),
                                        Text(
-                                        "@helena02",
+                                        _refCode,
                                         style: TextStyle(
                                             fontSize: 19,
                                             color: notifier.textColor,
@@ -141,6 +166,16 @@ class _Reffle_codeState extends State<Reffle_code> {
                               ),
                             ],
                           ),
+                        ),
+                      ),
+                      AppConstants.Height(20),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 48,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF8B0000), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                          onPressed: _loading ? null : _invite,
+                          child: Text(_loading ? 'Generating…' : 'Invite', style: const TextStyle(color: Colors.white)),
                         ),
                       ),
                       AppConstants.Height(20),

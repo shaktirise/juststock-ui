@@ -373,7 +373,7 @@ class _Order_crypState extends State<Order_cryp> {
             width: 370,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xFF8B0000),
             ),
             child: const Center(
                 child: Text("Preview Buy",

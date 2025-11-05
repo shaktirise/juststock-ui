@@ -45,23 +45,30 @@ class _SplashState extends State<Splash> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image(
-                image: const AssetImage(
-                  "assets/images/Crowwn.png",
-                ),
-                color: notifier.isDark ? Colors.white : null,
-                height: height / 8.5,
+              Image.asset(
+                'lib/assets/inside-logo.png',
+                width: width * 0.55,
+                fit: BoxFit.contain,
               ),
-              AppConstants.Width(width / 19),
+              AppConstants.Height(12),
               Text(
-                "Crowwn",
+                "JustStock Education",
                 style: TextStyle(
                   color: notifier.textColor,
-                  fontSize: 30,
+                  fontSize: 22,
                   fontFamily: "Manrope-Bold",
+                ),
+              ),
+              AppConstants.Height(6),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
+                  "Learn stocks, options and more with concise lessons and actionable insights.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Color(0xFF64748B)),
                 ),
               )
             ],
@@ -76,7 +83,7 @@ class _SplashState extends State<Splash> {
           child: Column(
             children: [
               Text(
-                "All in One Investment Platform",
+                "Your companion for learning markets",
                 style: TextStyle(
                   fontSize: 15,
                   fontFamily: "Manrope-Bold",

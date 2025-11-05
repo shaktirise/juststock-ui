@@ -96,7 +96,7 @@ class _FaceState extends State<Face> {
             const Spacer(),
             GestureDetector(
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const Finger(),
@@ -105,7 +105,7 @@ class _FaceState extends State<Face> {
               child: Container(
                 height: height / 12,
                 // width: double.infinity,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xff6B39F4),),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xFF8B0000),),
                 child: const Center(
                   child: Text(
                     "Continue",
@@ -117,7 +117,7 @@ class _FaceState extends State<Face> {
             AppConstants.Height(20),
             GestureDetector(
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const Finger(),
@@ -131,7 +131,7 @@ class _FaceState extends State<Face> {
                   child: Text(
                     "Skip for now",
                     style: TextStyle(
-                        color: Color(0xff6B39F4),
+                        color: Color(0xFF8B0000),
                         fontSize: 17,
                         fontFamily: "Manrope-Bold"),
                   ),
@@ -146,11 +146,8 @@ class _FaceState extends State<Face> {
   Widget indicator({required double value}){
     return  LinearProgressIndicator(
       value: value,
-      color: const Color(0xff6B39F4),
+      color: const Color(0xFF8B0000),
       backgroundColor: notifier.linerIndicator,
     );
   }
 }
-
-
-

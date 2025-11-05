@@ -103,8 +103,15 @@ class _Social_mediaState extends State<Social_media> {
                                       Container(
                                         height: 24,
                                         width: 69,
-                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.purpleAccent.withOpacity(0.1)),
-                                        child: const Center(child: Text("Connect",style: TextStyle(color: Color(0xff6B39F4),fontSize: 10,fontFamily: "Manrope-Bold"))),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(6),
+                                            color: const Color(0xFF8B0000).withOpacity(0.1)),
+                                        child: const Center(
+                                            child: Text("Connect",
+                                                style: TextStyle(
+                                                    color: Color(0xFF8B0000),
+                                                    fontSize: 10,
+                                                    fontFamily: "Manrope-Bold"))),
                                       ),
 
                                     ],
@@ -130,7 +137,7 @@ class _Social_mediaState extends State<Social_media> {
           child: Container(
             height: 56,
             width: 370,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xff6B39F4),),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xFF8B0000),),
             child: const Center(child: Text("Confirm",style: TextStyle(fontSize: 16,color: Colors.white,fontFamily: "̌Manrope-Bold"))),
           ),
         ),

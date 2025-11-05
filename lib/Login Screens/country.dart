@@ -132,7 +132,7 @@ class _CountryState extends State<Country> {
             height: 55,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: Color(0xff6B39F4),
+              color: Color(0xFF8B0000),
             ),
             child: const Center(
               child: Text(
@@ -152,7 +152,7 @@ class _CountryState extends State<Country> {
   Widget indicator({required double value}) {
     return LinearProgressIndicator(
       value: value,
-      color: const Color(0xff6B39F4),
+      color: const Color(0xFF8B0000),
       backgroundColor: notifier.linerIndicator,
     );
   }
@@ -165,7 +165,7 @@ class _CountryState extends State<Country> {
                   height: height / 12,
                   // width: 327,
                   decoration: BoxDecoration(
-                    color: const Color(0xff6B39F4),
+                    color: const Color(0xFF8B0000),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: ElevatedButton(
@@ -178,7 +178,7 @@ class _CountryState extends State<Country> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff6B39F4),
+                      backgroundColor: const Color(0xFF8B0000),
                       shape: RoundedRectangleBorder(
                         side: const BorderSide(width: 300),
                         borderRadius: BorderRadius.circular(15),

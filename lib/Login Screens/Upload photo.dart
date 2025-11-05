@@ -135,7 +135,7 @@ class _UploadState extends State<Upload> {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(20),
-                                              color: const Color(0xff6B39F4),
+                                              color: const Color(0xFF8B0000),
                                             ),
                                             child: const Center(
                                               child: Text(

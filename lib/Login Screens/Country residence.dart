@@ -98,7 +98,7 @@ class _ResidenceState extends State<Residence> {
             width: double.maxFinite,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xFF8B0000),
             ),
             child: const Center(
               child: Text(

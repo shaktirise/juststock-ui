@@ -93,7 +93,7 @@ class _ForgetState extends State<Forget> {
               },
               child: Container(
                 height: height/12,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xff6B39F4),),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xFF8B0000),),
                 child: const Center(child: Text("Reset Password",style: TextStyle(color: Color(0xffFFFFFF),fontSize: 15,fontFamily: "Manrope-Bold"),)),
               ),
             ),

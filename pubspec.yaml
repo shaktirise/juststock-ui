@@ -79,6 +79,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - lib/assets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -119,19 +120,19 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_1024.png
+  image_path: lib/assets/app-logo.png
   adaptive_icon_background: "#FFFFFF"
   web:
     generate: true
-    image_path: macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_1024.png
+    image_path: lib/assets/app-logo.png
     background_color: "#FFFFFF"
-    theme_color: "#6B39F4"
+    theme_color: "#8B0000"
   windows:
     generate: true
-    image_path: macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_1024.png
+    image_path: lib/assets/app-logo.png
   macos:
     generate: true
-    image_path: macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_1024.png
+    image_path: lib/assets/app-logo.png
   linux:
     generate: true
-    image_path: macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_1024.png
+    image_path: lib/assets/app-logo.png

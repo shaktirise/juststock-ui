@@ -113,7 +113,7 @@ class _Onboard1State extends State<Onboard1> {
                         // width: 350,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
-                            color: const Color(0xff6B39F4)),
+                            color: const Color(0xFF8B0000)),
                         child: const Center(
                           child: Text(
                             "Get Started",
@@ -312,7 +312,7 @@ class _Onboard1State extends State<Onboard1> {
                         // width: 350,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
-                          color: const Color(0xff6B39F4),
+                          color: const Color(0xFF8B0000),
                         ),
                         child: const Center(
                           child: Text(
@@ -344,7 +344,7 @@ class _Onboard1State extends State<Onboard1> {
                             child: Text(
                               "Browse Assets",
                               style: TextStyle(
-                                color: Color(0xff6B39F4),
+                                color: Color(0xFF8B0000),
                                 fontSize: 16,
                                 fontFamily: "Manrope-Bold",
                               ),
@@ -441,7 +441,7 @@ class _Onboard1State extends State<Onboard1> {
                             child: Text(
                               "Browse Assets",
                               style: TextStyle(
-                                color: Color(0xff6B39F4),
+                                color: Color(0xFF8B0000),
                                 fontSize: 16,
                                 fontFamily: "Manrope-Bold",
                               ),

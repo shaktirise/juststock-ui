@@ -132,7 +132,7 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
       'amount': amountPaise,
       'currency': currency,
       'name': 'Wallet Top-up',
-      'description': 'Crowwn trading advisory',
+      'description': 'JustStock education',
       'order_id': orderId,
       'timeout': 120,
       'prefill': {
@@ -211,7 +211,7 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
                 height: 44,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff6B39F4),
+                    backgroundColor: const Color(0xFF8B0000),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
                   onPressed: snapshot.connectionState == ConnectionState.waiting || _isProcessing
