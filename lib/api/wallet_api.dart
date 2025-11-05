@@ -11,10 +11,17 @@ class WalletApi {
     required int amountInRupees,
   }) async {
     final headers = await TokenStorage.authHeaders(extra: const {'Content-Type': 'application/json'});
+    final paise = amountInRupees * 100;
+    final body = {
+      'amountInRupees': amountInRupees,
+      'amountInPaise': paise,
+      'amount': paise,
+      'currency': 'INR',
+    };
     final res = await http.post(
       _uri('/api/wallet/topups/create-order'),
       headers: headers,
-      body: jsonEncode({'amountInRupees': amountInRupees}),
+      body: jsonEncode(body),
     );
     if (res.statusCode == 200 || res.statusCode == 201) {
       return jsonDecode(res.body) as Map<String, dynamic>;
@@ -26,16 +33,24 @@ class WalletApi {
     required String razorpayOrderId,
     required String razorpayPaymentId,
     required String razorpaySignature,
+    required int amountInRupees,
+    String currency = 'INR',
   }) async {
     final headers = await TokenStorage.authHeaders(extra: const {'Content-Type': 'application/json'});
+    final paise = amountInRupees * 100;
+    final body = {
+      'razorpay_order_id': razorpayOrderId,
+      'razorpay_payment_id': razorpayPaymentId,
+      'razorpay_signature': razorpaySignature,
+      'amountInRupees': amountInRupees,
+      'amountInPaise': paise,
+      'amount': paise,
+      'currency': currency,
+    };
     final res = await http.post(
       _uri('/api/wallet/topups/verify'),
       headers: headers,
-      body: jsonEncode({
-        'razorpay_order_id': razorpayOrderId,
-        'razorpay_payment_id': razorpayPaymentId,
-        'razorpay_signature': razorpaySignature,
-      }),
+      body: jsonEncode(body),
     );
     if (res.statusCode == 200) {
       return jsonDecode(res.body) as Map<String, dynamic>;
@@ -56,6 +71,26 @@ class WalletApi {
     throw HttpException(statusCode: res.statusCode, message: _extractError(res));
   }
 
+  static Future<Map<String, dynamic>> debit({
+    required int amountInRupees,
+    String? note,
+  }) async {
+    final headers = await TokenStorage.authHeaders(extra: const {'Content-Type': 'application/json'});
+    final body = {
+      'amountInRupees': amountInRupees,
+      if (note != null) 'note': note,
+    };
+    final res = await http.post(
+      _uri('/api/wallet/debit'),
+      headers: headers,
+      body: jsonEncode(body),
+    );
+    if (res.statusCode == 200) {
+      return jsonDecode(res.body) as Map<String, dynamic>;
+    }
+    throw HttpException(statusCode: res.statusCode, message: _extractError(res));
+  }
+
   static String _extractError(http.Response res) {
     try {
       final decoded = jsonDecode(res.body);
@@ -68,4 +103,3 @@ class WalletApi {
     }
   }
 }
-

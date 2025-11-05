@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:crowwn/api/wallet_api.dart';
+import 'package:crowwn/api/profile_api.dart';
 import 'package:provider/provider.dart';
 import '../Dark mode.dart';
 
@@ -17,12 +18,19 @@ class WalletBalanceCard extends StatefulWidget {
 
 class _WalletBalanceCardState extends State<WalletBalanceCard> {
   late Future<int> _balanceFuture;
+  late Future<bool> _activationFuture;
   Razorpay? _razorpay;
+  bool _isProcessing = false;
+  bool? _activated;
 
   @override
   void initState() {
     super.initState();
     _balanceFuture = WalletApi.getBalancePaise();
+    _activationFuture = ProfileApi.isActivated();
+    _activationFuture.then((v) {
+      if (mounted) setState(() => _activated = v);
+    });
   }
 
   @override
@@ -32,7 +40,14 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
   }
 
   void _refresh() {
-    setState(() => _balanceFuture = WalletApi.getBalancePaise());
+    setState(() {
+      _balanceFuture = WalletApi.getBalancePaise();
+      _activationFuture = ProfileApi.isActivated();
+      _activated = null;
+      _activationFuture.then((v) {
+        if (mounted) setState(() => _activated = v);
+      });
+    });
   }
 
   String _formatRupees(int paise) {
@@ -40,7 +55,7 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
     return '₹$rupees';
   }
 
-  Future<void> _startTopup(BuildContext context, {required bool firstTopup}) async {
+  Future<void> _startTopup(BuildContext context) async {
     final isMobile = defaultTargetPlatform == TargetPlatform.android ||
         defaultTargetPlatform == TargetPlatform.iOS;
     if (kIsWeb || !isMobile) {
@@ -50,13 +65,34 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
       return;
     }
 
-    final int amount = firstTopup ? 2100 : 1000;
+    final activated = await _activationFuture.catchError((_) => false) ?? false;
+    final int amount = activated ? 1000 : 2100;
 
-    final create = await WalletApi.createOrder(amountInRupees: amount);
-    final key = create['key'] as String;
-    final orderId = create['order_id'] as String;
+    Map<String, dynamic> create;
+    try {
+      setState(() => _isProcessing = true);
+      create = await WalletApi.createOrder(amountInRupees: amount);
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _isProcessing = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to create order: $e')),
+      );
+      return;
+    }
+    final key = (create['key'] as String?) ?? '';
+    final orderId = ((create['orderId'] ?? create['order_id']) as String?) ?? '';
     final amountPaise = (create['amount'] as num?)?.toInt() ?? (amount * 100);
     final currency = (create['currency'] as String?) ?? 'INR';
+    if (key.isEmpty || orderId.isEmpty) {
+      if (mounted) {
+        setState(() => _isProcessing = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Invalid order response from server')),
+        );
+      }
+      return;
+    }
 
     _razorpay?.clear();
     _razorpay = Razorpay();
@@ -67,6 +103,8 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
           razorpayOrderId: res.orderId ?? orderId,
           razorpayPaymentId: res.paymentId ?? '',
           razorpaySignature: res.signature ?? '',
+          amountInRupees: amount,
+          currency: currency,
         );
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Payment verified and wallet credited')));
@@ -104,6 +142,12 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
     };
 
     _razorpay!.open(options);
+    if (mounted) setState(() => _isProcessing = false);
+  }
+
+  String _formatRupeesFixed(int paise) {
+    final rupees = (paise / 100).toStringAsFixed(2);
+    return '₹$rupees';
   }
 
   @override
@@ -132,7 +176,7 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
           );
         }
         final paise = snapshot.data ?? 0;
-        final isFirst = paise <= 0;
+        final isFirst = !(_activated ?? false);
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           padding: const EdgeInsets.all(16),
@@ -160,7 +204,7 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
               if (snapshot.connectionState == ConnectionState.waiting)
                 const SizedBox(height: 28, width: 28, child: CircularProgressIndicator(strokeWidth: 2.5))
               else
-                Text(_formatRupees(paise), style: TextStyle(fontSize: 24, color: notifier.textColor, fontFamily: 'Manrope-Bold')),
+                Text(_formatRupeesFixed(paise), style: TextStyle(fontSize: 24, color: notifier.textColor, fontFamily: 'Manrope-Bold')),
               const SizedBox(height: 14),
               SizedBox(
                 width: double.infinity,
@@ -170,9 +214,9 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
                     backgroundColor: const Color(0xff6B39F4),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
-                  onPressed: snapshot.connectionState == ConnectionState.waiting
+                  onPressed: snapshot.connectionState == ConnectionState.waiting || _isProcessing
                       ? null
-                      : () => _startTopup(context, firstTopup: isFirst),
+                      : () => _startTopup(context),
                   child: Text(isFirst ? 'Add ₹2100 to Activate' : 'Add ₹1000',
                       style: const TextStyle(color: Colors.white, fontFamily: 'Manrope-Bold')),
                 ),

@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../services/api_config.dart';
 
 class AuthApi {
-  static const String baseUrl = 'https://backend-server-11f5.onrender.com';
+  static const String baseUrl = ApiConfig.apiBaseUrl;
 
   static Uri _uri(String path) => Uri.parse('$baseUrl$path');
 
@@ -136,4 +137,3 @@ class HttpException implements Exception {
   @override
   String toString() => 'HttpException($statusCode): $message';
 }
-

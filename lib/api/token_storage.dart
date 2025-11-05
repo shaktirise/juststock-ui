@@ -63,5 +63,29 @@ class TokenStorage {
     await prefs.remove(_kRefreshExp);
     await prefs.remove(_kUser);
   }
-}
 
+  static Future<Map<String, dynamic>?> getUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getString(_kUser);
+    if (raw == null || raw.isEmpty) return null;
+    try {
+      final decoded = jsonDecode(raw);
+      if (decoded is Map<String, dynamic>) return decoded;
+    } catch (_) {}
+    return null;
+  }
+
+  /// Returns a stable key for the current user, preferring id/_id then email,
+  /// and finally the access token if nothing else is available.
+  static Future<String> getUserKey() async {
+    final user = await getUser();
+    if (user != null) {
+      final id = user['id']?.toString() ?? user['_id']?.toString();
+      if (id != null && id.isNotEmpty) return id;
+      final email = user['email']?.toString();
+      if (email != null && email.isNotEmpty) return email;
+    }
+    final token = await getToken();
+    return token ?? 'anon';
+  }
+}

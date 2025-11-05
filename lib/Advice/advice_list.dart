@@ -1,9 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:crowwn/api/advice_api.dart';
 import 'package:crowwn/widgets/topup_helper.dart';
+import 'package:crowwn/services/advice_unlocked_store.dart';
+import 'package:crowwn/services/advice_seen_store.dart';
+import 'advice_view.dart';
 import '../Dark mode.dart';
 
 class AdviceListPage extends StatefulWidget {
@@ -18,17 +22,33 @@ class _AdviceListPageState extends State<AdviceListPage> {
   late Future<List<AdviceMeta>> _future;
   AdviceMeta? _latest;
   final Set<String> _unlocked = {};
+  final _dateFmt = DateFormat('dd MMM, hh:mm a');
 
   @override
   void initState() {
     super.initState();
     _load();
+    _initUnlocked();
+  }
+
+  Future<void> _initUnlocked() async {
+    final ids = await AdviceUnlockedStore.getUnlockedIds();
+    if (!mounted) return;
+    setState(() {
+      _unlocked
+        ..clear()
+        ..addAll(ids);
+    });
   }
 
   void _load() {
     _future = AdviceApi.list(category: widget.category);
     AdviceApi.latest(category: widget.category).then((v) {
-      if (mounted) setState(() => _latest = v);
+      if (!mounted) return;
+      setState(() => _latest = v);
+      if (v != null && v.id.isNotEmpty) {
+        AdviceSeenStore.markSeen(widget.category, v.id);
+      }
     });
   }
 
@@ -36,7 +56,8 @@ class _AdviceListPageState extends State<AdviceListPage> {
     try {
       final res = await AdviceApi.unlockLatest(widget.category);
       _unlocked.add(res.advice.id);
-      _showAdvice(res.advice);
+      await AdviceUnlockedStore.put(res.advice);
+      _openAdvice(res.advice);
       setState(() {});
     } on PaymentRequiredException {
       await TopupHelper.ensureFunds(context);
@@ -49,7 +70,8 @@ class _AdviceListPageState extends State<AdviceListPage> {
     try {
       final res = await AdviceApi.unlockById(id);
       _unlocked.add(res.advice.id);
-      _showAdvice(res.advice);
+      await AdviceUnlockedStore.put(res.advice);
+      _openAdvice(res.advice);
       setState(() {});
     } on PaymentRequiredException {
       await TopupHelper.ensureFunds(context);
@@ -58,38 +80,9 @@ class _AdviceListPageState extends State<AdviceListPage> {
     }
   }
 
-  void _showAdvice(AdviceDetail a) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (_) {
-        final notifier = Provider.of<ColorNotifire>(context, listen: true);
-        return Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: notifier.background,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-          ),
-          child: SafeArea(
-            top: false,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('${a.category.toUpperCase()} ADVICE', style: TextStyle(color: notifier.textColor, fontFamily: 'Manrope-Bold', fontSize: 16)),
-                const SizedBox(height: 8),
-                if (a.text != null) Text(a.text!, style: TextStyle(color: notifier.textColor)),
-                const SizedBox(height: 8),
-                if (a.buy != null) Text('Buy: ${a.buy}', style: TextStyle(color: notifier.textColor)),
-                if (a.target != null) Text('Target: ${a.target}', style: TextStyle(color: notifier.textColor)),
-                if (a.stoploss != null) Text('Stoploss: ${a.stoploss}', style: TextStyle(color: notifier.textColor)),
-                const SizedBox(height: 12),
-              ],
-            ),
-          ),
-        );
-      },
+  void _openAdvice(AdviceDetail a) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => AdviceViewPage(advice: a)),
     );
   }
 
@@ -131,35 +124,101 @@ class _AdviceListPageState extends State<AdviceListPage> {
             }
             final items = snapshot.data ?? const <AdviceMeta>[];
             if (items.isEmpty) {
-              return Center(child: Text('No advice yet', style: TextStyle(color: notifier.textColor)));
+              return Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.inbox_outlined, size: 48, color: notifier.divider),
+                    const SizedBox(height: 8),
+                    Text('No advice yet', style: TextStyle(color: notifier.textColor, fontFamily: 'Manrope-Bold')),
+                    const SizedBox(height: 4),
+                    const Text('Check back later for new updates', style: TextStyle(color: Color(0xFF94A3B8))),
+                  ],
+                ),
+              );
             }
-            return ListView.separated(
+            return ListView.builder(
               physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(12),
               itemCount: items.length,
-              separatorBuilder: (_, __) => Divider(color: notifier.divider),
               itemBuilder: (context, index) {
                 final m = items[index];
                 final paid = _unlocked.contains(m.id);
-                return ListTile(
-                  title: Text('Advice #${m.id}', style: TextStyle(color: notifier.textColor, fontFamily: 'Manrope-Bold')),
-                  subtitle: Text(
-                    paid ? 'Unlocked' : 'Message hidden',
-                    style: const TextStyle(color: Color(0xff64748B)),
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 12),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: notifier.textField,
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(color: notifier.getContainerBorder ?? const Color(0xFFE2E8F0)),
                   ),
-                  trailing: paid
-                      ? Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          decoration: BoxDecoration(color: const Color(0x1A1DCE5C), borderRadius: BorderRadius.circular(12)),
-                          child: const Text('PAID', style: TextStyle(color: Color(0xff1DCE5C), fontWeight: FontWeight.w700)),
-                        )
-                      : TextButton(
-                          style: TextButton.styleFrom(
-                            backgroundColor: const Color(0xffF8F9FD),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Color(0xffE2E8F0))),
-                          ),
-                          onPressed: () => _unlockById(m.id),
-                          child: Text('Pay ₹${m.price}', style: const TextStyle(color: Color(0xFFD32F2F))),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 36,
+                        width: 36,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFEDE9FE),
+                          borderRadius: BorderRadius.circular(8),
                         ),
+                        child: Icon(paid ? Icons.lock_open : Icons.lock_outline, color: const Color(0xFF6B39F4)),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Advice #${m.id}',
+                              style: TextStyle(color: notifier.textColor, fontFamily: 'Manrope-Bold'),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              _dateFmt.format(m.createdAt),
+                              style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      paid
+                          ? ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF4F46E5),
+                                minimumSize: const Size(0, 36),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                              ),
+                              onPressed: () async {
+                                final cached = await AdviceUnlockedStore.get(m.id);
+                                if (cached != null) {
+                                  _openAdvice(cached);
+                                  return;
+                                }
+                                try {
+                                  final res = await AdviceApi.unlockById(m.id);
+                                  await AdviceUnlockedStore.put(res.advice);
+                                  _openAdvice(res.advice);
+                                } catch (e) {
+                                  if (!mounted) return;
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                                }
+                              },
+                              child: const Text('Open', style: TextStyle(color: Colors.white)),
+                            )
+                          : ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFFD32F2F),
+                                minimumSize: const Size(0, 36),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                              ),
+                              onPressed: () => _unlockById(m.id),
+                              child: Text('Pay ₹${m.price}', style: const TextStyle(color: Colors.white)),
+                            ),
+                    ],
+                  ),
                 );
               },
             );

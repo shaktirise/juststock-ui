@@ -22,32 +22,50 @@ class AdviceApi {
     int limit = 20,
   }) async {
     final cat = normalizeCategory(category);
-    final headers = await TokenStorage.authHeaders();
-    final uri = _uri('/api/advice-v2?category=$cat&page=$page&limit=$limit');
+    final headers = await TokenStorage.authHeaders(extra: const {'Accept': 'application/json'});
+    // Server expects uppercase category in query per spec.
+    final queryCat = cat.toUpperCase();
+    final uri = _uri('/api/advice-v2?category=$queryCat&page=$page&limit=$limit');
     final res = await http.get(uri, headers: headers);
     if (res.statusCode == 200) {
       final data = jsonDecode(res.body);
-      final items = (data as List).cast<dynamic>();
-      return items.map((e) => AdviceMeta.fromJson(e as Map<String, dynamic>)).toList();
+      List list;
+      if (data is Map<String, dynamic> && data['items'] is List) {
+        list = data['items'] as List;
+      } else if (data is List) {
+        list = data;
+      } else {
+        list = const [];
+      }
+      return list.map((e) => AdviceMeta.fromJson((e as Map).cast<String, dynamic>())).toList();
     }
     throw HttpException(statusCode: res.statusCode, message: _extractError(res));
   }
 
   static Future<AdviceMeta?> latest({required String category}) async {
     final cat = normalizeCategory(category);
-    final headers = await TokenStorage.authHeaders();
-    final res = await http.get(_uri('/api/advice-v2/$cat/latest'), headers: headers);
+    final headers = await TokenStorage.authHeaders(extra: const {'Accept': 'application/json'});
+    // Try the documented endpoint first.
+    final res = await http.get(_uri('/api/advice-v2/latest?category=${cat.toUpperCase()}'), headers: headers);
     if (res.statusCode == 200) {
       final data = jsonDecode(res.body) as Map<String, dynamic>;
       final obj = data['advice'];
       if (obj == null) return null;
-      return AdviceMeta.fromJson(obj as Map<String, dynamic>);
+      return AdviceMeta.fromJson((obj as Map).cast<String, dynamic>());
     }
-    throw HttpException(statusCode: res.statusCode, message: _extractError(res));
+    // Fallback to slug style if supported by server.
+    final res2 = await http.get(_uri('/api/advice-v2/$cat/latest'), headers: headers);
+    if (res2.statusCode == 200) {
+      final data = jsonDecode(res2.body) as Map<String, dynamic>;
+      final obj = data['advice'];
+      if (obj == null) return null;
+      return AdviceMeta.fromJson((obj as Map).cast<String, dynamic>());
+    }
+    throw HttpException(statusCode: res.statusCode, message: _extractError(res2));
   }
 
   static Future<AdviceUnlocked> unlockById(String id) async {
-    final headers = await TokenStorage.authHeaders(extra: const {'Content-Type': 'application/json'});
+    final headers = await TokenStorage.authHeaders(extra: const {'Content-Type': 'application/json', 'Accept': 'application/json'});
     final res = await http.post(_uri('/api/advice-v2/$id/unlock'), headers: headers);
     if (res.statusCode == 200) {
       final data = jsonDecode(res.body) as Map<String, dynamic>;
@@ -62,7 +80,7 @@ class AdviceApi {
 
   static Future<AdviceUnlocked> unlockLatest(String category) async {
     final cat = normalizeCategory(category);
-    final headers = await TokenStorage.authHeaders();
+    final headers = await TokenStorage.authHeaders(extra: const {'Accept': 'application/json'});
     final res = await http.post(_uri('/api/advice-v2/$cat/unlock-latest'), headers: headers);
     if (res.statusCode == 200) {
       final data = jsonDecode(res.body) as Map<String, dynamic>;
@@ -161,4 +179,3 @@ class PaymentRequiredException implements Exception {
   @override
   String toString() => 'PaymentRequired: $message';
 }
-

@@ -19,6 +19,8 @@ import '../config/common.dart';
 import '../widgets/wallet_balance_card.dart';
 import '../widgets/wallet_balance_amount.dart';
 import '../Advice/advice_list.dart';
+import 'package:crowwn/api/advice_api.dart';
+import '../services/advice_seen_store.dart';
 import 'Search.dart';
 import 'crypto_.dart';
 import 'gold_.dart';
@@ -35,6 +37,9 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
   int currentindex = 0;
   int selectIndex = 0;
   bool _password = true;
+  final List<String> _cats = const ['stocks', 'options', 'future', 'commodity'];
+  final Map<String, AdviceMeta?> _latestByCat = {};
+  final Map<String, bool> _unread = {};
 
   List page = [
     const Crypto_(),
@@ -56,12 +61,41 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
+    _refreshUnread();
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  Future<void> _refreshUnread() async {
+    for (final cat in _cats) {
+      try {
+        final latest = await AdviceApi.latest(category: cat);
+        _latestByCat[cat] = latest;
+        final seen = await AdviceSeenStore.getSeenId(cat);
+        final latestId = latest?.id;
+        final isUnread = latestId != null && latestId.isNotEmpty && latestId != seen;
+        if (mounted) setState(() => _unread[cat] = isUnread);
+      } catch (_) {
+        // ignore errors silently on home badges
+      }
+    }
+  }
+
+  Future<void> _openCategory(String cat) async {
+    final latest = _latestByCat[cat];
+    if (latest != null && latest.id.isNotEmpty) {
+      await AdviceSeenStore.markSeen(cat, latest.id);
+      if (mounted) setState(() => _unread[cat] = false);
+    }
+    if (!mounted) return;
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AdviceListPage(category: cat)),
+    ).then((_) => _refreshUnread());
   }
 
   ColorNotifire notifier = ColorNotifire();
@@ -86,7 +120,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
               ),
               SizedBox(width: width / 45),
               Text(
-                'Crowwn',
+                'JustStock',
                 style: TextStyle(
                   fontSize: 18,
                   color: notifier.textColor,
@@ -274,138 +308,137 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                     MainAxisAlignment.spaceAround,
                                 children: [
                                   InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => const stocks_(),
-                                        ),
-                                      );
-                                    },
+                                    onTap: () => _openCategory('stocks'),
                                     child: Container(
                                       height: height / 12,
                                       width: width / 7,
                                       color: notifier.onboardBackgroundColor,
-                                      // color: Colors.red,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                      child: Stack(
                                         children: [
-                                          Icon(Icons.show_chart, size: 25, color: notifier.bottom),
-                                          AppConstants.Height(5),
-                                          const Text(
-                                            "Stocks",
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Color(0xff64748B),
-                                                fontFamily: "Manrope-Bold"),
-                                          )
+                                          Center(
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Icon(Icons.stacked_line_chart, size: 26, color: notifier.bottom),
+                                                AppConstants.Height(4),
+                                                const SizedBox(
+                                                  width: 68,
+                                                  child: Text(
+                                                    "Stocks",
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(fontSize: 12, color: Color(0xff64748B), fontFamily: "Manrope-Bold"),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          if (_unread['stocks'] == true)
+                                            const Positioned(right: 8, top: 8, child: CircleAvatar(radius: 4, backgroundColor: Colors.red)),
                                         ],
                                       ),
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => const AdviceListPage(category: 'options'),
-                                        ),
-                                      );
-                                    },
+                                    onTap: () => _openCategory('options'),
                                     child: Container(
                                       height: height / 12,
                                       width: width / 7,
                                       color: notifier.onboardBackgroundColor,
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(Icons.swap_horiz, size: 25, color: notifier.bottom),
-                                            AppConstants.Height(5),
-                                            const Text(
-                                              "Options",
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: Color(0xff64748B),
-                                                fontFamily: "Manrope-Bold",
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                                      child: Stack(
+                                        children: [
+                                          Center(
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Icon(Icons.swap_calls, size: 26, color: notifier.bottom),
+                                                AppConstants.Height(4),
+                                                const SizedBox(
+                                                  width: 68,
+                                                  child: Text(
+                                                    "Options",
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(fontSize: 12, color: Color(0xff64748B), fontFamily: "Manrope-Bold"),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          if (_unread['options'] == true)
+                                            const Positioned(right: 8, top: 8, child: CircleAvatar(radius: 4, backgroundColor: Colors.red)),
+                                        ],
                                       ),
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => const AdviceListPage(category: 'future'),
-                                        ),
-                                      );
-                                    },
+                                    onTap: () => _openCategory('future'),
                                     child: Container(
                                       height: height / 12,
                                       width: width / 7,
                                       color: notifier.onboardBackgroundColor,
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(Icons.timeline, size: 25, color: notifier.bottom),
-                                            AppConstants.Height(5),
-                                            const Text(
-                                              "Future",
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Color(0xff64748B),
-                                                  fontFamily: "Manrope-Bold"),
-                                            )
-                                          ],
-                                        ),
+                                      child: Stack(
+                                        children: [
+                                          Center(
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Icon(Icons.timeline, size: 26, color: notifier.bottom),
+                                                AppConstants.Height(4),
+                                                const SizedBox(
+                                                  width: 68,
+                                                  child: Text(
+                                                    "Future",
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(fontSize: 12, color: Color(0xff64748B), fontFamily: "Manrope-Bold"),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          if (_unread['future'] == true)
+                                            const Positioned(right: 8, top: 8, child: CircleAvatar(radius: 4, backgroundColor: Colors.red)),
+                                        ],
                                       ),
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => const AdviceListPage(category: 'commodity'),
-                                        ),
-                                      );
-                                    },
+                                    onTap: () => _openCategory('commodity'),
                                     child: Container(
                                       height: height / 12,
                                       width: width / 7,
                                       color: notifier.onboardBackgroundColor,
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(Icons.inventory_2_outlined, size: 25, color: notifier.bottom),
-                                            AppConstants.Height(5),
-                                            const Text(
-                                              "Commodity",
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: Color(0xff64748B),
-                                                fontFamily: "Manrope-Bold",
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                                      child: Stack(
+                                        children: [
+                                          Center(
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Icon(Icons.shopping_bag_outlined, size: 26, color: notifier.bottom),
+                                                AppConstants.Height(4),
+                                                const SizedBox(
+                                                  width: 68,
+                                                  child: Text(
+                                                    "Commodity",
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(fontSize: 12, color: Color(0xff64748B), fontFamily: "Manrope-Bold"),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          if (_unread['commodity'] == true)
+                                            const Positioned(right: 8, top: 8, child: CircleAvatar(radius: 4, backgroundColor: Colors.red)),
+                                        ],
                                       ),
                                     ),
                                   ),

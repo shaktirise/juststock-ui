@@ -5,10 +5,11 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = untitled1
+PRODUCT_NAME = JustStock
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.untitled1
+PRODUCT_BUNDLE_IDENTIFIER = com.example.juststock
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright Â© 2023 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2025 JustStock. All rights reserved.
+

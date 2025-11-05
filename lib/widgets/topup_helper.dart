@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../api/wallet_api.dart';
+import '../api/profile_api.dart';
 
 class TopupHelper {
   static Future<void> ensureFunds(BuildContext context) async {
@@ -16,13 +17,12 @@ class TopupHelper {
       return;
     }
 
-    final balancePaise = await WalletApi.getBalancePaise();
-    final firstTopup = balancePaise <= 0;
-    final amountInRupees = firstTopup ? 2100 : 1000;
+    final activated = await ProfileApi.isActivated();
+    final amountInRupees = activated ? 1000 : 2100;
 
     final order = await WalletApi.createOrder(amountInRupees: amountInRupees);
     final key = order['key'] as String;
-    final orderId = order['order_id'] as String;
+    final orderId = (order['orderId'] ?? order['order_id']) as String;
     final amountPaise = (order['amount'] as num?)?.toInt() ?? (amountInRupees * 100);
     final currency = (order['currency'] as String?) ?? 'INR';
 
@@ -33,6 +33,8 @@ class TopupHelper {
           razorpayOrderId: res.orderId ?? orderId,
           razorpayPaymentId: res.paymentId ?? '',
           razorpaySignature: res.signature ?? '',
+          amountInRupees: amountInRupees,
+          currency: currency,
         );
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Payment verified. Wallet credited.')),
@@ -65,4 +67,3 @@ class TopupHelper {
     rp.open(options);
   }
 }
-
