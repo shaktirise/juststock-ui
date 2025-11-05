@@ -7,6 +7,7 @@ import '../Dark mode.dart';
 import '../config/common.dart';
 import 'Login.dart';
 import 'Sign phone.dart';
+import 'package:crowwn/services/api_locator.dart';
 
 
 class Sign extends StatefulWidget {
@@ -402,6 +403,8 @@ extension on _SignState {
         referralCode: _referralCtrl.text.trim().isEmpty ? null : _referralCtrl.text.trim(),
       );
       await TokenStorage.saveAuth(auth);
+      // Also persist to secure storage for Dio client
+      await ApiLocator.tokenStore.save(auth.token, auth.refreshToken);
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(

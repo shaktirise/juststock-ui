@@ -6,6 +6,7 @@ import 'package:crowwn/api/token_storage.dart';
 import '../Dark mode.dart';
 import '../config/common.dart';
 import 'Face id.dart';
+import 'package:crowwn/services/api_locator.dart';
 import 'Forget pass.dart';
 import 'Sign up.dart';
 
@@ -313,6 +314,8 @@ extension on _LoginState {
         password: _passwordCtrl.text,
       );
       await TokenStorage.saveAuth(auth);
+      // Also persist to secure storage for Dio client
+      await ApiLocator.tokenStore.save(auth.token, auth.refreshToken);
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(

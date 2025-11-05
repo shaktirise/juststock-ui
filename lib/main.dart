@@ -2,9 +2,11 @@ import 'package:crowwn/Onboarding%20screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crowwn/Dark%20mode.dart';
+import 'package:crowwn/services/api_locator.dart';
 
-
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await ApiLocator.init();
   runApp(const MyApp());
 }
 

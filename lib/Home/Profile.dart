@@ -18,6 +18,8 @@ import '../Dark mode.dart';
 import '../Message & Notification/Notifications.dart';
 import '../config/common.dart';
 import 'bottom.dart';
+import 'package:crowwn/services/api_locator.dart';
+import 'package:crowwn/Account&setting/Referrals.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -28,6 +30,39 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   ColorNotifire notifier = ColorNotifire();
+  Map<String, dynamic>? _me;
+  bool _loadingMe = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchMe();
+  }
+
+  Future<void> _onLogout() async {
+    try {
+      await ApiLocator.auth.logout();
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Logged out')),
+      );
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Logout failed: $e')),
+      );
+    }
+  }
+
+  Future<void> _fetchMe() async {
+    setState(() => _loadingMe = true);
+    try {
+      final me = await ApiLocator.user.me();
+      setState(() => _me = me);
+    } catch (_) {}
+    setState(() => _loadingMe = false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,18 +88,11 @@ class _ProfileState extends State<Profile> {
           ),
         ),
         actions: [
-          Image.asset(
-            "assets/images/edit.png",
-            scale: 3,
-            color: Colors.white,
+          IconButton(
+            icon: const Icon(Icons.logout, color: Colors.white),
+            onPressed: _onLogout,
           ),
-          // Switch(
-          //   value: notifier.isDark,
-          //   onChanged: (bool value) {
-          //     notifier.isavalable(value);
-          //   },
-          // ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         ],
         backgroundColor: const Color(0xFFD32F2F),
         elevation: 0,
@@ -101,21 +129,30 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     AppConstants.Height(20),
-                    const Center(
-                      child: Text(
-                        "Helena Sarapova",
-                        style: TextStyle(
-                          fontFamily: "Manrope-Bold",
-                          color: Color(0xffFFFFFF),
-                          fontSize: 20,
-                        ),
-                      ),
+                    Center(
+                      child: _loadingMe
+                          ? const SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                              ),
+                            )
+                          : Text(
+                              (_me?['name'] ?? 'Your Name').toString(),
+                              style: const TextStyle(
+                                fontFamily: "Manrope-Bold",
+                                color: Color(0xffFFFFFF),
+                                fontSize: 20,
+                              ),
+                            ),
                     ),
                     AppConstants.Height(5),
-                    const Center(
+                    Center(
                       child: Text(
-                        "helenasarapova@mail.com",
-                        style: TextStyle(
+                        (_me?['email'] ?? '').toString(),
+                        style: const TextStyle(
                           fontFamily: "Manrope-Regular",
                           color: Color(0xffB59CFA),
                           fontSize: 14,
@@ -132,6 +169,30 @@ class _ProfileState extends State<Profile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Quick entry to Referrals
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ReferralsPage(),
+                        ),
+                      );
+                    },
+                    child: accountDetails(
+                      image: "assets/images/card.png",
+                      name: "Referrals",
+                      desc: "Tree, earnings and MLM details",
+                      onPress: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ReferralsPage(),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
