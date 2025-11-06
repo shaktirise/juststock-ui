@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:crowwn/api/wallet_api.dart';
 import 'package:crowwn/api/profile_api.dart';
@@ -22,6 +23,8 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
   Razorpay? _razorpay;
   bool _isProcessing = false;
   bool? _activated;
+  final TextEditingController _amountController = TextEditingController();
+  String? _amountError;
 
   @override
   void initState() {
@@ -36,6 +39,7 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
   @override
   void dispose() {
     _razorpay?.clear();
+    _amountController.dispose();
     super.dispose();
   }
 
@@ -50,23 +54,16 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
     });
   }
 
-  String _formatRupees(int paise) {
-    final rupees = (paise / 100).toStringAsFixed(2);
-    return '₹$rupees';
-  }
-
-  Future<void> _startTopup(BuildContext context) async {
+  Future<void> _startTopup(BuildContext context, int amount) async {
     final isMobile = defaultTargetPlatform == TargetPlatform.android ||
         defaultTargetPlatform == TargetPlatform.iOS;
     if (kIsWeb || !isMobile) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Top-up is supported only on Android/iOS')),
+        const SnackBar(
+            content: Text('Top-up is supported only on Android/iOS')),
       );
       return;
     }
-
-    final activated = await _activationFuture.catchError((_) => false) ?? false;
-    final int amount = activated ? 1000 : 2100;
 
     Map<String, dynamic> create;
     try {
@@ -81,7 +78,8 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
       return;
     }
     final key = (create['key'] as String?) ?? '';
-    final orderId = ((create['orderId'] ?? create['order_id']) as String?) ?? '';
+    final orderId =
+        ((create['orderId'] ?? create['order_id']) as String?) ?? '';
     final amountPaise = (create['amount'] as num?)?.toInt() ?? (amount * 100);
     final currency = (create['currency'] as String?) ?? 'INR';
     if (key.isEmpty || orderId.isEmpty) {
@@ -97,7 +95,8 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
     _razorpay?.clear();
     _razorpay = Razorpay();
 
-    _razorpay!.on(Razorpay.EVENT_PAYMENT_SUCCESS, (PaymentSuccessResponse res) async {
+    _razorpay!.on(Razorpay.EVENT_PAYMENT_SUCCESS,
+        (PaymentSuccessResponse res) async {
       if (mounted) setState(() => _isProcessing = true);
       try {
         await WalletApi.verify(
@@ -108,11 +107,14 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
           currency: currency,
         );
         if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Payment verified and wallet credited')));
+        _amountController.clear();
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Payment verified and wallet credited')));
         _refresh();
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Verification failed: $e')));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Verification failed: $e')));
         }
       } finally {
         _razorpay?.clear();
@@ -122,7 +124,8 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
     });
 
     _razorpay!.on(Razorpay.EVENT_PAYMENT_ERROR, (PaymentFailureResponse res) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Payment failed: ${res.message ?? res.code}')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Payment failed: ${res.message ?? res.code}')));
       _razorpay?.clear();
       _razorpay = null;
     });
@@ -147,6 +150,18 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
     if (mounted) setState(() => _isProcessing = false);
   }
 
+  Future<void> _handleTopup(BuildContext context) async {
+    FocusScope.of(context).unfocus();
+    final raw = _amountController.text.trim();
+    final amount = int.tryParse(raw);
+    if (amount == null || amount <= 0) {
+      setState(() => _amountError = 'Enter a valid amount in rupees');
+      return;
+    }
+    setState(() => _amountError = null);
+    await _startTopup(context, amount);
+  }
+
   String _formatRupeesFixed(int paise) {
     final rupees = (paise / 100).toStringAsFixed(2);
     return '₹$rupees';
@@ -165,14 +180,20 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
             decoration: BoxDecoration(
               color: notifier.textField,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: notifier.getContainerBorder ?? Colors.transparent),
+              border: Border.all(
+                  color: notifier.getContainerBorder ?? Colors.transparent),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Wallet Balance', style: TextStyle(color: notifier.textColor, fontSize: 16, fontFamily: 'Manrope-Bold')),
+                Text('Wallet Balance',
+                    style: TextStyle(
+                        color: notifier.textColor,
+                        fontSize: 16,
+                        fontFamily: 'Manrope-Bold')),
                 const SizedBox(height: 8),
-                const Text('Sign in to view your wallet balance and add money.', style: TextStyle(color: Color(0xff64748B))),
+                const Text('Sign in to view your wallet balance and add money.',
+                    style: TextStyle(color: Color(0xff64748B))),
               ],
             ),
           );
@@ -185,14 +206,19 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
           decoration: BoxDecoration(
             color: notifier.textField,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: notifier.getContainerBorder ?? Colors.transparent),
+            border: Border.all(
+                color: notifier.getContainerBorder ?? Colors.transparent),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  Text('Wallet Balance', style: TextStyle(color: notifier.textColor, fontSize: 16, fontFamily: 'Manrope-Bold')),
+                  Text('Wallet Balance',
+                      style: TextStyle(
+                          color: notifier.textColor,
+                          fontSize: 16,
+                          fontFamily: 'Manrope-Bold')),
                   const Spacer(),
                   IconButton(
                     onPressed: _refresh,
@@ -204,30 +230,70 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
               ),
               const SizedBox(height: 8),
               if (snapshot.connectionState == ConnectionState.waiting)
-                const SizedBox(height: 28, width: 28, child: CircularProgressIndicator(strokeWidth: 2.5))
+                const SizedBox(
+                    height: 28,
+                    width: 28,
+                    child: CircularProgressIndicator(strokeWidth: 2.5))
               else
-                Text(_formatRupeesFixed(paise), style: TextStyle(fontSize: 24, color: notifier.textColor, fontFamily: 'Manrope-Bold')),
+                Text(_formatRupeesFixed(paise),
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: notifier.textColor,
+                        fontFamily: 'Manrope-Bold')),
               const SizedBox(height: 14),
+              TextField(
+                controller: _amountController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(
+                  labelText: 'Amount (INR)',
+                  prefixText: '₹ ',
+                  errorText: _amountError,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                        color:
+                            notifier.getContainerBorder ?? Colors.transparent),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(color: Color(0xFF8B0000)),
+                  ),
+                  filled: true,
+                  fillColor: notifier.textField,
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                ),
+                style: TextStyle(
+                    color: notifier.textColor, fontFamily: 'Manrope-Regular'),
+              ),
+              const SizedBox(height: 12),
               SizedBox(
                 width: double.infinity,
                 height: 44,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF8B0000),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
                   ),
-                  onPressed: snapshot.connectionState == ConnectionState.waiting || _isProcessing
-                      ? null
-                      : () => _startTopup(context),
-                  child: Text(isFirst ? 'Add ₹2100 to Activate' : 'Add ₹1000',
-                      style: const TextStyle(color: Colors.white, fontFamily: 'Manrope-Bold')),
+                  onPressed:
+                      snapshot.connectionState == ConnectionState.waiting ||
+                              _isProcessing
+                          ? null
+                          : () => _handleTopup(context),
+                  child: const Text('Add Money',
+                      style: TextStyle(
+                          color: Colors.white, fontFamily: 'Manrope-Bold')),
                 ),
               ),
               if (isFirst)
                 const Padding(
                   padding: EdgeInsets.only(top: 8.0),
                   child: Text(
-                    'Your first successful top-up of ₹2100 activates your account. Later top-ups are ₹1000.',
+                    'Your first successful top-up activates your account. Enter the amount you wish to add.',
                     style: TextStyle(color: Color(0xff64748B), fontSize: 12),
                   ),
                 ),
