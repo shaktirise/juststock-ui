@@ -18,11 +18,13 @@ class WalletApi {
       'amount': paise,
       'currency': 'INR',
     };
-    final res = await http.post(
-      _uri('/api/wallet/topups/create-order'),
-      headers: headers,
-      body: jsonEncode(body),
-    );
+    final res = await http
+        .post(
+          _uri('/api/wallet/topups/create-order'),
+          headers: headers,
+          body: jsonEncode(body),
+        )
+        .timeout(const Duration(seconds: 25));
     if (res.statusCode == 200 || res.statusCode == 201) {
       return jsonDecode(res.body) as Map<String, dynamic>;
     }
@@ -47,11 +49,13 @@ class WalletApi {
       'amount': paise,
       'currency': currency,
     };
-    final res = await http.post(
-      _uri('/api/wallet/topups/verify'),
-      headers: headers,
-      body: jsonEncode(body),
-    );
+    final res = await http
+        .post(
+          _uri('/api/wallet/topups/verify'),
+          headers: headers,
+          body: jsonEncode(body),
+        )
+        .timeout(const Duration(seconds: 30));
     if (res.statusCode == 200) {
       return jsonDecode(res.body) as Map<String, dynamic>;
     }
@@ -60,10 +64,12 @@ class WalletApi {
 
   static Future<int> getBalancePaise() async {
     final headers = await TokenStorage.authHeaders();
-    final res = await http.get(
-      _uri('/api/wallet/balance'),
-      headers: headers,
-    );
+    final res = await http
+        .get(
+          _uri('/api/wallet/balance'),
+          headers: headers,
+        )
+        .timeout(const Duration(seconds: 20));
     if (res.statusCode == 200) {
       final data = jsonDecode(res.body) as Map<String, dynamic>;
       return (data['balancePaise'] as num?)?.toInt() ?? 0;
@@ -80,11 +86,13 @@ class WalletApi {
       'amountInRupees': amountInRupees,
       if (note != null) 'note': note,
     };
-    final res = await http.post(
-      _uri('/api/wallet/debit'),
-      headers: headers,
-      body: jsonEncode(body),
-    );
+    final res = await http
+        .post(
+          _uri('/api/wallet/debit'),
+          headers: headers,
+          body: jsonEncode(body),
+        )
+        .timeout(const Duration(seconds: 20));
     if (res.statusCode == 200) {
       return jsonDecode(res.body) as Map<String, dynamic>;
     }

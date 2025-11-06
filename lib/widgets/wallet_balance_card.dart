@@ -98,6 +98,7 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
     _razorpay = Razorpay();
 
     _razorpay!.on(Razorpay.EVENT_PAYMENT_SUCCESS, (PaymentSuccessResponse res) async {
+      if (mounted) setState(() => _isProcessing = true);
       try {
         await WalletApi.verify(
           razorpayOrderId: res.orderId ?? orderId,
@@ -116,6 +117,7 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
       } finally {
         _razorpay?.clear();
         _razorpay = null;
+        if (mounted) setState(() => _isProcessing = false);
       }
     });
 

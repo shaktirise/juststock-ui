@@ -120,19 +120,23 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: lib/assets/app-logo.png
+  # Default icon for all platforms
+  image_path: lib/assets/app-apk-icon.jpg
+  # Explicit per-platform overrides (all use the same asset)
+  image_path_android: lib/assets/app-apk-icon.jpg
+  image_path_ios: lib/assets/app-apk-icon.jpg
   adaptive_icon_background: "#FFFFFF"
   web:
     generate: true
-    image_path: lib/assets/app-logo.png
+    image_path: lib/assets/app-apk-icon.jpg
     background_color: "#FFFFFF"
     theme_color: "#8B0000"
   windows:
     generate: true
-    image_path: lib/assets/app-logo.png
+    image_path: lib/assets/app-apk-icon.jpg
   macos:
     generate: true
-    image_path: lib/assets/app-logo.png
+    image_path: lib/assets/app-apk-icon.jpg
   linux:
     generate: true
-    image_path: lib/assets/app-logo.png
+    image_path: lib/assets/app-apk-icon.jpg

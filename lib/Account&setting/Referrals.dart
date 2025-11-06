@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+﻿// ignore_for_file: file_names
 import 'package:crowwn/services/api_locator.dart';
 import 'package:crowwn/services/referral_api.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +23,14 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
   List<dynamic>? _withdrawals;
   bool _loading = true;
   String? _error;
+
+  int _amountPaiseFrom(Map<String, dynamic> m) {
+    final ap = m['amountPaise'];
+    if (ap is num) return ap.toInt();
+    final a = m['amount'];
+    if (a is num) return (a * 100).round();
+    return 0;
+  }
 
   @override
   void initState() {
@@ -115,7 +123,7 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Level $n — ${users.length} users', style: TextStyle(fontFamily: 'Manrope-Bold', color: notifier.textColor)),
+                Text('Level $n - ${users.length} users', style: TextStyle(fontFamily: 'Manrope-Bold', color: notifier.textColor)),
                 const SizedBox(height: 8),
                 for (final u in users.take(5))
                   Padding(
@@ -180,7 +188,7 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
                       ],
                     ),
                   ),
-                  Text('₹ ${rupees((it['amountPaise'] ?? 0) as int).toStringAsFixed(2)}', style: TextStyle(color: notifier.textColor)),
+                  Text('₹ ${rupees(_amountPaiseFrom(it)).toStringAsFixed(2)}', style: TextStyle(color: notifier.textColor)),
                 ],
               ),
             ),
@@ -208,7 +216,7 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
                       ],
                     ),
                   ),
-                  Text('₹ ${rupees((w['amountPaise'] ?? 0) as int).toStringAsFixed(2)}', style: TextStyle(color: notifier.textColor)),
+                  Text('₹ ${rupees(_amountPaiseFrom(w)).toStringAsFixed(2)}', style: TextStyle(color: notifier.textColor)),
                 ],
               ),
             ),
@@ -281,7 +289,7 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
 
   Future<void> _withdraw() async {
     try {
-      final res = await ApiLocator.referral.requestWithdraw();
+      await ApiLocator.referral.requestWithdraw();
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Withdrawal requested')),

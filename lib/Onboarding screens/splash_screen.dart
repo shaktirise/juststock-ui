@@ -1,4 +1,6 @@
 import 'package:crowwn/config/common.dart';
+import 'package:crowwn/services/api_locator.dart';
+import 'package:crowwn/Home/bottom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,17 +22,25 @@ class _SplashState extends State<Splash> {
   }
 
   init() {
-    Future.delayed(
-      const Duration(seconds: 10),
-      () {
+    Future.microtask(() async {
+      // Give the app a brief moment to settle
+      await Future.delayed(const Duration(milliseconds: 400));
+      try {
+        // If user/me works, go to app; else fall back to onboarding
+        await ApiLocator.user.me();
+        if (!mounted) return;
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) => const Onboard1(),
-          ),
+          MaterialPageRoute(builder: (context) => const BottomBarScreen()),
         );
-      },
-    );
+      } catch (_) {
+        if (!mounted) return;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const Onboard1()),
+        );
+      }
+    });
   }
 
   ColorNotifire notifier = ColorNotifire();
