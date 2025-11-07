@@ -215,34 +215,29 @@ class _ProfileState extends State<Profile> {
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Text(
-                                  "Invite friends and earn referral rewards on activations and renewals.",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: "Manrope-Regular",
-                                    color: notifier.textColor,
-                                    wordSpacing: 2,
-                                  ),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: Text(
+                                "Invite friends and earn referral rewards on activations and renewals.",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: "Manrope-Regular",
+                                  color: notifier.textColor,
+                                  wordSpacing: 2,
                                 ),
                               ),
-                            ],
+                            ),
                           ),
-                          const Spacer(),
-                          Container(
-                            alignment: Alignment.center,
-                            height: height / 9,
+                          SizedBox(
                             width: width / 5,
-                            child: Image.asset(
-                              "assets/images/Gift_1.png",
-                              fit: BoxFit.cover,
+                            height: height / 9,
+                            child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: Image.asset("assets/images/Gift_1.png"),
                             ),
                           ),
                         ],

@@ -80,7 +80,10 @@ class _Onboard1State extends State<Onboard1> {
                   height: MediaQuery.of(context).size.height / 2,
                   width: double.infinity,
                   color: notifier.onboardBackgroundColor,
-                  child: Image.asset("assets/images/Card 1.jpg", scale: 0.11),
+                  child: Image.asset(
+                    "assets/images/card_1.png",
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
               // Switch(
@@ -117,7 +120,9 @@ class _Onboard1State extends State<Onboard1> {
                     AppConstants.Height(15),
                     GestureDetector(
                       onTap: () {
-                        _page.nextPage(duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
+                        _page.nextPage(
+                            duration: const Duration(milliseconds: 250),
+                            curve: Curves.easeInOut);
                       },
                       child: Container(
                         height: 60,
@@ -180,8 +185,8 @@ class _Onboard1State extends State<Onboard1> {
                   width: double.infinity,
                   color: notifier.onboardBackgroundColor,
                   child: Image.asset(
-                    "assets/images/Card 2.jpg",
-                    scale: 0.9,
+                    "assets/images/card_2.png",
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),
@@ -213,7 +218,9 @@ class _Onboard1State extends State<Onboard1> {
                     AppConstants.Height(10),
                     GestureDetector(
                       onTap: () {
-                        _page.nextPage(duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
+                        _page.nextPage(
+                            duration: const Duration(milliseconds: 250),
+                            curve: Curves.easeInOut);
                       },
                       child: Center(
                         child: Container(
@@ -278,7 +285,10 @@ class _Onboard1State extends State<Onboard1> {
                   alignment: Alignment.center,
                   width: double.infinity,
                   color: notifier.onboardBackgroundColor,
-                  child: Image.asset("assets/images/Card 3.jpg", scale: 0.9),
+                  child: Image.asset(
+                    "assets/images/card_3.png",
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
               AppConstants.Height(20),
@@ -377,7 +387,10 @@ class _Onboard1State extends State<Onboard1> {
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height / 2.8,
                   color: notifier.onboardBackgroundColor,
-                  child: Image.asset("assets/images/Card 4.jpg", scale: 0.9),
+                  child: Image.asset(
+                    "assets/images/card_4.png",
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
               AppConstants.Height(20),

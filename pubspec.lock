@@ -257,12 +257,11 @@ packages:
     source: sdk
     version: "0.0.0"
   fluttertoast:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: fluttertoast
-      sha256: "95f349437aeebe524ef7d6c9bde3e6b4772717cf46a0eb6a3ceaddc740b297cc"
-      url: "https://pub.dev"
-    source: hosted
+      path: "third_party/fluttertoast"
+      relative: true
+    source: path
     version: "8.2.8"
   get:
     dependency: "direct main"
