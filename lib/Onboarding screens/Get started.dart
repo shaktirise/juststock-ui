@@ -42,7 +42,7 @@ class _Get1State extends State<Get1> {
             // ),
 
              Text(
-              "Get Started",
+              "Start Your Growth Journey",
               style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
@@ -50,7 +50,7 @@ class _Get1State extends State<Get1> {
                   color: notifier.textColor),
             ),
             const Text(
-              "All in One Investment Platform",
+              "Your Stock Market Learning Hub",
               style: TextStyle(
                   fontSize: 16,
                   color: Color(0xff64748B),
@@ -81,12 +81,12 @@ class _Get1State extends State<Get1> {
             // Container(
             //     height: 60,
             //     width: 400,
-            //     decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: Color(0xff6B39F4),),
+            //     decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: Color(0xFF8B0000),),
             //     child: Center(
             //       child: ElevatedButton(
             //         onPressed: () {
             //           Navigator.push(context, MaterialPageRoute(builder: (context) => Login(),));
-            //         },style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color(0xff6B39F4))),
+            //         },style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color(0xFF8B0000))),
             //         child: Text(
             //           "Continue with email",
             //           style: TextStyle(fontSize: 20,fontFamily: "Manrope-Bold",color: Color(0xffFFFFFF)),
@@ -174,7 +174,7 @@ class _Get1State extends State<Get1> {
                   "Sign Up",
                   style: TextStyle(
                       fontSize: 14,
-                      color: Color(0xff6B39F4),
+                      color: Color(0xFF8B0000),
                       fontFamily: "Manrope-Bold"),
                 ))
               ],

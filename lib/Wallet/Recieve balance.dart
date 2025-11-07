@@ -169,7 +169,7 @@ class _Recevie_balanceState extends State<Recevie_balance> {
                               Text(
                                 "Change",
                                 style: TextStyle(
-                                  color: Color(0xff6B39F4),
+                                  color: Color(0xFF8B0000),
                                   fontSize: 12,
                                   fontFamily: "Manrope-Bold",
                                 ),

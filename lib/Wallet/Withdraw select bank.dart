@@ -77,7 +77,7 @@ class _Withdraw_selectState extends State<Withdraw_select> {
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: selectedFilter == 0
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xFF8B0000)
                           : notifier.getContainerBorder,
                       width: 1,
                     ),
@@ -136,7 +136,7 @@ class _Withdraw_selectState extends State<Withdraw_select> {
                                 children: [
                                   Radio(
                                     fillColor: MaterialStateColor.resolveWith(
-                                        (states) => const Color(0xff6B39F4)),
+                                        (states) => const Color(0xFF8B0000)),
                                     // activeColor: Color(0xff0056D2),
                                     value: 0,
                                     groupValue: selectedFilter,
@@ -172,7 +172,7 @@ class _Withdraw_selectState extends State<Withdraw_select> {
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                           color: selectedFilter == 1
-                              ? const Color(0xff6B39F4)
+                              ? const Color(0xFF8B0000)
                               : notifier.getContainerBorder,
                           width: 1)),
                   child: Padding(
@@ -227,7 +227,7 @@ class _Withdraw_selectState extends State<Withdraw_select> {
                                 children: [
                                   Radio(
                                     fillColor: MaterialStateColor.resolveWith(
-                                        (states) => const Color(0xff6B39F4)),
+                                        (states) => const Color(0xFF8B0000)),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 1,
                                     groupValue: selectedFilter,
@@ -271,7 +271,7 @@ class _Withdraw_selectState extends State<Withdraw_select> {
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: selectedFilter == 2
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xFF8B0000)
                           : notifier.getContainerBorder,
                       width: 1,
                     ),
@@ -330,7 +330,7 @@ class _Withdraw_selectState extends State<Withdraw_select> {
                                 children: [
                                   Radio(
                                     fillColor: MaterialStateColor.resolveWith(
-                                      (states) => const Color(0xff6B39F4),
+                                      (states) => const Color(0xFF8B0000),
                                     ),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 2,
@@ -367,7 +367,7 @@ class _Withdraw_selectState extends State<Withdraw_select> {
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: selectedFilter == 3
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xFF8B0000)
                           : notifier.getContainerBorder,
                       width: 1,
                     ),
@@ -427,7 +427,7 @@ class _Withdraw_selectState extends State<Withdraw_select> {
                                 children: [
                                   Radio(
                                     fillColor: MaterialStateColor.resolveWith(
-                                      (states) => const Color(0xff6B39F4),
+                                      (states) => const Color(0xFF8B0000),
                                     ),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 3,
@@ -470,7 +470,7 @@ class _Withdraw_selectState extends State<Withdraw_select> {
             // width: 370,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xFF8B0000),
             ),
             child: const Center(
                 child: Text("Confirm",

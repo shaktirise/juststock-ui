@@ -177,7 +177,7 @@ class _CreatedState extends State<Created> {
                                         data2[index]['Et'],
                                         style: const TextStyle(
                                             fontSize: 11,
-                                            color: Color(0xff6B39F4),
+                                            color: Color(0xFF8B0000),
                                             fontFamily: "Manrope-SemiBold"),
                                       ),
                                       const Spacer(),

@@ -148,7 +148,7 @@ class _Detail_stockState extends State<Detail_stock> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: _index == 0
-                            ? const Color(0xff6B39F4)
+                            ? const Color(0xFF8B0000)
                             : notifier.tabBar4,
                         // border: Border.all(
                         //   width: 1,
@@ -179,7 +179,7 @@ class _Detail_stockState extends State<Detail_stock> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: _index == 1
-                            ? const Color(0xff6B39F4)
+                            ? const Color(0xFF8B0000)
                             : notifier.tabBar4,
                         // border: Border.all(
                         //   width: 1,
@@ -210,7 +210,7 @@ class _Detail_stockState extends State<Detail_stock> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: _index == 2
-                            ? const Color(0xff6B39F4)
+                            ? const Color(0xFF8B0000)
                             : notifier.tabBar4,
                         // border: Border.all(
                         //   width: 1,
@@ -241,7 +241,7 @@ class _Detail_stockState extends State<Detail_stock> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: _index == 3
-                            ? const Color(0xff6B39F4)
+                            ? const Color(0xFF8B0000)
                             : notifier.tabBar4,
                         // border: Border.all(
                         //   width: 1,
@@ -272,7 +272,7 @@ class _Detail_stockState extends State<Detail_stock> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: _index == 4
-                            ? const Color(0xff6B39F4)
+                            ? const Color(0xFF8B0000)
                             : notifier.tabBar4,
                         // border: Border.all(
                         //   width: 1,

@@ -100,7 +100,7 @@ class _Bank_account_add_bankState extends State<Bank_account_add_bank> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.grey.withOpacity(
-                            0.1), /*border: Border.all(color: Color(0xff6B39F4))*/
+                            0.1), /*border: Border.all(color: Color(0xFF8B0000))*/
                       ),
                       child: Center(
                         child: TextField(
@@ -138,7 +138,7 @@ class _Bank_account_add_bankState extends State<Bank_account_add_bank> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.grey.withOpacity(
-                            0.1), /*border: Border.all(color: Color(0xff6B39F4))*/
+                            0.1), /*border: Border.all(color: Color(0xFF8B0000))*/
                       ),
                       child: Center(
                         child: TextField(
@@ -174,7 +174,7 @@ class _Bank_account_add_bankState extends State<Bank_account_add_bank> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 color: Colors.grey.withOpacity(
-                    0.1), /*border: Border.all(color: Color(0xff6B39F4))*/
+                    0.1), /*border: Border.all(color: Color(0xFF8B0000))*/
               ),
               child: Center(
                 child: TextField(
@@ -206,7 +206,7 @@ class _Bank_account_add_bankState extends State<Bank_account_add_bank> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 color: Colors.grey.withOpacity(
-                    0.1), /*border: Border.all(color: Color(0xff6B39F4))*/
+                    0.1), /*border: Border.all(color: Color(0xFF8B0000))*/
               ),
               child: Center(
                 child: TextField(
@@ -253,7 +253,7 @@ class _Bank_account_add_bankState extends State<Bank_account_add_bank> {
                       const Text(
                         "credit/debit card terms",
                         style: TextStyle(
-                            color: Color(0xff6B39F4),
+                            color: Color(0xFF8B0000),
                             fontSize: 12,
                             fontFamily: "Manrope-Medium"),
                       )
@@ -282,7 +282,7 @@ class _Bank_account_add_bankState extends State<Bank_account_add_bank> {
             // width: 370,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xFF8B0000),
             ),
             child: const Center(
               child: Text(

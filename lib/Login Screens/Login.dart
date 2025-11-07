@@ -6,6 +6,7 @@ import 'package:crowwn/api/token_storage.dart';
 import '../Dark mode.dart';
 import '../config/common.dart';
 import 'Face id.dart';
+// import 'KYC Slides.dart';
 import 'package:crowwn/services/api_locator.dart';
 import 'Forget pass.dart';
 import 'Sign up.dart';
@@ -121,7 +122,7 @@ class _LoginState extends State<Login> {
                         Checkbox(
                           // checkColor: Colors.blue,
                            side: const BorderSide(color: Color(0xff334155)),
-                          activeColor: const Color(0xff6B39F4),
+                          activeColor: const Color(0xFF8B0000),
                           checkColor: const Color(0xffFFFFFF),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
 
@@ -146,7 +147,7 @@ class _LoginState extends State<Login> {
                             "Forgot Password?",
                             style: TextStyle(
                                 fontSize: 14,
-                                color: Color(0xff6B39F4),
+                                color: Color(0xFF8B0000),
                                 fontFamily: "Manrope-Bold"),
                           ),
                         )
@@ -267,7 +268,7 @@ class _LoginState extends State<Login> {
                             "Sign Up",
                             style: TextStyle(
                                 fontSize: 14,
-                                color: Color(0xff6B39F4),
+                                color: Color(0xFF8B0000),
                                 fontFamily: "Manrope-Bold"),
                           )),
                     ],

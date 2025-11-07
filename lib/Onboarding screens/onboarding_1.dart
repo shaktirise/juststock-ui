@@ -15,6 +15,19 @@ class Onboard1 extends StatefulWidget {
 
 class _Onboard1State extends State<Onboard1> {
   ColorNotifire notifier = ColorNotifire();
+  late final PageController _page;
+
+  @override
+  void initState() {
+    super.initState();
+    _page = PageController();
+  }
+
+  @override
+  void dispose() {
+    _page.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +69,10 @@ class _Onboard1State extends State<Onboard1> {
         elevation: 0,
       ),
       body: PageView(
+        controller: _page,
         children: [
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 child: Container(
@@ -66,7 +80,7 @@ class _Onboard1State extends State<Onboard1> {
                   height: MediaQuery.of(context).size.height / 2,
                   width: double.infinity,
                   color: notifier.onboardBackgroundColor,
-                  child: Image.asset("assets/images/Card 1.png", scale: 0.11),
+                  child: Image.asset("assets/images/Card 1.jpg", scale: 0.11),
                 ),
               ),
               // Switch(
@@ -79,34 +93,31 @@ class _Onboard1State extends State<Onboard1> {
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "All in One Investment\nPlatform",
+                      "Learn Stock Market the Right Way",
                       style: TextStyle(
                           fontSize: 24,
                           // wordSpacing: 5,
                           fontFamily: "Manrope-Bold",
                           color: notifier.textColor),
+                      textAlign: TextAlign.center,
                     ),
                     AppConstants.Height(10),
                     const Text(
-                      "Diversity your investment from cryptocurrency, NFTs, Gold, and stock in one app",
+                      "Short, simple lessons designed for beginners and intermediates.",
                       style: TextStyle(
                         fontSize: 16,
                         color: Color(0xff64748B),
                         fontFamily: "Manrope-Medium",
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     AppConstants.Height(15),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Get1(),
-                          ),
-                        );
+                        _page.nextPage(duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
                       },
                       child: Container(
                         height: 60,
@@ -116,7 +127,7 @@ class _Onboard1State extends State<Onboard1> {
                             color: const Color(0xFF8B0000)),
                         child: const Center(
                           child: Text(
-                            "Get Started",
+                            "Next",
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: "Manrope-SemiBold",
@@ -144,7 +155,7 @@ class _Onboard1State extends State<Onboard1> {
                             child: Text(
                               "Browse Assets",
                               style: TextStyle(
-                                color: Color(0xff6B39F4),
+                                color: Color(0xFF8B0000),
                                 fontSize: 16,
                                 fontFamily: "Manrope-Bold",
                               ),
@@ -160,7 +171,7 @@ class _Onboard1State extends State<Onboard1> {
             ],
           ),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 child: Container(
@@ -169,7 +180,7 @@ class _Onboard1State extends State<Onboard1> {
                   width: double.infinity,
                   color: notifier.onboardBackgroundColor,
                   child: Image.asset(
-                    "assets/images/Card 2.png",
+                    "assets/images/Card 2.jpg",
                     scale: 0.9,
                   ),
                 ),
@@ -178,34 +189,31 @@ class _Onboard1State extends State<Onboard1> {
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Track Prices On All\nInvestment",
+                      "Real Market Concepts Made Easy",
                       style: TextStyle(
                         fontSize: 24,
                         fontFamily: "Manrope-Bold",
                         color: notifier.textColor,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     AppConstants.Height(10),
                     const Text(
-                      "Set up automatic price alerts to let you know about price movements for a specific asset.",
+                      "Candlesticks, trends, indicators, charts explained in plain language.",
                       style: TextStyle(
                         fontSize: 16,
                         color: Color(0xff64748B),
                         fontFamily: "Manrope-Medium",
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     AppConstants.Height(10),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Get1(),
-                          ),
-                        );
+                        _page.nextPage(duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
                       },
                       child: Center(
                         child: Container(
@@ -213,11 +221,11 @@ class _Onboard1State extends State<Onboard1> {
                           // width: 350,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
-                            color: const Color(0xff6B39F4),
+                            color: const Color(0xFF8B0000),
                           ),
                           child: const Center(
                             child: Text(
-                              "Get Started",
+                              "Next",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontFamily: "Manrope-SemiBold",
@@ -246,7 +254,7 @@ class _Onboard1State extends State<Onboard1> {
                             child: Text(
                               "Browse Assets",
                               style: TextStyle(
-                                color: Color(0xff6B39F4),
+                                color: Color(0xFF8B0000),
                                 fontSize: 16,
                                 fontFamily: "Manrope-Bold",
                               ),
@@ -262,7 +270,7 @@ class _Onboard1State extends State<Onboard1> {
             ],
           ),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 child: Container(
@@ -270,32 +278,34 @@ class _Onboard1State extends State<Onboard1> {
                   alignment: Alignment.center,
                   width: double.infinity,
                   color: notifier.onboardBackgroundColor,
-                  child: Image.asset("assets/images/Card 3.png", scale: 0.9),
+                  child: Image.asset("assets/images/Card 3.jpg", scale: 0.9),
                 ),
               ),
               AppConstants.Height(20),
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Stretch Out Your Payments Over Time",
+                      "Daily Market Insights",
                       style: TextStyle(
                         fontSize: 24,
                         // wordSpacing: 5,
                         fontFamily: "Manrope-Bold",
                         color: notifier.textColor,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     AppConstants.Height(10),
                     const Text(
-                      "Massa enim rhoncus quis magna. Fames mi dignissim cursus sit. Malesuada pulvinar enim a vitae urna volutpat.",
+                      "Get simplified updates, analysis, and educational content every day.",
                       style: TextStyle(
                         fontSize: 16,
                         color: Color(0xff64748B),
                         fontFamily: "Manrope-Medium",
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     AppConstants.Height(10),
                     GestureDetector(
@@ -367,7 +377,7 @@ class _Onboard1State extends State<Onboard1> {
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height / 2.8,
                   color: notifier.onboardBackgroundColor,
-                  child: Image.asset("assets/images/Card 4.png", scale: 0.9),
+                  child: Image.asset("assets/images/Card 4.jpg", scale: 0.9),
                 ),
               ),
               AppConstants.Height(20),
@@ -409,7 +419,7 @@ class _Onboard1State extends State<Onboard1> {
                         // width: 350,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
-                          color: const Color(0xff6B39F4),
+                          color: const Color(0xFF8B0000),
                         ),
                         child: const Center(
                           child: Text(

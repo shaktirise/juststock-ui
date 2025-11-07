@@ -113,7 +113,7 @@ class _Message_ofState extends State<Message_of> {
                     // width: 185,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: const Color(0xff6B39F4)),
+                        color: const Color(0xFF8B0000)),
                     child: const Center(
                         child: Text("Hello Marielle! Of course.",
                             style: TextStyle(
@@ -179,7 +179,7 @@ class _Message_ofState extends State<Message_of> {
                     // width: 240,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: const Color(0xff6B39F4)),
+                        color: const Color(0xFF8B0000)),
                     child: const Center(
                       child: Padding(
                         padding: EdgeInsets.only(left: 15, right: 10),

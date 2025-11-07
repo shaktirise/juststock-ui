@@ -171,7 +171,7 @@ class _Top_upState extends State<Top_up> {
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontFamily: "Manrope-Bold",
-                                  color: Color(0xff6B39F4),
+                                  color: Color(0xFF8B0000),
                                 ),
                               )
                             ],

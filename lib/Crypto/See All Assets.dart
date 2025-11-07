@@ -32,7 +32,7 @@ class _see_allState extends State<see_all> {
           child:
               Image.asset("assets/images/arrow-narrow-left (1).png", scale: 3,color: notifier.textColor),
         ),
-        title: const Text("See All Assets",style: TextStyle(color: Color(0xff6B39F4),fontSize: 17,fontFamily: "Manrope-Bold")),
+        title: const Text("See All Assets",style: TextStyle(color: Color(0xFF8B0000),fontSize: 17,fontFamily: "Manrope-Bold")),
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),

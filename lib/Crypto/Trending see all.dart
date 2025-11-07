@@ -145,7 +145,7 @@ class _Trending_seeState extends State<Trending_see> {
         ),
         title: const Text("See All Treding",
             style: TextStyle(
-                color: Color(0xff6B39F4),
+                color: Color(0xFF8B0000),
                 fontSize: 17,
                 fontFamily: "Manrope-Bold")),
       ),

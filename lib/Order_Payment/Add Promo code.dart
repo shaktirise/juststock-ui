@@ -66,7 +66,7 @@ class _Promo_codeState extends State<Promo_code> {
                       color: notifier.onboardBackgroundColor,
                       border: Border.all(
                           color: code == 0
-                              ? const Color(0xff6B39F4)
+                              ? const Color(0xFF8B0000)
                               : notifier.background)),
                   child: TextField(
                     decoration: InputDecoration(
@@ -90,7 +90,7 @@ class _Promo_codeState extends State<Promo_code> {
                 height: 56,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: const Color(0xff6B39F4)),
+                    color: const Color(0xFF8B0000)),
                 child: const Center(
                   child: Text(
                     "Apply",
@@ -165,7 +165,7 @@ class _Promo_codeState extends State<Promo_code> {
                   const Text(
                     'Details',
                     style: TextStyle(
-                        color: Color(0xff6B39F4),
+                        color: Color(0xFF8B0000),
                         fontFamily: "Manrope-Bold",
                         fontSize: 12,),
                   ),
@@ -227,7 +227,7 @@ class _Promo_codeState extends State<Promo_code> {
                   const Text(
                     'Details',
                     style: TextStyle(
-                        color: Color(0xff6B39F4),
+                        color: Color(0xFF8B0000),
                         fontFamily: "Manrope-Bold",
                         fontSize: 12),
                   ),

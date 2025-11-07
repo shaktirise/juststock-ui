@@ -167,7 +167,7 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                       width: width/8,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: _index == 1 ? notifier.outlinedButtonColor  : notifier.tabBar4,/*? Color(0xff6B39F4) : Color(0xffF8F9FD),*/
+                        color: _index == 1 ? notifier.outlinedButtonColor  : notifier.tabBar4,/*? Color(0xFF8B0000) : Color(0xffF8F9FD),*/
                       ),
                       child: Center(
                           child: Text("1W",

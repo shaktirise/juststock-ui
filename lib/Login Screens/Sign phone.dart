@@ -73,7 +73,7 @@ class _phoneState extends State<phone> {
                   width: 226,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: notifier.textField,/*border: Border.all(color: Color(0xff6B39F4))*/
+                    color: notifier.textField,/*border: Border.all(color: Color(0xFF8B0000))*/
                   ),
                   child: TextField(
                     style: TextStyle(color: notifier.textColor),
@@ -102,7 +102,7 @@ class _phoneState extends State<phone> {
             ),
             // CommonButton(
             //   tap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => Verification(),));},
-            //   color: Color(0xff6B39F4),
+            //   color: Color(0xFF8B0000),
             //   text: "Continue",
             //   textcolor: Colors.white, fontsize: 16,
             // ),

@@ -227,7 +227,7 @@ class _CollectionsState extends State<Collections> {
                 subtitle: Text(
                   "Read more",
                   style: TextStyle(
-                    color: Color(0xff6B39F4),
+                    color: Color(0xFF8B0000),
                     fontFamily: "Manrope-SemiBold",
                   ),
                 ),
@@ -278,7 +278,7 @@ class _CollectionsState extends State<Collections> {
                       width: width / 9,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: const Color(0xff6B39F4),
+                        color: const Color(0xFF8B0000),
                       ),
                       child: IconButton(
                         alignment: Alignment.center,
@@ -454,7 +454,7 @@ class _CollectionsState extends State<Collections> {
             width: 327,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xFF8B0000),
             ),
             child: const Center(
               child: Text(

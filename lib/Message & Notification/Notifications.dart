@@ -122,7 +122,7 @@ class _NotificationsState extends State<Notifications>
                                       borderRadius: BorderRadius.circular(15),
                                       border: Border.all(
                                           color: status == 0
-                                              ? const Color(0xff6B39F4)
+                                              ? const Color(0xFF8B0000)
                                               : notifier.getContainerBorder)),
                                   child: Row(
                                     children: [
@@ -142,7 +142,7 @@ class _NotificationsState extends State<Notifications>
                                         fillColor:
                                             MaterialStateColor.resolveWith(
                                                 (states) =>
-                                                    const Color(0xff6B39F4)),
+                                                    const Color(0xFF8B0000)),
                                         // activeColor: const Color(0xff0056D2),
                                         value: 0,
                                         groupValue: status,
@@ -173,7 +173,7 @@ class _NotificationsState extends State<Notifications>
                                       borderRadius: BorderRadius.circular(15),
                                       border: Border.all(
                                           color: status == 1
-                                              ? const Color(0xff6B39F4)
+                                              ? const Color(0xFF8B0000)
                                               : notifier.getContainerBorder)),
                                   child: Row(
                                     children: [
@@ -193,7 +193,7 @@ class _NotificationsState extends State<Notifications>
                                         fillColor:
                                             MaterialStateColor.resolveWith(
                                                 (states) =>
-                                                    const Color(0xff6B39F4)),
+                                                    const Color(0xFF8B0000)),
                                         // activeColor: const Color(0xff0056D2),
                                         value: 1,
                                         groupValue: status,
@@ -224,7 +224,7 @@ class _NotificationsState extends State<Notifications>
                                       borderRadius: BorderRadius.circular(15),
                                       border: Border.all(
                                           color: status == 2
-                                              ? const Color(0xff6B39F4)
+                                              ? const Color(0xFF8B0000)
                                               : notifier.getContainerBorder)),
                                   child: Row(
                                     children: [
@@ -244,7 +244,7 @@ class _NotificationsState extends State<Notifications>
                                         fillColor:
                                             MaterialStateColor.resolveWith(
                                                 (states) =>
-                                                    const Color(0xff6B39F4)),
+                                                    const Color(0xFF8B0000)),
                                         // activeColor: const Color(0xff0056D2),
                                         value: 2,
                                         groupValue: status,
@@ -269,7 +269,7 @@ class _NotificationsState extends State<Notifications>
                                   height: 60,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
-                                      color: const Color(0xff6B39F4)),
+                                      color: const Color(0xFF8B0000)),
                                   child: const Center(
                                       child: Text("Done",
                                           style: TextStyle(

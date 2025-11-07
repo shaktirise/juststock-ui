@@ -78,7 +78,7 @@ class _ProofState extends State<Proof> {
                   color: notifier.textField,
                   border: Border.all(
                       color: selectedFilter == 0
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xFF8B0000)
                           : notifier.background)),
               child: Center(
                 child: ListTile(
@@ -100,8 +100,8 @@ class _ProofState extends State<Proof> {
                           color: notifier.textColor)),
                   trailing: Radio(
                     fillColor: MaterialStateColor.resolveWith(
-                        (states) => const Color(0xff6B39F4)),
-                    // activeColor: Color(0xff6B39F4),
+                        (states) => const Color(0xFF8B0000)),
+                    // activeColor: Color(0xFF8B0000),
                     value: 0,
                     groupValue: selectedFilter,
                     onChanged: (index) {
@@ -135,7 +135,7 @@ class _ProofState extends State<Proof> {
                 color: notifier.textField,
                 border: Border.all(
                   color: selectedFilter == 1
-                      ? const Color(0xff6B39F4)
+                      ? const Color(0xFF8B0000)
                       : notifier.background,
                 ),
               ),
@@ -170,9 +170,9 @@ class _ProofState extends State<Proof> {
                   ),
                   trailing: Radio(
                     fillColor: MaterialStateColor.resolveWith(
-                      (states) => const Color(0xff6B39F4),
+                      (states) => const Color(0xFF8B0000),
                     ),
-                    // activeColor: Color(0xff6B39F4),
+                    // activeColor: Color(0xFF8B0000),
                     value: 1,
                     groupValue: selectedFilter,
                     onChanged: (value) {
@@ -195,7 +195,7 @@ class _ProofState extends State<Proof> {
                 color: notifier.textField,
                 border: Border.all(
                   color: selectedFilter == 2
-                      ? const Color(0xff6B39F4)
+                      ? const Color(0xFF8B0000)
                       : notifier.background,
                 ),
               ),
@@ -228,9 +228,9 @@ class _ProofState extends State<Proof> {
                           color: notifier.textColor)),
                   trailing: Radio(
                     fillColor: MaterialStateColor.resolveWith(
-                      (states) => const Color(0xff6B39F4),
+                      (states) => const Color(0xFF8B0000),
                     ),
-                    // activeColor: Color(0xff6B39F4),
+                    // activeColor: Color(0xFF8B0000),
                     value: 2,
                     groupValue: selectedFilter,
                     onChanged: (value) {

@@ -171,7 +171,7 @@ class _PinState extends State<Pin> {
                     "Skip for Now",
                     style: TextStyle(
                       fontSize: 17,
-                      color: Color(0xff6B39F4),
+                      color: Color(0xFF8B0000),
                       fontFamily: "Manrope-Bold",
                     ),
                   ),

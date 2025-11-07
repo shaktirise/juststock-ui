@@ -83,7 +83,7 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
           tabs: const [
             Tab(text: 'Tree'),
             Tab(text: 'Earnings'),
-            Tab(text: 'Config'),
+            Tab(text: 'Plan Details'),
           ],
         ),
       ),

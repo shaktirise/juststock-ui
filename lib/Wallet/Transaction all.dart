@@ -27,7 +27,7 @@ class _Transaction_allState extends State<Transaction_all> {
           child:
           Image.asset("assets/images/arrow-narrow-left (1).png", scale: 3),
         ),
-        title: const Text("See All Transactions",style: TextStyle(color: Color(0xff6B39F4),fontSize: 17,fontFamily: "Manrope-Bold")),
+        title: const Text("See All Transactions",style: TextStyle(color: Color(0xFF8B0000),fontSize: 17,fontFamily: "Manrope-Bold")),
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),

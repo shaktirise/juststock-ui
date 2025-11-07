@@ -274,7 +274,7 @@ class _crypto_State extends State<crypto_> {
                   style: TextStyle(
                       fontFamily: "Manrope-Medium",
                       fontSize: 15,
-                      color: Color(0xff6B39F4),
+                      color: Color(0xFF8B0000),
                       fontWeight: FontWeight.w700),
                 ),
               ),
@@ -356,7 +356,7 @@ class _crypto_State extends State<crypto_> {
                       "See all",
                       style: TextStyle(
                           fontSize: 15,
-                          color: Color(0xff6B39F4),
+                          color: Color(0xFF8B0000),
                           fontFamily: "Manrope-Medium"),
                     ),
                   ),
@@ -528,7 +528,7 @@ class _crypto_State extends State<crypto_> {
                     },
                     child: Text(
                       "See all",
-                      style: TextStyle(fontSize: 14, color: Color(0xff6B39F4)),
+                      style: TextStyle(fontSize: 14, color: Color(0xFF8B0000)),
                     ),
                   )
                 ],

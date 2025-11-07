@@ -60,7 +60,7 @@ class _Bank_listState extends State<Bank_list> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.grey.withOpacity(
-                      0.1), /*border: Border.all(color: Color(0xff6B39F4))*/
+                      0.1), /*border: Border.all(color: Color(0xFF8B0000))*/
                 ),
                 child: Center(
                   child: TextField(
@@ -422,7 +422,7 @@ class _Bank_listState extends State<Bank_list> {
             // width: 370,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xFF8B0000),
             ),
             child: const Center(
                 child: Text("Confirm",

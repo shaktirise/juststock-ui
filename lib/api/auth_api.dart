@@ -12,6 +12,7 @@ class AuthApi {
     required String email,
     required String password,
     required String confirmPassword,
+    String? phone,
     String? referralCode,
   }) async {
     final body = <String, dynamic>{
@@ -20,6 +21,21 @@ class AuthApi {
       'password': password,
       'confirmPassword': confirmPassword,
     };
+    // Normalize optional Indian phone. 10 digits -> +91XXXXXXXXXX
+    if (phone != null) {
+      final p = phone.trim();
+      if (p.isNotEmpty) {
+        final onlyDigits = RegExp(r'^\d{10}$');
+
+        final withCode = RegExp(r'^\+91\d{10}$');
+
+        String normalized = p;
+        if (onlyDigits.hasMatch(p)) {
+          normalized = '+91$p';
+        }
+        body['phone'] = normalized;
+      }
+    }
     if (referralCode != null && referralCode.trim().isNotEmpty) {
       body['referralCode'] = referralCode.trim();
     }

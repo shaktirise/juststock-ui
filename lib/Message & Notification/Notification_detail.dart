@@ -17,9 +17,9 @@ class _Notification_detailState extends State<Notification_detail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff6B39F4),
+      backgroundColor: const Color(0xFF8B0000),
       appBar: AppBar(
-        backgroundColor: const Color(0xff6B39F4),
+        backgroundColor: const Color(0xFF8B0000),
         elevation: 0,
         leading: GestureDetector(
           onTap: () {
@@ -107,7 +107,7 @@ class _Notification_detailState extends State<Notification_detail> {
                 child: const Center(
                     child: Text("Verify Email",
                         style: TextStyle(
-                            color: Color(0xff6B39F4),
+                            color: Color(0xFF8B0000),
                             fontSize: 14,
                             fontFamily: "Manrope-Bold"))),
               ),

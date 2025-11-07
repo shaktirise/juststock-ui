@@ -1554,7 +1554,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
         //   alignment: Alignment(0.1, 1.23),
         //   child: FloatingActionButton(
         //     splashColor: Colors.blue,
-        //     backgroundColor: Color(0xff6B39F4),
+        //     backgroundColor: Color(0xFF8B0000),
         //     child: Image(
         //         image: AssetImage("assets/images/Floating action.png"),
         //         height: 20,

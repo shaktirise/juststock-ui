@@ -19,6 +19,7 @@ import '../Message & Notification/Notifications.dart';
 import '../config/common.dart';
 import 'bottom.dart';
 import 'package:crowwn/services/api_locator.dart';
+import 'package:crowwn/Login Screens/Login.dart';
 import 'package:crowwn/Account&setting/Referrals.dart';
 
 class Profile extends StatefulWidget {
@@ -43,10 +44,11 @@ class _ProfileState extends State<Profile> {
     try {
       await ApiLocator.auth.logout();
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Logged out')),
+      // Navigate to Sign In and clear history so back can't reach protected routes
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => const Login()),
+        (route) => false,
       );
-      Navigator.of(context).popUntil((route) => route.isFirst);
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -84,17 +86,17 @@ class _ProfileState extends State<Profile> {
           child: Image.asset(
             "assets/images/arrow-narrow-left (1).png",
             scale: 3,
-            color: Colors.white,
+            color: const Color(0xFF0F172A),
           ),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout, color: Colors.white),
+            icon: const Icon(Icons.logout, color: Color(0xFF0F172A)),
             onPressed: _onLogout,
           ),
           const SizedBox(width: 10),
         ],
-        backgroundColor: const Color(0xFFD32F2F),
+        backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -154,7 +156,7 @@ class _ProfileState extends State<Profile> {
                         (_me?['email'] ?? '').toString(),
                         style: const TextStyle(
                           fontFamily: "Manrope-Regular",
-                          color: Color(0xffB59CFA),
+                          color: Color(0xffFFFFFF),
                           fontSize: 14,
                         ),
                       ),
@@ -208,7 +210,7 @@ class _ProfileState extends State<Profile> {
                         color: notifier.background,
                         borderRadius: BorderRadius.circular(15),
                         border: Border.all(
-                          color: const Color(0xffB59CFA),
+                          color: const Color(0xffFFFFFF),
                         ),
                       ),
                       child: Row(
@@ -222,7 +224,7 @@ class _ProfileState extends State<Profile> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
                                 child: Text(
-                                  "Invite your friends and win\n free asset up to 100",
+                                  "Invite friends and earn referral rewards on activations and renewals.",
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: "Manrope-Regular",
@@ -625,6 +627,15 @@ class _ProfileState extends State<Profile> {
                               builder: (context) => const About_App(),
                             ));
                       },
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: _onLogout,
+                    child: accountDetails3(
+                      image: "assets/images/logout.png",
+                      name: "Logout",
+                      desc: "Sign out of your account",
+                      onPress: _onLogout,
                     ),
                   ),
                 ],

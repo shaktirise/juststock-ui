@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../Dark mode.dart';
+import 'package:crowwn/services/api_locator.dart';
 import '../config/common.dart';
 import 'Recieve balance.dart';
 import 'Top up balance.dart';
@@ -44,10 +45,10 @@ class _WalletState extends State<Wallet> {
           child: Image.asset(
             "assets/images/arrow-narrow-left (1).png",
             scale: 2.9,
-            color: Colors.white,
+            color: Color(0xFF0F172A),
           ),
         ),
-        backgroundColor: const Color(0xFF8B0000),
+        backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -77,7 +78,7 @@ class _WalletState extends State<Wallet> {
                         const Column(
                           children: [
                             Text(
-                              "USD Balance",
+                              "Referral Income",
                               style: TextStyle(
                                 color: Color(0xff94A3B8),
                                 fontSize: 15,
@@ -89,21 +90,39 @@ class _WalletState extends State<Wallet> {
                         AppConstants.Height(10),
                         Row(
                           children: [
-                            _password
-                                ? const Text(
-                                    "\$8,786.55",
-                                    style: TextStyle(
-                                      fontSize: 32,
-                                      color: Color(0xffFFFFFF),
-                                    ),
-                                  )
-                                : const Text(
+                            FutureBuilder<Map<String, dynamic>>(
+                              future: ApiLocator.referral.earnings(),
+                              builder: (context, snap) {
+                                // If hidden, show stars regardless of data
+                                if (!_password) {
+                                  return const Text(
                                     '  ********',
                                     style: TextStyle(
                                       fontSize: 32,
                                       color: Color(0xffFFFFFF),
                                     ),
+                                  );
+                                }
+                                if (snap.connectionState == ConnectionState.waiting) {
+                                  return const SizedBox(
+                                      height: 24,
+                                      width: 24,
+                                      child: CircularProgressIndicator(
+                                          strokeWidth: 2, color: Colors.white));
+                                }
+                                final data = snap.data ?? const {};
+                                final totalEarnedPaise =
+                                    (data['totalEarnedPaise'] as num?)?.toInt() ?? 0;
+                                final rupees = (totalEarnedPaise / 100).toStringAsFixed(2);
+                                return Text(
+                                  '₹ $rupees',
+                                  style: const TextStyle(
+                                    fontSize: 32,
+                                    color: Color(0xffFFFFFF),
                                   ),
+                                );
+                              },
+                            ),
                             AppConstants.Width(10),
                             GestureDetector(
                               onTap: () {
@@ -127,6 +146,7 @@ class _WalletState extends State<Wallet> {
                             // Expanded(child: AppConstants.Width(90)),
                           ],
                         ),
+                        // Removed secondary label/value; big value shows referral earnings
                       ],
                     ),
                   ),
@@ -301,7 +321,7 @@ class _WalletState extends State<Wallet> {
                           "See all",
                           style: TextStyle(
                               fontSize: 15,
-                              color: Color(0xff6B39F4),
+                              color: Color(0xFF8B0000),
                               fontFamily: "Manrope - Regular"),
                         ),
                       )

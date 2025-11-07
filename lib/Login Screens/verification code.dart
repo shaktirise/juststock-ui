@@ -116,7 +116,7 @@ class _VerificationState extends State<Verification> {
              ),
             // CommonButton(
             //   tap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => Password(),));},
-            //   color: Color(0xff6B39F4),
+            //   color: Color(0xFF8B0000),
             //   text: "Continue",
             //   textcolor: Colors.white, fontsize: 17,
             // ),
@@ -128,7 +128,7 @@ class _VerificationState extends State<Verification> {
               child: Container(
                 height: height/11,
                 decoration: BoxDecoration(color: notifier.tabBar2,borderRadius: BorderRadius.circular(15)),
-                child:const Center(child: Text("Resend Code",style: TextStyle(fontSize: 16,color: Color(0xff6B39F4),fontFamily: "Manrope-Bold"))) ,
+                child:const Center(child: Text("Resend Code",style: TextStyle(fontSize: 16,color: Color(0xFF8B0000),fontFamily: "Manrope-Bold"))) ,
               ),
             ),
             // Container(
@@ -140,7 +140,7 @@ class _VerificationState extends State<Verification> {
             //   ),
             //   child: Center(
             //       child: Text("",
-            //           style: TextStyle(fontSize: 16, color: Color(0xff6B39F4),fontFamily: "Manrope-Bold"))),
+            //           style: TextStyle(fontSize: 16, color: Color(0xFF8B0000),fontFamily: "Manrope-Bold"))),
             // )
           ],
         ),

@@ -38,7 +38,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
               currentIndex = 2;
             });
           },
-          backgroundColor: const Color(0xff6B39F4),
+          backgroundColor: const Color(0xFF8B0000),
           child: const Image(
               image: AssetImage("assets/images/Floating action.png"),
               height: 20,
@@ -52,6 +52,8 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         currentIndex: currentIndex,
         elevation: 0,
         onTap: (int index) {
+          // Disable Demat (index 3)
+          if (index == 3) return;
           setState(() {
             currentIndex = index;
           });
@@ -123,7 +125,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                     color: notifier.bottom
                 ),
               ),
-              label: "Portfolio"),
+              label: "Demat"),
           BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.only(bottom: 8.0,right: 5),

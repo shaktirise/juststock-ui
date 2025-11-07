@@ -207,7 +207,7 @@ class _rankingsState extends State<rankings> {
                                                   Colors.transparent,
                                                 ),
                                                 checkColor:
-                                                    const Color(0xff6B39F4),
+                                                    const Color(0xFF8B0000),
                                                 side: MaterialStateBorderSide
                                                     .resolveWith(
                                                   (states) => const BorderSide(
@@ -250,7 +250,7 @@ class _rankingsState extends State<rankings> {
                                                     const MaterialStatePropertyAll(
                                                         Colors.transparent),
                                                 checkColor:
-                                                    const Color(0xff6B39F4),
+                                                    const Color(0xFF8B0000),
                                                 side: MaterialStateBorderSide
                                                     .resolveWith(
                                                   (states) => const BorderSide(
@@ -292,7 +292,7 @@ class _rankingsState extends State<rankings> {
                                                   Colors.transparent,
                                                 ),
                                                 checkColor:
-                                                    const Color(0xff6B39F4),
+                                                    const Color(0xFF8B0000),
                                                 side: MaterialStateBorderSide
                                                     .resolveWith(
                                                   (states) => const BorderSide(
@@ -334,7 +334,7 @@ class _rankingsState extends State<rankings> {
                                                   Colors.transparent,
                                                 ),
                                                 checkColor:
-                                                    const Color(0xff6B39F4),
+                                                    const Color(0xFF8B0000),
                                                 side: MaterialStateBorderSide
                                                     .resolveWith(
                                                   (states) => const BorderSide(
@@ -376,7 +376,7 @@ class _rankingsState extends State<rankings> {
                                                   Colors.transparent,
                                                 ),
                                                 checkColor:
-                                                    const Color(0xff6B39F4),
+                                                    const Color(0xFF8B0000),
                                                 side: MaterialStateBorderSide
                                                     .resolveWith(
                                                   (states) => const BorderSide(
@@ -418,7 +418,7 @@ class _rankingsState extends State<rankings> {
                                                   Colors.transparent,
                                                 ),
                                                 checkColor:
-                                                    const Color(0xff6B39F4),
+                                                    const Color(0xFF8B0000),
                                                 side: MaterialStateBorderSide
                                                     .resolveWith(
                                                   (states) => const BorderSide(
@@ -458,7 +458,7 @@ class _rankingsState extends State<rankings> {
                                                     const MaterialStatePropertyAll(
                                                         Colors.transparent),
                                                 checkColor:
-                                                    const Color(0xff6B39F4),
+                                                    const Color(0xFF8B0000),
                                                 side: MaterialStateBorderSide
                                                     .resolveWith(
                                                   (states) => const BorderSide(
@@ -498,7 +498,7 @@ class _rankingsState extends State<rankings> {
                                                     const MaterialStatePropertyAll(
                                                         Colors.transparent),
                                                 checkColor:
-                                                    const Color(0xff6B39F4),
+                                                    const Color(0xFF8B0000),
                                                 side: MaterialStateBorderSide
                                                     .resolveWith(
                                                   (states) => const BorderSide(
@@ -537,7 +537,7 @@ class _rankingsState extends State<rankings> {
                                                   borderRadius:
                                                       BorderRadius.circular(15),
                                                   color:
-                                                      const Color(0xff6B39F4)),
+                                                      const Color(0xFF8B0000)),
                                               child: const Center(
                                                   child: Text(
                                                 "Apply",

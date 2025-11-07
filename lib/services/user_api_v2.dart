@@ -15,5 +15,15 @@ class UserApiV2 {
     final data = r.data as Map<String, dynamic>;
     return (data['user'] as Map).cast<String, dynamic>();
   }
-}
 
+  Future<Map<String, dynamic>> updatePhone(String phone) async {
+    // Normalize Indian numbers: 10-digit -> +91XXXXXXXXXX
+    String p = phone.trim();
+    if (RegExp(r'^\d{10}$').hasMatch(p)) {
+      p = '+91' + p;
+    }
+    final r = await dio.put('/api/auth/me', data: {'phone': p});
+    final data = r.data as Map<String, dynamic>;
+    return (data['user'] as Map).cast<String, dynamic>();
+  }
+}

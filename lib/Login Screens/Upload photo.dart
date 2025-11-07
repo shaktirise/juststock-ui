@@ -180,7 +180,7 @@ class _UploadState extends State<Upload> {
                                               "Retake Picture",
                                               style: TextStyle(
                                                 fontSize: 18,
-                                                color: Color(0xff6B39F4),
+                                                color: Color(0xFF8B0000),
                                                 fontFamily: "Manrope-Bold",
                                               ),
                                             ),

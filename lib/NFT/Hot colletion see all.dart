@@ -122,7 +122,7 @@ class _Hot_collectionState extends State<Hot_collection> {
               Navigator.pop(context);
             },
             child: Image.asset("assets/images/arrow-narrow-left (1).png",scale: 3,color: notifier.textColor,)),
-        title: const Text("Hot Collections",style: TextStyle(fontSize: 17,fontFamily: "Manrope-Bold",color: Color(0xff6B39F4))),
+        title: const Text("Hot Collections",style: TextStyle(fontSize: 17,fontFamily: "Manrope-Bold",color: Color(0xFF8B0000))),
       ),
       body: SingleChildScrollView(
         child: Column(

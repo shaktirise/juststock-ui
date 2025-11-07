@@ -48,7 +48,7 @@ class _Personal_dataState extends State<Personal_data> {
           Image.asset(
             "assets/images/edit.png",
             scale: 3,
-            color: const Color(0xff6B39F4),
+            color: const Color(0xFF8B0000),
           ),
           SizedBox(width: 10),
         ],
@@ -81,7 +81,7 @@ class _Personal_dataState extends State<Personal_data> {
                     width: 30,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: const Color(0xff6B39F4),
+                        color: const Color(0xFF8B0000),
                         border: Border.all(
                             color: notifier.isDark
                                 ? const Color(0xff0F172A)
@@ -113,7 +113,7 @@ class _Personal_dataState extends State<Personal_data> {
                 borderRadius: BorderRadius.circular(15),
                 color: Colors.grey.withOpacity(
                   0.1,
-                ), /*border: Border.all(color: Color(0xff6B39F4))*/
+                ), /*border: Border.all(color: Color(0xFF8B0000))*/
               ),
               child: Center(
                 child: TextField(
@@ -173,7 +173,7 @@ class _Personal_dataState extends State<Personal_data> {
                     borderRadius: BorderRadius.circular(15),
                     color: Colors.grey.withOpacity(
                       0.1,
-                    ), /*border: Border.all(color: Color(0xff6B39F4))*/
+                    ), /*border: Border.all(color: Color(0xFF8B0000))*/
                   ),
                   child: TextField(
                     style: TextStyle(color: notifier.textColor),
@@ -204,7 +204,7 @@ class _Personal_dataState extends State<Personal_data> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 color: Colors.grey.withOpacity(
-                    0.1), /*border: Border.all(color: Color(0xff6B39F4))*/
+                    0.1), /*border: Border.all(color: Color(0xFF8B0000))*/
               ),
               child: TextField(
                 // keyboardType: TextInputType.number,
@@ -231,7 +231,7 @@ class _Personal_dataState extends State<Personal_data> {
             // width: 370,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xFF8B0000),
             ),
             child: const Center(
                 child: Text("Save Change",

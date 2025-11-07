@@ -112,7 +112,7 @@ class _VerifyState extends State<Verify> {
             ),
             // CommonButton(
             //   tap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => Upload(),));},
-            //   color: Color(0xff6B39F4),
+            //   color: Color(0xFF8B0000),
             //   text: "Continue",
             //   textcolor: Colors.white, fontsize: 17,
             // ),

@@ -141,7 +141,7 @@ class _gold_State extends State<gold_> {
                       style: TextStyle(
                           fontSize: 15,
                           fontFamily: "Manrope-Medium",
-                          color: Color(0xff6B39F4)),
+                          color: Color(0xFF8B0000)),
                     ),
                   ),
                 ],
@@ -252,7 +252,7 @@ class _gold_State extends State<gold_> {
                       style: TextStyle(
                           fontSize: 15,
                           fontFamily: "Manrope-Medium",
-                          color: Color(0xff6B39F4)),
+                          color: Color(0xFF8B0000)),
                     ),
                   ),
                 ],

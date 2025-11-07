@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crowwn/api/auth_api.dart';
 import 'package:crowwn/api/token_storage.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/gestures.dart';
 import '../Dark mode.dart';
 import '../config/common.dart';
 import 'Login.dart';
@@ -21,17 +23,42 @@ class _SignState extends State<Sign> {
   bool value = false;
   bool _obsecuretext1 = true;
   ColorNotifire notifier = ColorNotifire();
+  late final TapGestureRecognizer _termsRecognizer;
+  late final TapGestureRecognizer _privacyRecognizer;
   final TextEditingController _nameCtrl = TextEditingController();
   final TextEditingController _emailCtrl = TextEditingController();
+  final TextEditingController _phoneCtrl = TextEditingController();
   final TextEditingController _passwordCtrl = TextEditingController();
   final TextEditingController _confirmCtrl = TextEditingController();
   final TextEditingController _referralCtrl = TextEditingController();
   bool _submitting = false;
 
   @override
+  void initState() {
+    super.initState();
+    _termsRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        launchUrl(
+          Uri.parse('https://juststock.in/terms'),
+          mode: LaunchMode.externalApplication,
+        );
+      };
+    _privacyRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        launchUrl(
+          Uri.parse('https://juststock.in/privacy'),
+          mode: LaunchMode.externalApplication,
+        );
+      };
+  }
+
+  @override
   void dispose() {
+    _termsRecognizer.dispose();
+    _privacyRecognizer.dispose();
     _nameCtrl.dispose();
     _emailCtrl.dispose();
+    _phoneCtrl.dispose();
     _passwordCtrl.dispose();
     _confirmCtrl.dispose();
     _referralCtrl.dispose();
@@ -109,6 +136,22 @@ class _SignState extends State<Sign> {
                   style: TextStyle(color: notifier.textColor),
                   decoration: InputDecoration(
                       hintText: "Email",
+                      border: const OutlineInputBorder(borderSide: BorderSide.none),
+                      hintStyle: TextStyle(color: notifier.textFieldHintText)),
+                ),
+              ),
+              AppConstants.Height(15),
+              Container(
+                height: height / 13,
+                decoration: BoxDecoration(
+                    color: notifier.textField,
+                    borderRadius: BorderRadius.circular(15)),
+                child: TextField(
+                  controller: _phoneCtrl,
+                  style: TextStyle(color: notifier.textColor),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                      hintText: "Mobile number (optional)",
                       border: const OutlineInputBorder(borderSide: BorderSide.none),
                       hintStyle: TextStyle(color: notifier.textFieldHintText)),
                 ),
@@ -208,7 +251,7 @@ class _SignState extends State<Sign> {
                 children: [
                   Checkbox(
                     side: const BorderSide(color: Color(0xff334155)),
-                    activeColor: const Color(0xff6B39F4),
+                    activeColor: const Color(0xFF8B0000),
                     checkColor: const Color(0xffFFFFFF),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
@@ -218,6 +261,41 @@ class _SignState extends State<Sign> {
                         this.value = value!;
                       });
                     },
+                  ),
+                  Flexible(
+                    child: RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: "Manrope-Medium",
+                          color: notifier.textColor,
+                        ),
+                        children: [
+                          const TextSpan(
+                            text:
+                                "I confirm that I am 18 years or older and agree to the ",
+                          ),
+                          TextSpan(
+                            text: "Terms of Use",
+                            style: const TextStyle(
+                              color: Color(0xFF8B0000),
+                              decoration: TextDecoration.underline,
+                            ),
+                            recognizer: _termsRecognizer,
+                          ),
+                          const TextSpan(text: " and "),
+                          TextSpan(
+                            text: "Privacy Policy",
+                            style: const TextStyle(
+                              color: Color(0xFF8B0000),
+                              decoration: TextDecoration.underline,
+                            ),
+                            recognizer: _privacyRecognizer,
+                          ),
+                          const TextSpan(text: "."),
+                        ],
+                      ),
+                    ),
                   ),
                   Flexible(
                     child: Text(
@@ -342,7 +420,7 @@ class _SignState extends State<Sign> {
                         "Sign In",
                         style: TextStyle(
                             fontSize: 14,
-                            color: Color(0xff6B39F4),
+                            color: Color(0xFF8B0000),
                             fontFamily: "Manrope-Medium"),
                       ))
                 ],
@@ -362,6 +440,7 @@ extension on _SignState {
   String? _validate() {
     final name = _nameCtrl.text.trim();
     final email = _emailCtrl.text.trim();
+    final phone = _phoneCtrl.text.trim();
     final password = _passwordCtrl.text;
     final confirm = _confirmCtrl.text;
 
@@ -371,6 +450,13 @@ extension on _SignState {
     final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
     if (!emailRegex.hasMatch(email)) {
       return 'Enter a valid email address';
+    }
+    if (phone.isNotEmpty) {
+      final onlyDigits = RegExp(r'^\d{10}$');
+      final withCode = RegExp(r'^\+91\d{10}$');
+      if (!onlyDigits.hasMatch(phone) && !withCode.hasMatch(phone)) {
+        return 'Enter a valid 10-digit Indian mobile (or +91XXXXXXXXXX)';
+      }
     }
     if (password.length < 8 || password.length > 128) {
       return 'Password must be 8–128 characters';
@@ -400,6 +486,7 @@ extension on _SignState {
         email: _emailCtrl.text.trim(),
         password: _passwordCtrl.text,
         confirmPassword: _confirmCtrl.text,
+        phone: _phoneCtrl.text.trim().isEmpty ? null : _phoneCtrl.text.trim(),
         referralCode: _referralCtrl.text.trim().isEmpty ? null : _referralCtrl.text.trim(),
       );
       await TokenStorage.saveAuth(auth);
@@ -426,3 +513,4 @@ extension on _SignState {
     }
   }
 }
+

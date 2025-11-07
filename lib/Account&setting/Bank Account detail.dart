@@ -57,7 +57,7 @@ class _Bank_detailState extends State<Bank_detail> {
                 height: 190,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: const Color(0xff6B39F4),
+                    color: const Color(0xFF8B0000),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20,right: 20),
@@ -149,7 +149,7 @@ class _Bank_detailState extends State<Bank_detail> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: Colors.grey.withOpacity(
-                              0.1), /*border: Border.all(color: Color(0xff6B39F4))*/
+                              0.1), /*border: Border.all(color: Color(0xFF8B0000))*/
                         ),
                         child: TextField(
                           style: TextStyle(color: notifier.textColor),
@@ -184,7 +184,7 @@ class _Bank_detailState extends State<Bank_detail> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: Colors.grey.withOpacity(
-                              0.1), /*border: Border.all(color: Color(0xff6B39F4))*/
+                              0.1), /*border: Border.all(color: Color(0xFF8B0000))*/
                         ),
                         child: TextField(
                           style: TextStyle(color: notifier.textColor),
@@ -218,7 +218,7 @@ class _Bank_detailState extends State<Bank_detail> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.grey.withOpacity(
-                      0.1), /*border: Border.all(color: Color(0xff6B39F4))*/
+                      0.1), /*border: Border.all(color: Color(0xFF8B0000))*/
                 ),
                 child: TextField(
                   style: TextStyle(color: notifier.textColor),
@@ -252,7 +252,7 @@ class _Bank_detailState extends State<Bank_detail> {
             // width: 370,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xFF8B0000),
             ),
             child: const Center(
                 child: Text("Continue",

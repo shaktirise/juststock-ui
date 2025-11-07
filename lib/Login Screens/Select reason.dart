@@ -132,7 +132,7 @@ class _ReasonState extends State<Reason> {
                                 : notifier.textField,
                             border: Border.all(
                                 color: Select1
-                                    ? const Color(0xff6B39F4)
+                                    ? const Color(0xFF8B0000)
                                     : Colors.transparent),
                           ),
                           child: Center(
@@ -142,7 +142,7 @@ class _ReasonState extends State<Reason> {
                                 fontFamily: "Manrope-SemiBold",
                                 fontSize: 12,
                                 color: Select1
-                                    ? const Color(0xff6B39F4)
+                                    ? const Color(0xFF8B0000)
                                     : Colors.grey),
                           )),
                         ),
@@ -164,7 +164,7 @@ class _ReasonState extends State<Reason> {
                                   : notifier.textField,
                               border: Border.all(
                                   color: Select2
-                                      ? const Color(0xff6B39F4)
+                                      ? const Color(0xFF8B0000)
                                       : Colors.transparent)),
                           child: Center(
                               child: Text(
@@ -173,7 +173,7 @@ class _ReasonState extends State<Reason> {
                                 fontFamily: "Manrope-SemiBold",
                                 fontSize: 12,
                                 color: Select2
-                                    ? const Color(0xff6B39F4)
+                                    ? const Color(0xFF8B0000)
                                     : Colors.grey),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
@@ -201,7 +201,7 @@ class _ReasonState extends State<Reason> {
                                   : notifier.textField,
                               border: Border.all(
                                   color: Select3
-                                      ? const Color(0xff6B39F4)
+                                      ? const Color(0xFF8B0000)
                                       : Colors.transparent)),
                           child: Center(
                               child: Text(
@@ -210,7 +210,7 @@ class _ReasonState extends State<Reason> {
                                 fontFamily: "Manrope-SemiBold",
                                 fontSize: 12,
                                 color: Select3
-                                    ? const Color(0xff6B39F4)
+                                    ? const Color(0xFF8B0000)
                                     : Colors.grey),
                           )),
                         ),
@@ -232,7 +232,7 @@ class _ReasonState extends State<Reason> {
                                   : notifier.textField,
                               border: Border.all(
                                   color: Select4
-                                      ? const Color(0xff6B39F4)
+                                      ? const Color(0xFF8B0000)
                                       : Colors.transparent)),
                           child: Center(
                               child: Text(
@@ -241,7 +241,7 @@ class _ReasonState extends State<Reason> {
                                 fontFamily: "Manrope-SemiBold",
                                 fontSize: 12,
                                 color: Select4
-                                    ? const Color(0xff6B39F4)
+                                    ? const Color(0xFF8B0000)
                                     : Colors.grey),
                           )),
                         ),
@@ -267,7 +267,7 @@ class _ReasonState extends State<Reason> {
                                   : notifier.textField,
                               border: Border.all(
                                   color: Select5
-                                      ? const Color(0xff6B39F4)
+                                      ? const Color(0xFF8B0000)
                                       : Colors.transparent)),
                           child: Center(
                               child: Text(
@@ -276,7 +276,7 @@ class _ReasonState extends State<Reason> {
                                 fontFamily: "Manrope-SemiBold",
                                 fontSize: 12,
                                 color: Select5
-                                    ? const Color(0xff6B39F4)
+                                    ? const Color(0xFF8B0000)
                                     : Colors.grey),
                           )),
                         ),
@@ -298,7 +298,7 @@ class _ReasonState extends State<Reason> {
                                   : notifier.textField,
                               border: Border.all(
                                   color: Select6
-                                      ? const Color(0xff6B39F4)
+                                      ? const Color(0xFF8B0000)
                                       : Colors.transparent)),
                           child: Center(
                               child: Text(
@@ -307,7 +307,7 @@ class _ReasonState extends State<Reason> {
                                 fontFamily: "Manrope-SemiBold",
                                 fontSize: 12,
                                 color: Select6
-                                    ? const Color(0xff6B39F4)
+                                    ? const Color(0xFF8B0000)
                                     : Colors.grey),
                           )),
                         ),
@@ -345,7 +345,7 @@ class _ReasonState extends State<Reason> {
                                   : notifier.textField,
                               border: Border.all(
                                   color: Select7
-                                      ? const Color(0xff6B39F4)
+                                      ? const Color(0xFF8B0000)
                                       : Colors.transparent)),
                           child: Center(
                               child: Text(
@@ -354,7 +354,7 @@ class _ReasonState extends State<Reason> {
                                 fontFamily: "Manrope-SemiBold",
                                 fontSize: 12,
                                 color: Select7
-                                    ? const Color(0xff6B39F4)
+                                    ? const Color(0xFF8B0000)
                                     : Colors.grey),
                           )),
                         ),
@@ -376,7 +376,7 @@ class _ReasonState extends State<Reason> {
                                   : notifier.textField,
                               border: Border.all(
                                   color: Select8
-                                      ? const Color(0xff6B39F4)
+                                      ? const Color(0xFF8B0000)
                                       : Colors.transparent)),
                           child: Center(
                               child: Text(
@@ -385,7 +385,7 @@ class _ReasonState extends State<Reason> {
                                 fontFamily: "Manrope-SemiBold",
                                 fontSize: 12,
                                 color: Select8
-                                    ? const Color(0xff6B39F4)
+                                    ? const Color(0xFF8B0000)
                                     : Colors.grey),
                           )),
                         ),
@@ -411,7 +411,7 @@ class _ReasonState extends State<Reason> {
                                   : notifier.textField,
                               border: Border.all(
                                   color: Select9
-                                      ? const Color(0xff6B39F4)
+                                      ? const Color(0xFF8B0000)
                                       : Colors.transparent)),
                           child: Center(
                               child: Text(
@@ -420,7 +420,7 @@ class _ReasonState extends State<Reason> {
                                 fontFamily: "Manrope-SemiBold",
                                 fontSize: 12,
                                 color: Select9
-                                    ? const Color(0xff6B39F4)
+                                    ? const Color(0xFF8B0000)
                                     : Colors.grey),
                           )),
                         ),
@@ -442,7 +442,7 @@ class _ReasonState extends State<Reason> {
                                   : notifier.textField,
                               border: Border.all(
                                   color: Select10
-                                      ? const Color(0xff6B39F4)
+                                      ? const Color(0xFF8B0000)
                                       : Colors.transparent)),
                           child: Center(
                               child: Text(
@@ -451,7 +451,7 @@ class _ReasonState extends State<Reason> {
                                 fontFamily: "Manrope-SemiBold",
                                 fontSize: 12,
                                 color: Select10
-                                    ? const Color(0xff6B39F4)
+                                    ? const Color(0xFF8B0000)
                                     : Colors.grey),
                           )),
                         ),
@@ -473,7 +473,7 @@ class _ReasonState extends State<Reason> {
                                   : notifier.textField,
                               border: Border.all(
                                   color: Select11
-                                      ? const Color(0xff6B39F4)
+                                      ? const Color(0xFF8B0000)
                                       : Colors.transparent)),
                           child: Center(
                               child: Text(
@@ -482,7 +482,7 @@ class _ReasonState extends State<Reason> {
                                 fontFamily: "Manrope-SemiBold",
                                 fontSize: 12,
                                 color: Select11
-                                    ? const Color(0xff6B39F4)
+                                    ? const Color(0xFF8B0000)
                                     : Colors.grey),
                           )),
                         ),
@@ -520,7 +520,7 @@ class _ReasonState extends State<Reason> {
                                   : notifier.textField,
                               border: Border.all(
                                   color: Select12
-                                      ? const Color(0xff6B39F4)
+                                      ? const Color(0xFF8B0000)
                                       : Colors.transparent)),
                           child: Center(
                               child: Text(
@@ -529,7 +529,7 @@ class _ReasonState extends State<Reason> {
                                 fontFamily: "Manrope-SemiBold",
                                 fontSize: 12,
                                 color: Select12
-                                    ? const Color(0xff6B39F4)
+                                    ? const Color(0xFF8B0000)
                                     : Colors.grey),
                           )),
                         ),
@@ -551,7 +551,7 @@ class _ReasonState extends State<Reason> {
                                   : notifier.textField,
                               border: Border.all(
                                   color: Select13
-                                      ? const Color(0xff6B39F4)
+                                      ? const Color(0xFF8B0000)
                                       : Colors.transparent)),
                           child: Center(
                               child: Text(
@@ -560,7 +560,7 @@ class _ReasonState extends State<Reason> {
                                 fontFamily: "Manrope-SemiBold",
                                 fontSize: 12,
                                 color: Select13
-                                    ? const Color(0xff6B39F4)
+                                    ? const Color(0xFF8B0000)
                                     : Colors.grey),
                           )),
                         ),
@@ -653,7 +653,7 @@ class _ReasonState extends State<Reason> {
 //             name[index],
 //             style: TextStyle(
 //                 color: select.contains(index)
-//                     ? Color(0xff6B39F4)
+//                     ? Color(0xFF8B0000)
 //                     : Color(0xff94A3B8),
 //                 fontSize: 14,
 //                 fontFamily: "Manrope-SemiBold"),
@@ -704,7 +704,7 @@ class _ReasonState extends State<Reason> {
 //             name1[index],
 //             style: TextStyle(
 //                 color: select1.contains(index)
-//                     ? Color(0xff6B39F4)
+//                     ? Color(0xFF8B0000)
 //                     : Color(0xff94A3B8),
 //                 fontSize: 14,
 //                 fontFamily: "Manrope-SemiBold"),
@@ -755,7 +755,7 @@ class _ReasonState extends State<Reason> {
 //             name2[index],
 //             style: TextStyle(
 //                 color: select2.contains(index)
-//                     ? Color(0xff6B39F4)
+//                     ? Color(0xFF8B0000)
 //                     : Color(0xff94A3B8),
 //                 fontSize: 14,
 //                 fontFamily: "Manrope-SemiBold"),

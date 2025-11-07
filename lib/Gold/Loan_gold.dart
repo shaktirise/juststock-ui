@@ -306,7 +306,7 @@ class _LoanState extends State<Loan> {
                             child: Text("24 months",
                                 style: TextStyle(
                                     color: selectIndex == 5
-                                        ? const Color(0xff6B39F4)
+                                        ? const Color(0xFF8B0000)
                                         : Colors.grey,
                                     fontSize: 12,
                                     fontFamily: "Manrope-Bold"))),

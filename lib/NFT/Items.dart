@@ -226,7 +226,7 @@ class _ItemsState extends State<Items> {
                                         data[index]['Et'],
                                         style: const TextStyle(
                                             fontSize: 11,
-                                            color: Color(0xff6B39F4),
+                                            color: Color(0xFF8B0000),
                                             fontFamily: "Manrope-Bold"),
                                       ),
                                       const Spacer(),
@@ -338,7 +338,7 @@ class _ItemsState extends State<Items> {
                                             : notifier.tabBar1,
                                         border: Border.all(
                                           color: selectIndex == 0
-                                              ? const Color(0xff6B39F4)
+                                              ? const Color(0xFF8B0000)
                                               : Colors.black.withOpacity(0.1),
                                         ),
                                       ),
@@ -349,7 +349,7 @@ class _ItemsState extends State<Items> {
                                               fontFamily: "Manrope-SemiBold",
                                               fontSize: 12,
                                               color: selectIndex == 0
-                                                  ? const Color(0xff6B39F4)
+                                                  ? const Color(0xFF8B0000)
                                                   : Colors.grey),
                                         ),
                                       ),
@@ -374,7 +374,7 @@ class _ItemsState extends State<Items> {
                                             : notifier.tabBar1,
                                         border: Border.all(
                                           color: selectIndex == 1
-                                              ? const Color(0xff6B39F4)
+                                              ? const Color(0xFF8B0000)
                                               : Colors.black.withOpacity(0.1),
                                         ),
                                       ),
@@ -385,7 +385,7 @@ class _ItemsState extends State<Items> {
                                               fontFamily: "Manrope-SemiBold",
                                               fontSize: 12,
                                               color: selectIndex == 1
-                                                  ? const Color(0xff6B39F4)
+                                                  ? const Color(0xFF8B0000)
                                                   : Colors.grey),
                                         ),
                                       ),
@@ -408,7 +408,7 @@ class _ItemsState extends State<Items> {
                                             : notifier.tabBar1,
                                         border: Border.all(
                                           color: selectIndex == 2
-                                              ? const Color(0xff6B39F4)
+                                              ? const Color(0xFF8B0000)
                                               : Colors.black.withOpacity(0.1),
                                         ),
                                       ),
@@ -419,7 +419,7 @@ class _ItemsState extends State<Items> {
                                               fontFamily: "Manrope-SemiBold",
                                               fontSize: 12,
                                               color: selectIndex == 2
-                                                  ? const Color(0xff6B39F4)
+                                                  ? const Color(0xFF8B0000)
                                                   : Colors.grey),
                                         ),
                                       ),
@@ -448,7 +448,7 @@ class _ItemsState extends State<Items> {
                                             : notifier.tabBar1,
                                         border: Border.all(
                                           color: selectIndex == 4
-                                              ? const Color(0xff6B39F4)
+                                              ? const Color(0xFF8B0000)
                                               : Colors.black.withOpacity(0.1),
                                         ),
                                       ),
@@ -459,7 +459,7 @@ class _ItemsState extends State<Items> {
                                               fontFamily: "Manrope-SemiBold",
                                               fontSize: 12,
                                               color: selectIndex == 4
-                                                  ? const Color(0xff6B39F4)
+                                                  ? const Color(0xFF8B0000)
                                                   : Colors.grey),
                                         ),
                                       ),
@@ -484,7 +484,7 @@ class _ItemsState extends State<Items> {
                                             : notifier.tabBar1,
                                         border: Border.all(
                                           color: selectIndex == 5
-                                              ? const Color(0xff6B39F4)
+                                              ? const Color(0xFF8B0000)
                                               : Colors.black.withOpacity(0.1),
                                         ),
                                       ),
@@ -495,7 +495,7 @@ class _ItemsState extends State<Items> {
                                               fontFamily: "Manrope-SemiBold",
                                               fontSize: 12,
                                               color: selectIndex == 5
-                                                  ? const Color(0xff6B39F4)
+                                                  ? const Color(0xFF8B0000)
                                                   : Colors.grey),
                                         ),
                                       ),
@@ -535,7 +535,7 @@ class _ItemsState extends State<Items> {
                                             : notifier.tabBar1,
                                         border: Border.all(
                                           color: SelectIndex == 0
-                                              ? const Color(0xff6B39F4)
+                                              ? const Color(0xFF8B0000)
                                               : Colors.black.withOpacity(0.1),
                                         ),
                                       ),
@@ -546,7 +546,7 @@ class _ItemsState extends State<Items> {
                                             fontFamily: "Manrope-SemiBold",
                                             fontSize: 12,
                                             color: SelectIndex == 0
-                                                ? const Color(0xff6B39F4)
+                                                ? const Color(0xFF8B0000)
                                                 : Colors.grey),
                                       )),
                                     ),
@@ -571,7 +571,7 @@ class _ItemsState extends State<Items> {
                                               : notifier.tabBar1,
                                           border: Border.all(
                                               color: SelectIndex == 1
-                                                  ? const Color(0xff6B39F4)
+                                                  ? const Color(0xFF8B0000)
                                                   : Colors.black
                                                       .withOpacity(0.1))),
                                       child: Center(
@@ -581,7 +581,7 @@ class _ItemsState extends State<Items> {
                                               fontFamily: "Manrope-SemiBold",
                                               fontSize: 12,
                                               color: SelectIndex == 1
-                                                  ? const Color(0xff6B39F4)
+                                                  ? const Color(0xFF8B0000)
                                                   : Colors.grey),
                                         ),
                                       ),
@@ -608,7 +608,7 @@ class _ItemsState extends State<Items> {
                                 width: 140,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
-                                  color: notifier.tabBar2, /*border: Border.all(color: Color(0xff6B39F4))*/
+                                  color: notifier.tabBar2, /*border: Border.all(color: Color(0xFF8B0000))*/
                                 ),
                                 child: TextField(
                                   style: TextStyle(color: notifier.textColor),
@@ -641,7 +641,7 @@ class _ItemsState extends State<Items> {
                                 width: 140,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
-                                  color: notifier.tabBar2, /*border: Border.all(color: Color(0xff6B39F4))*/
+                                  color: notifier.tabBar2, /*border: Border.all(color: Color(0xFF8B0000))*/
                                 ),
                                 child: TextField(
                                   style: TextStyle(color: notifier.textColor),
@@ -676,7 +676,7 @@ class _ItemsState extends State<Items> {
                               // width: 327,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
-                                  color: const Color(0xff6B39F4)),
+                                  color: const Color(0xFF8B0000)),
                               child: const Center(
                                 child: Text(
                                   "Apply",

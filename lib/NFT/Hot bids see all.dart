@@ -249,7 +249,7 @@ class _Hot_bidsState extends State<Hot_bids> {
                                         data5[index]['Et'],
                                         style: const TextStyle(
                                             fontSize: 13,
-                                            color: Color(0xff6B39F4),
+                                            color: Color(0xFF8B0000),
                                             fontFamily: "Manrope-Bold"),
                                       ),
                                       const Spacer(),

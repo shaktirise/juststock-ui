@@ -24,7 +24,7 @@ class _Order_nftState extends State<Order_nft> {
     return Scaffold(
       backgroundColor: notifier.background,
       appBar: AppBar(
-        backgroundColor: const Color(0xff6B39F4),
+        backgroundColor: const Color(0xFF8B0000),
         elevation: 0,
         centerTitle: true,
         leading: GestureDetector(
@@ -178,7 +178,7 @@ class _Order_nftState extends State<Order_nft> {
                                     Text(
                                       "Change",
                                       style: TextStyle(
-                                          fontSize: 15, color: Color(0xff6B39F4),fontFamily: "Manrope-Bold"),
+                                          fontSize: 15, color: Color(0xFF8B0000),fontFamily: "Manrope-Bold"),
                                     ),
 
                                   ],
