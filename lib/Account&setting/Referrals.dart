@@ -130,7 +130,7 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
                   Padding(
                     padding: const EdgeInsets.only(bottom: 6),
                     child: Text(
-                      '${u['name'] ?? 'Unknown'} • ${u['email'] ?? '-'}',
+                      '${u['name'] ?? 'Unknown'} ï¿½ ${u['email'] ?? '-'}',
                       style: TextStyle(color: notifier.textColor),
                     ),
                   ),
@@ -202,7 +202,7 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
                       ],
                     ),
                   ),
-                  Text('₹ ${rupees(_amountPaiseFrom(it)).toStringAsFixed(2)}', style: TextStyle(color: notifier.textColor)),
+                  Text('? ${rupees(_amountPaiseFrom(it)).toStringAsFixed(2)}', style: TextStyle(color: notifier.textColor)),
                 ],
               ),
             ),
@@ -230,7 +230,7 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
                       ],
                     ),
                   ),
-                  Text('₹ ${rupees(_amountPaiseFrom(w)).toStringAsFixed(2)}', style: TextStyle(color: notifier.textColor)),
+                  Text('? ${rupees(_amountPaiseFrom(w)).toStringAsFixed(2)}', style: TextStyle(color: notifier.textColor)),
                 ],
               ),
             ),
@@ -249,18 +249,8 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
       padding: const EdgeInsets.all(16),
       children: [
         _row('Max Depth', maxDepth),
-        _row('Registration Fee', '₹ ${rupees(regFee).toStringAsFixed(2)}'),
-        _row('Renewal Fee', '₹ ${rupees(renFee).toStringAsFixed(2)}'),
-        const SizedBox(height: 8),
-        Text('Level Percentages', style: TextStyle(fontFamily: 'Manrope-Bold', color: notifier.textColor)),
-        const SizedBox(height: 6),
-        Wrap(
-          spacing: 6,
-          children: [
-            for (int i = 0; i < levelPercentages.length; i++)
-              Chip(label: Text('L${i + 1}: ${levelPercentages[i]}%')),
-          ],
-        ),
+        _row('First Top-up', '${rupees(regFee).toStringAsFixed(2)}'),
+        _row('Re-top', '${rupees(renFee).toStringAsFixed(2)}'),
       ],
     );
   }
@@ -277,7 +267,7 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title, style: TextStyle(color: notifier.textColor)),
-          Text('₹ ${value.toStringAsFixed(2)}', style: TextStyle(color: notifier.textColor)),
+          Text('? ${value.toStringAsFixed(2)}', style: TextStyle(color: notifier.textColor)),
         ],
       ),
     );
@@ -317,3 +307,4 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
     }
   }
 }
+

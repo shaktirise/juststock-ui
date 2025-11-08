@@ -8,7 +8,7 @@ import 'package:flutter/gestures.dart';
 import '../Dark mode.dart';
 import '../config/common.dart';
 import 'Login.dart';
-import 'Sign phone.dart';
+// Removed phone/OTP flow after signup
 import 'package:crowwn/services/api_locator.dart';
 
 
@@ -421,10 +421,11 @@ extension on _SignState {
         const SnackBar(content: Text('Signup successful')), 
       );
 
-      // Continue existing flow
-      Navigator.push(
+      // After signup, go to Sign In (OTP/PIN screens removed)
+      Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const phone()),
+        MaterialPageRoute(builder: (context) => const Login()),
+        (route) => false,
       );
     } catch (e) {
       final msg = e.toString().replaceFirst('Exception: ', '');

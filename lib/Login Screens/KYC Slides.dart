@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../Dark mode.dart';
 import '../config/common.dart';
-import 'Face id.dart';
+import '../Home/bottom.dart';
 
 class KYCSLides extends StatefulWidget {
   const KYCSLides({super.key});
@@ -36,7 +36,7 @@ class _KYCSLidesState extends State<KYCSLides> {
       _page.nextPage(duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
     } else {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const Face()),
+        MaterialPageRoute(builder: (_) => const BottomBarScreen()),
       );
     }
   }
@@ -53,7 +53,7 @@ class _KYCSLidesState extends State<KYCSLides> {
         leading: IconButton(
           icon: Icon(Icons.close, color: notifier.textColor),
           onPressed: () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => const Face()),
+            MaterialPageRoute(builder: (_) => const BottomBarScreen()),
           ),
         ),
       ),
@@ -87,8 +87,8 @@ class _KYCSLidesState extends State<KYCSLides> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          SafeArea(
+            minimum: const EdgeInsets.fromLTRB(16, 0, 16, 40),
             child: SizedBox(
               width: double.infinity,
               height: 52,
@@ -98,7 +98,7 @@ class _KYCSLidesState extends State<KYCSLides> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
                 onPressed: _next,
-                child: Text(_index == 1 ? 'Continue' : 'Next',
+                child: Text(_index == 1 ? 'Get Started' : 'Next',
                     style: const TextStyle(color: Colors.white, fontFamily: 'Manrope-Bold')),
               ),
             ),
@@ -153,5 +153,6 @@ class _KYCSLidesState extends State<KYCSLides> {
     );
   }
 }
+
 
 

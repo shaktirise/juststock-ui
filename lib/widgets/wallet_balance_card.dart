@@ -288,14 +288,13 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
                           color: Colors.white, fontFamily: 'Manrope-Bold')),
                 ),
               ),
-              if (isFirst)
-                const Padding(
-                  padding: EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    'Your first successful top-up activates your account. Enter the amount you wish to add.',
-                    style: TextStyle(color: Color(0xff64748B), fontSize: 12),
-                  ),
+              const Padding(
+                padding: EdgeInsets.only(top: 8.0),
+                child: Text(
+                  'Note: First top-up is ₹2100 to activate your account. After activation, each top-up is ₹1000.',
+                  style: TextStyle(color: Color(0xff64748B), fontSize: 12),
                 ),
+              ),
             ],
           ),
         );

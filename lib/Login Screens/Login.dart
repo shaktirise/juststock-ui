@@ -65,7 +65,7 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                     const Spacer(),
-                    Image.asset('lib/assets/inside-logo.png', height: height/8, fit: BoxFit.contain),
+                    Image.asset('lib/assets/inside-logo.png', height: height/6, fit: BoxFit.contain),
                     const Spacer(),
                     const Text('Welcome Back!',
                         style: TextStyle(

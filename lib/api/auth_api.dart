@@ -119,6 +119,50 @@ class AuthApi {
       return 'Request failed (${res.statusCode})';
     }
   }
+
+  // Forgot password: sends reset email; in testing may return { resetToken }
+  static Future<ForgotResponse> forgotPassword({
+    required String email,
+  }) async {
+    final res = await http.post(
+      _uri('/api/auth/forgot-password'),
+      headers: const {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email}),
+    );
+
+    if (res.statusCode == 200) {
+      try {
+        final data = jsonDecode(res.body);
+        if (data is Map<String, dynamic>) {
+          return ForgotResponse.fromMap(data);
+        }
+      } catch (_) {}
+      return const ForgotResponse(ok: true);
+    }
+    throw HttpException(statusCode: res.statusCode, message: _extractError(res));
+  }
+
+  // Reset password using email + token
+  static Future<bool> resetPassword({
+    required String email,
+    required String token,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    final res = await http.post(
+      _uri('/api/auth/reset-password'),
+      headers: const {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'email': email,
+        'token': token,
+        'password': password,
+        'confirmPassword': confirmPassword,
+      }),
+    );
+
+    if (res.statusCode == 200) return true;
+    throw HttpException(statusCode: res.statusCode, message: _extractError(res));
+  }
 }
 
 class AuthResponse extends TokenPair {
@@ -144,6 +188,38 @@ class TokenPair {
     required this.refreshToken,
     required this.refreshTokenExpiresAt,
   });
+}
+
+class ForgotResponse {
+  final bool ok;
+  final String? resetToken;
+  final String? code; // alias when server uses a different key
+
+  const ForgotResponse({required this.ok, this.resetToken, this.code});
+
+  static ForgotResponse fromMap(Map<String, dynamic> map) {
+    String? pick(Map<String, dynamic> m) {
+      for (final k in const [
+        'resetToken', 'token', 'code', 'reset_code', 'reset_token', 'resetCode',
+      ]) {
+        final v = m[k];
+        if (v is String && v.trim().isNotEmpty) return v.trim();
+      }
+      // Sometimes wrapped in { data: { ... } }
+      final data = map['data'];
+      if (data is Map<String, dynamic>) {
+        return pick(data);
+      }
+      return null;
+    }
+
+    final found = pick(map);
+    return ForgotResponse(
+      ok: (map['ok'] as bool?) ?? true,
+      resetToken: found,
+      code: found,
+    );
+  }
 }
 
 class HttpException implements Exception {
