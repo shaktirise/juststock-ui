@@ -1,6 +1,7 @@
 ﻿// ignore_for_file: file_names
 import 'package:crowwn/services/api_locator.dart';
 import 'package:crowwn/services/referral_api.dart';
+import '../widgets/topup_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Dark mode.dart';
@@ -160,9 +161,22 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
           _statTile('Paid', rupees(paid)),
           _statTile('Pending', rupees(pending)),
           const SizedBox(height: 12),
-          ElevatedButton(
-            onPressed: entries.isEmpty ? null : _withdraw,
-            child: const Text('Withdraw'),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () => TopupHelper.ensureFunds(context),
+                  child: const Text('Deposit'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: entries.isEmpty ? null : _withdraw,
+                  child: const Text('Withdraw'),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
           Text('Entries', style: TextStyle(fontFamily: 'Manrope-Bold', color: notifier.textColor)),

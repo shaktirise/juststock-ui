@@ -524,20 +524,8 @@ class _Detail_cryptoState extends State<Detail_crypto> {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 15,right: 15,bottom: 15),
-        child: GestureDetector(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const Portfolio_crypto(),));
-          },
-          child: Container(
-            height: 56,
-            // width: 327,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xFFD32F2F),),
-            child: const Center(child: Text("Buy MATIC",style: TextStyle(color: Color(0xffFFFFFF),fontSize: 16,fontFamily: "Manrope-Bold"))),
-          ),
-        ),
-      ),
+      // Removed Buy button from details screen
+      // bottomNavigationBar intentionally omitted
     );
   }
   Widget cryptochart() {

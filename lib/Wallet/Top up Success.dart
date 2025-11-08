@@ -6,6 +6,7 @@ import 'package:crowwn/config/common.dart';
 
 import '../Dark mode.dart';
 import '../Home/bottom.dart';
+import '../services/in_app_notification_center.dart';
 
 class Top_success extends StatefulWidget {
   const Top_success({super.key});
@@ -16,6 +17,20 @@ class Top_success extends StatefulWidget {
 
 class _Top_successState extends State<Top_success> {
   ColorNotifire notifier = ColorNotifire();
+  bool _loggedDeposit = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _logDepositEvent();
+  }
+
+  void _logDepositEvent() {
+    if (_loggedDeposit) return;
+    _loggedDeposit = true;
+    NotificationCenter.instance?.logDeposit();
+  }
+
   @override
   Widget build(BuildContext context) {
     notifier = Provider.of<ColorNotifire>(context, listen: true);

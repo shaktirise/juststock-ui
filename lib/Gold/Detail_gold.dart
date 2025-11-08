@@ -520,21 +520,8 @@ class _Detail_goldState extends State<Detail_gold> {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 20,right: 20,top: 15,bottom: 15),
-        child: GestureDetector(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const sell_buy(),));
-          },
-          child: Container(
-            height: 56,
-            width: 327,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xFFD32F2F),
-            ),
-            child: const Center(child: Text("Buy Gold",style:TextStyle(fontFamily: "Manrope-Bold",color: Colors.white,fontSize: 16),)),
-          ),
-        ),
-      ),
+      // Removed Buy button from details screen
+      // bottomNavigationBar intentionally omitted
     );
   }
   Widget goldchart() {

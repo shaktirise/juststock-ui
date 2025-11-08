@@ -24,7 +24,9 @@ import '../services/advice_seen_store.dart';
 import 'Search.dart';
 import 'crypto_.dart';
 import 'gold_.dart';
-import 'nfts_.dart';
+
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class home extends StatefulWidget {
   const home({super.key});
@@ -34,6 +36,11 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> with SingleTickerProviderStateMixin {
+static const String _adminWhatsAppNumber = '917066844214';
+  Future<void> _openWhatsapp() async {
+    final uri = Uri.parse('https://wa.me/' + _adminWhatsAppNumber);
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
+  }
   int currentindex = 0;
   int selectIndex = 0;
   bool _password = true;
@@ -110,78 +117,43 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
       child: Scaffold(
         backgroundColor: notifier.background,
         appBar: AppBar(
-          elevation: 0,
-          automaticallyImplyLeading: false,
-          title: Row(
-            children: [
-              Image.asset(
-                'lib/assets/inside-logo.png',
-                width: 140, // horizontal logo for white app bar
-                fit: BoxFit.contain,
-              ),
-            ],
+  elevation: 0,
+  automaticallyImplyLeading: false,
+  title: Row(
+    children: [
+      Image.asset(
+        'lib/assets/inside-logo.png',
+        width: 140,
+        fit: BoxFit.contain,
+      ),
+    ],
+  ),
+  actionsIconTheme: const IconThemeData(size: 22),
+  actions: [
+    IconButton(
+      tooltip: 'WhatsApp',
+      onPressed: _openWhatsapp,
+      icon: const FaIcon(FontAwesomeIcons.whatsapp, color: Color(0xFF25D366)),
+    ),
+    IconButton(
+      tooltip: 'Notifications',
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Notifications(),
           ),
-          actions: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const search(),
-                  ),
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Image.asset(
-                  "assets/images/Search.png",
-                  height: 20,
-                  width: 19,
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Message(),
-                  ),
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(right: 10),
-                child: Image.asset(
-                  "assets/images/message.png",
-                  height: 23,
-                  width: 26,
-                ),
-              ),
-            ),
-            // Switch(
-            //   value: notifier.isDark,
-            //   onChanged: (bool value) {
-            //     notifier.isavalable(value);
-            //   },
-            // ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Notifications(),
-                  ),
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: Image.asset("assets/images/notification.png",
-                    height: 23, width: 23),
-              ),
-            ),
-          ],
-          backgroundColor: notifier.background,
-        ),
+        );
+      },
+      icon: Image.asset(
+        "assets/images/notification.png",
+        height: 22,
+        width: 22,
+      ),
+    ),
+  ],
+  backgroundColor: notifier.background,
+),
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
@@ -209,7 +181,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  "Total asset value",
+                                  "Total wallet balance",
                                   style: TextStyle(
                                       color: Color(0xff94A3B8),
                                       fontSize: 15,
@@ -599,10 +571,10 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(10),
-                                              color: const Color(0xFFD32F2F),
+                                              color: const Color(0xFF94A3B8),
                                             ),
                                             child: const Center(
-                                                child: Text("Buy",
+                                                child: Text("",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontFamily:
@@ -760,11 +732,11 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(10),
-                                              color: const Color(0xFFD32F2F),
+                                              color: const Color(0xFF94A3B8),
                                             ),
                                             child: const Center(
                                               child: Text(
-                                                "Buy",
+                                                "",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontFamily:
@@ -926,11 +898,11 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(10),
-                                              color: const Color(0xFFD32F2F),
+                                              color: const Color(0xFF94A3B8),
                                             ),
                                             child: const Center(
                                               child: Text(
-                                                "Buy",
+                                                "",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontFamily:
@@ -1094,11 +1066,11 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(10),
-                                              color: const Color(0xFFD32F2F),
+                                              color: const Color(0xFF94A3B8),
                                             ),
                                             child: const Center(
                                               child: Text(
-                                                "Buy",
+                                                "",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontFamily:
@@ -1146,7 +1118,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                               const Text(
                                 "Edit Watchlist",
                                 style: TextStyle(
-                                  color: Color(0xFFD32F2F),
+                                  color: Color(0xFF94A3B8),
                                 ),
                               ),
                             ],
@@ -1161,7 +1133,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                         labelPadding: EdgeInsetsDirectional.symmetric(
                             horizontal: 5, vertical: 3),
                         physics: const BouncingScrollPhysics(),
-                        labelColor: const Color(0xFFD32F2F),
+                        labelColor: const Color(0xFF94A3B8),
                         labelStyle: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,

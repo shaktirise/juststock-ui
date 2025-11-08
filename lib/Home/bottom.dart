@@ -29,21 +29,20 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   Widget build(BuildContext context) {
     notifier = Provider.of<ColorNotifire>(context, listen: true);
     return Scaffold(
+      // Keep footer stable when keyboard opens
+      resizeToAvoidBottomInset: false,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Align(
-        alignment: const Alignment(0,0.99),
-        child: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              currentIndex = 2;
-            });
-          },
-          backgroundColor: const Color(0xFF8B0000),
-          child: const Image(
-              image: AssetImage("assets/images/Floating action.png"),
-              height: 20,
-              width: 20,
-          ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            currentIndex = 2;
+          });
+        },
+        backgroundColor: const Color(0xFF8B0000),
+        child: const Image(
+          image: AssetImage("assets/images/Floating action.png"),
+          height: 20,
+          width: 20,
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

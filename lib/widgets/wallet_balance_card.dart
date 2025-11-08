@@ -10,6 +10,9 @@ import 'package:crowwn/api/profile_api.dart';
 import 'package:provider/provider.dart';
 import '../Dark mode.dart';
 
+// Enable Add Money button on Home/Wallet card
+const bool kDisableAddMoneyButton = false;
+
 class WalletBalanceCard extends StatefulWidget {
   const WalletBalanceCard({super.key});
 
@@ -279,11 +282,7 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12)),
                   ),
-                  onPressed:
-                      snapshot.connectionState == ConnectionState.waiting ||
-                              _isProcessing
-                          ? null
-                          : () => _handleTopup(context),
+                  onPressed: (snapshot.connectionState == ConnectionState.waiting || _isProcessing || kDisableAddMoneyButton) ? null : () => _handleTopup(context),
                   child: const Text('Add Money',
                       style: TextStyle(
                           color: Colors.white, fontFamily: 'Manrope-Bold')),

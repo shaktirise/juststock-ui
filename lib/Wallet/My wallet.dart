@@ -1,3 +1,6 @@
+import 'Withdraw options.dart';
+import 'Top up balance.dart';
+import 'package:crowwn/widgets/topup_helper.dart';
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -161,13 +164,7 @@ class _WalletState extends State<Wallet> {
                       Column(
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const Top_up(),
-                                  ),);
-                            },
+                            onTap: () { TopupHelper.ensureFunds(context); },
                             child: Container(
                               height: 56,
                               width: 56,
@@ -198,7 +195,7 @@ class _WalletState extends State<Wallet> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const Withdraw(),
+                                    builder: (context) => const WithdrawOptions(),
                                   ));
                             },
                             child: Container(
@@ -226,8 +223,7 @@ class _WalletState extends State<Wallet> {
                       Column(
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              Navigator.push(
+                            onTap: () { return;                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
@@ -258,8 +254,7 @@ class _WalletState extends State<Wallet> {
                       Column(
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              Navigator.push(
+                            onTap: () { return;                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>

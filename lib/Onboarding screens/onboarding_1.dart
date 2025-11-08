@@ -158,7 +158,7 @@ class _Onboard1State extends State<Onboard1> {
                           width: double.infinity,
                           child: Center(
                             child: Text(
-                              "Browse Assets",
+                              "",
                               style: TextStyle(
                                 color: Color(0xFF8B0000),
                                 fontSize: 16,
@@ -259,7 +259,7 @@ class _Onboard1State extends State<Onboard1> {
                           width: double.infinity,
                           child: Center(
                             child: Text(
-                              "Browse Assets",
+                              "",
                               style: TextStyle(
                                 color: Color(0xFF8B0000),
                                 fontSize: 16,
@@ -362,7 +362,7 @@ class _Onboard1State extends State<Onboard1> {
                           width: double.infinity,
                           child: Center(
                             child: Text(
-                              "Browse Assets",
+                              "",
                               style: TextStyle(
                                 color: Color(0xFF8B0000),
                                 fontSize: 16,
@@ -462,7 +462,7 @@ class _Onboard1State extends State<Onboard1> {
                           width: double.infinity,
                           child: Center(
                             child: Text(
-                              "Browse Assets",
+                              "",
                               style: TextStyle(
                                 color: Color(0xFF8B0000),
                                 fontSize: 16,

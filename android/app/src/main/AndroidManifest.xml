@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- App requires internet for API polling and notifications -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Android 13+ (API 33) notification permission for local/push notifications -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
         android:label="JustStock"
         android:name="${applicationName}"

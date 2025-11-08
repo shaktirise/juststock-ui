@@ -570,36 +570,8 @@ class _Detail_stockState extends State<Detail_stock> {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15, bottom: 5),
-        child: GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const Portfolio(),
-                ));
-          },
-            child: Container(
-              height: 56,
-              // width: 327,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-              color: const Color(0xFFD32F2F),
-              ),
-            child: const Center(
-              child: Text(
-                "Buy AMZN",
-                style: TextStyle(
-                  color: Color(0xffFFFFFF),
-                  fontSize: 16,
-                  fontFamily: "Manrope-Bold",
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      // Removed Buy button from details screen
+      // bottomNavigationBar intentionally omitted
     );
   }
 

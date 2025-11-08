@@ -103,7 +103,7 @@ class _SignState extends State<Sign> {
               ),
               AppConstants.Height(10),
               const Text(
-                "Let’s get started with a free Financy account.",
+                "Let’s get started with a free JustStock account.",
                 style: TextStyle(
                     fontSize: 14,
                     color: Color(0xff64748B),
@@ -151,7 +151,7 @@ class _SignState extends State<Sign> {
                   style: TextStyle(color: notifier.textColor),
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                      hintText: "Mobile number (optional)",
+                      hintText: "Mobile number",
                       border: const OutlineInputBorder(borderSide: BorderSide.none),
                       hintStyle: TextStyle(color: notifier.textFieldHintText)),
                 ),
@@ -321,84 +321,7 @@ class _SignState extends State<Sign> {
                 ),
               ),
               AppConstants.Height(10),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: 155,
-                      height: 56,
-                      child: OutlinedButton(
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(13),
-                                ),
-                              ),
-                              side: MaterialStatePropertyAll(BorderSide(
-                                  color: notifier.getContainerBorder))),
-                          onPressed: () {},
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                "assets/images/apple-logo.png",
-                                height: 19,
-                                width: 16,
-                                color: notifier.isDark ? Colors.white : null,
-                              ),
-                              Text(
-                                " Apple",
-                                style: TextStyle(
-                                    color: notifier.isDark
-                                        ? Colors.white
-                                        : Colors.black,
-                                    fontFamily: "Manrope-SemiBold",
-                                    fontSize: 16),
-                              )
-                            ],
-                          )),
-                    ),
-                  ),
-                  Expanded(child: AppConstants.Width(50)),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: SizedBox(
-                      width: 155,
-                      height: 56,
-                      child: OutlinedButton(
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(13),
-                                ),
-                              ),
-                              side: MaterialStatePropertyAll(BorderSide(
-                                  color: notifier.getContainerBorder))),
-                          onPressed: () {},
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Image(
-                                image: AssetImage("assets/images/google.png"),
-                                height: 19,
-                                width: 16,
-                              ),
-                              Text(
-                                " Google",
-                                style: TextStyle(
-                                    color: notifier.isDark
-                                        ? Colors.white
-                                        : Colors.black,
-                                    fontFamily: "Manrop-SemiBold",
-                                    fontSize: 16),
-                              )
-                            ],
-                          )),
-                    ),
-                  ),
-                ],
-              ),
+              // Social signup buttons (Apple/Google) removed
               AppConstants.Height(20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

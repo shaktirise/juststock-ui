@@ -263,27 +263,14 @@ class _ProfileState extends State<Profile> {
                     ),
                   ),
                   AppConstants.Height(20),
+                  // Temporarily disabled: Personal Details
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Personal_data(),
-                        ),
-                      );
-                    },
+                    onTap: () {},
                     child: accountDetails(
                       image: "assets/images/Person.png",
                       name: "Personal Details",
                       desc: "Your account information",
-                      onPress: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Personal_data(),
-                          ),
-                        );
-                      },
+                      onPress: null,
                     ),
                   ),
                   GestureDetector(
@@ -318,27 +305,14 @@ class _ProfileState extends State<Profile> {
                       },
                     ),
                   ),
+                  // Temporarily disabled: Bank Account
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Bank_account(),
-                        ),
-                      );
-                    },
+                    onTap: () {},
                     child: accountDetails(
                       image: "assets/images/card.png",
                       name: "Bank Account",
                       desc: "Manage your bank account",
-                      onPress: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Bank_account(),
-                          ),
-                        );
-                      },
+                      onPress: null,
                     ),
                   ),
                   Text(
@@ -368,27 +342,14 @@ class _ProfileState extends State<Profile> {
                       onPress: () {},
                     ),
                   ),
+                  // Temporarily disabled: Social Media
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Social_media(),
-                        ),
-                      );
-                    },
+                    onTap: () {},
                     child: accountDetails_(
                       image: "assets/images/Instagram outlined.png",
                       name: "Social Media",
                       desc: "All Social Media",
-                      onPress: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Social_media(),
-                          ),
-                        );
-                      },
+                      onPress: null,
                     ),
                   ),
                   AppConstants.Height(20),
@@ -430,25 +391,14 @@ class _ProfileState extends State<Profile> {
                       },
                     ),
                   ),
+                  // Temporarily disabled: Language
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Select_language(),
-                          ));
-                    },
+                    onTap: () {},
                     child: accountDetails1(
                       image: "assets/images/Translate.png",
                       name: "Languange",
                       desc: "English (USA)",
-                      onPress: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Select_language(),
-                            ));
-                      },
+                      onPress: null,
                     ),
                   ),
                   Container(
@@ -519,25 +469,14 @@ class _ProfileState extends State<Profile> {
                         fontSize: 16),
                   ),
                   AppConstants.Height(20),
+                  // Temporarily disabled: Help Center
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Help_Center(),
-                          ));
-                    },
+                    onTap: () {},
                     child: accountDetails(
                       image: "assets/images/question-circle-outlined.png",
                       name: "Help Center",
                       desc: "Get supports",
-                      onPress: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Help_Center(),
-                            ));
-                      },
+                      onPress: null,
                     ),
                   ),
                   GestureDetector(

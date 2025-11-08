@@ -17,6 +17,13 @@ class Withdraw extends StatefulWidget {
 class _WithdrawState extends State<Withdraw> {
   ColorNotifire notifier = ColorNotifire();
   int index2 = 0;
+  final TextEditingController _amountController = TextEditingController();
+
+  @override
+  void dispose() {
+    _amountController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +74,7 @@ class _WithdrawState extends State<Withdraw> {
                     border: Border.all(color: notifier.getContainerBorder)),
                 child: Center(
                   child: TextField(
+                    controller: _amountController,
                     style: TextStyle(
                         fontSize: 35,
                         color: notifier.textColor,
@@ -297,10 +305,11 @@ class _WithdrawState extends State<Withdraw> {
         padding: const EdgeInsets.only(left: 20, bottom: 10, right: 20),
         child: GestureDetector(
           onTap: () {
+            final parsed = double.tryParse(_amountController.text.replaceAll(',', '').trim());
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const Withdraw_select(),
+                builder: (context) => Withdraw_select(amount: parsed),
               ),
             );
           },

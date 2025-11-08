@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crowwn/Dark%20mode.dart';
 import 'package:crowwn/services/api_locator.dart';
+import 'package:crowwn/services/in_app_notification_center.dart';
+import 'package:crowwn/services/local_push_notifications.dart';
+import 'package:crowwn/services/push_messaging_bridge.dart';
+final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ApiLocator.init();
+  await LocalPushNotifications.initialize();
+  // Initialize remote push (FCM) if configured\n  await initPushMessaging();
   runApp(const MyApp());
 }
 
@@ -25,9 +31,13 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (context) => ColorNotifire(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => NotificationCenter(rootNavigatorKey),
+        ),
       ],
       builder: (_, context) {
         return MaterialApp(
+          navigatorKey: rootNavigatorKey,
           theme: ThemeData(
             useMaterial3: false,
             primaryColor: const Color(0xFF8B0000),

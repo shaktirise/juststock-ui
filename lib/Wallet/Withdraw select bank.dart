@@ -6,9 +6,12 @@ import 'package:provider/provider.dart';
 import '../Dark mode.dart';
 import '../Home/bottom.dart';
 import '../config/common.dart';
+import '../services/in_app_notification_center.dart';
 
 class Withdraw_select extends StatefulWidget {
-  const Withdraw_select({super.key});
+  const Withdraw_select({super.key, this.amount});
+
+  final double? amount;
 
   @override
   State<Withdraw_select> createState() => _Withdraw_selectState();
@@ -459,6 +462,7 @@ class _Withdraw_selectState extends State<Withdraw_select> {
         padding: const EdgeInsets.only(left: 20, bottom: 5, right: 20),
         child: GestureDetector(
           onTap: () {
+            NotificationCenter.instance?.logWithdraw(amount: widget.amount);
             Navigator.push(
                 context,
                 MaterialPageRoute(

@@ -112,51 +112,7 @@ class _Get1State extends State<Get1> {
             //         )
             //       ],
             //     )),
-            AppConstants.Height(10),
-            Container(
-              height: height/12,
-              // width: 327,
-              decoration: BoxDecoration(
-                  border: Border.all(color: notifier.getContainerBorder),
-                  borderRadius: BorderRadius.circular(15)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image(
-                    image: const AssetImage("assets/images/apple-logo.png"),
-                    height: 25,
-                    width: 25,
-                      color: notifier.isDark ? Colors.white : null
-                  ),
-                  Text(
-                    " Continue With Apple",
-                    style: TextStyle(fontSize: 17,color: notifier.textColor),
-                  )
-                ],
-              ),
-            ),
-            AppConstants.Height(10),
-            Container(
-              height: height/12,
-              // width: 327,
-              decoration: BoxDecoration(
-                  border: Border.all(color: notifier.getContainerBorder),
-                  borderRadius: BorderRadius.circular(15)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Image(
-                    image: AssetImage("assets/images/google.png"),
-                    height: 25,
-                    width: 25,
-                  ),
-                  Text(
-                    " Continue With Google",
-                    style: TextStyle(fontSize: 17,color: notifier.textColor),
-                  )
-                ],
-              ),
-            ),
+            // Apple/Google sign-in removed; email only
             AppConstants.Height(20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

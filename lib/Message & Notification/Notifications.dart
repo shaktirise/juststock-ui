@@ -1,11 +1,13 @@
 // ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../Dark mode.dart';
 import '../config/common.dart';
-import 'Activity.dart';
-import 'Information.dart';
+import 'Advisory_tab.dart';
+import 'Information_tab.dart';
+import 'notification_filter.dart';
 
 class Notifications extends StatefulWidget {
   const Notifications({super.key});
@@ -14,19 +16,18 @@ class Notifications extends StatefulWidget {
   State<Notifications> createState() => _NotificationsState();
 }
 
-class _NotificationsState extends State<Notifications>
-    with SingleTickerProviderStateMixin {
+class _NotificationsState extends State<Notifications> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  String selectedFilter = "Message";
+  NotificationViewFilter _filter = NotificationViewFilter.all;
+  int status = NotificationViewFilter.all.index;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this, initialIndex: 1);
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
   }
 
   ColorNotifire notifier = ColorNotifire();
-  int status = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -110,18 +111,17 @@ class _NotificationsState extends State<Notifications>
                               AppConstants.Height(10),
                               GestureDetector(
                                 onTap: () {
-                                  setState(
-                                    () {
-                                      status = 0;
-                                    },
-                                  );
+                                  setState(() {
+                                    status = NotificationViewFilter.all.index;
+                                    _filter = NotificationViewFilter.all;
+                                  });
                                 },
                                 child: Container(
                                   height: height / 12,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
                                       border: Border.all(
-                                          color: status == 0
+                                          color: status == NotificationViewFilter.all.index
                                               ? const Color(0xFF8B0000)
                                               : notifier.getContainerBorder)),
                                   child: Row(
@@ -144,12 +144,13 @@ class _NotificationsState extends State<Notifications>
                                                 (states) =>
                                                     const Color(0xFF8B0000)),
                                         // activeColor: const Color(0xff0056D2),
-                                        value: 0,
+                                        value: NotificationViewFilter.all.index,
                                         groupValue: status,
                                         onChanged: (index) {
                                           setState(
                                             () {
-                                              status = 0;
+                                              status = NotificationViewFilter.all.index;
+                                              _filter = NotificationViewFilter.all;
                                             },
                                           );
                                         },
@@ -161,18 +162,17 @@ class _NotificationsState extends State<Notifications>
                               AppConstants.Height(10),
                               GestureDetector(
                                 onTap: () {
-                                  setState(
-                                    () {
-                                      status = 1;
-                                    },
-                                  );
+                                  setState(() {
+                                    status = NotificationViewFilter.read.index;
+                                    _filter = NotificationViewFilter.read;
+                                  });
                                 },
                                 child: Container(
                                   height: height / 12,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
                                       border: Border.all(
-                                          color: status == 1
+                                          color: status == NotificationViewFilter.read.index
                                               ? const Color(0xFF8B0000)
                                               : notifier.getContainerBorder)),
                                   child: Row(
@@ -195,14 +195,13 @@ class _NotificationsState extends State<Notifications>
                                                 (states) =>
                                                     const Color(0xFF8B0000)),
                                         // activeColor: const Color(0xff0056D2),
-                                        value: 1,
+                                        value: NotificationViewFilter.read.index,
                                         groupValue: status,
                                         onChanged: (value) {
-                                          setState(
-                                            () {
-                                              status = 1;
-                                            },
-                                          );
+                                          setState(() {
+                                            status = NotificationViewFilter.read.index;
+                                            _filter = NotificationViewFilter.read;
+                                          });
                                         },
                                       ),
                                     ],
@@ -212,18 +211,17 @@ class _NotificationsState extends State<Notifications>
                               AppConstants.Height(10),
                               GestureDetector(
                                 onTap: () {
-                                  setState(
-                                    () {
-                                      status = 2;
-                                    },
-                                  );
+                                  setState(() {
+                                    status = NotificationViewFilter.unread.index;
+                                    _filter = NotificationViewFilter.unread;
+                                  });
                                 },
                                 child: Container(
                                   height: height / 12,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
                                       border: Border.all(
-                                          color: status == 2
+                                          color: status == NotificationViewFilter.unread.index
                                               ? const Color(0xFF8B0000)
                                               : notifier.getContainerBorder)),
                                   child: Row(
@@ -246,14 +244,13 @@ class _NotificationsState extends State<Notifications>
                                                 (states) =>
                                                     const Color(0xFF8B0000)),
                                         // activeColor: const Color(0xff0056D2),
-                                        value: 2,
+                                        value: NotificationViewFilter.unread.index,
                                         groupValue: status,
                                         onChanged: (value) {
-                                          setState(
-                                            () {
-                                              status = 2;
-                                            },
-                                          );
+                                          setState(() {
+                                            status = NotificationViewFilter.unread.index;
+                                            _filter = NotificationViewFilter.unread;
+                                          });
                                         },
                                       ),
                                     ],
@@ -290,7 +287,7 @@ class _NotificationsState extends State<Notifications>
             child: Image.asset(
               "assets/images/arrows-sort.png",
               scale: 3,
-              color: notifier.textColor,
+              color: const Color(0xFF8B0000),
             ),
           ),
           const SizedBox(width: 10),
@@ -320,12 +317,12 @@ class _NotificationsState extends State<Notifications>
                 tabs: [
                   Tab(
                       child: Text(
-                    "Information",
+                    "Advisory",
                     style: TextStyle(color: notifier.textColor, fontSize: 13),
                   ),),
                   Tab(
                       child: Text(
-                    "Activity",
+                    "Information",
                     style: TextStyle(color: notifier.textColor, fontSize: 13),
                   ),),
                 ],
@@ -335,9 +332,9 @@ class _NotificationsState extends State<Notifications>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: const [
-                Information(),
-                Activity(),
+              children: [
+                AdvisoryTab(filter: _filter),
+                InformationTab(filter: _filter),
               ],
             ),
           ),

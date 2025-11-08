@@ -6,7 +6,7 @@ import 'package:crowwn/api/token_storage.dart';
 import '../Dark mode.dart';
 import '../config/common.dart';
 import 'Face id.dart';
-// import 'KYC Slides.dart';
+import 'KYC Slides.dart';
 import 'package:crowwn/services/api_locator.dart';
 import 'Forget pass.dart';
 import 'Sign up.dart';
@@ -182,75 +182,7 @@ class _LoginState extends State<Login> {
                         color: Color(0xff64748B),
                         fontFamily: "Manrope-Medium"),
                   ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          width: 155,
-                          height: 56,
-                          child: OutlinedButton(
-                              style: ButtonStyle(
-                                shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(13),
-                                  ),
-                                ),
-                                side: MaterialStatePropertyAll(BorderSide(color: notifier.getContainerBorder))
-                              ),
-                              onPressed: () {},
-                              child:  Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset("assets/images/apple-logo.png",height: 19,width: 16,color: notifier.isDark?Colors.white:null,),
-                                  Text(
-                                    " Apple",
-                                    style: TextStyle(
-                                        color: notifier.isDark?Colors.white:Colors.black,
-                                        fontFamily: "Manrope-SemiBold",
-                                        fontSize: 16),
-                                  )
-                                ],
-                              )),
-                        ),
-                      ),
-                      Expanded(child: AppConstants.Width(50)),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: SizedBox(
-                          width: 155,
-                          height: 56,
-                          child: OutlinedButton(
-                              style: ButtonStyle(
-                                shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(13),
-                                  ),
-                                ),
-                                  side: MaterialStatePropertyAll(BorderSide(color: notifier.getContainerBorder))
-                              ),
-                              onPressed: () {},
-                              child:  Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Image(
-                                    image: AssetImage("assets/images/google.png"),
-                                    height: 22,
-                                    width: 22,
-                                  ),
-                                  Text(
-                                    " Google",
-                                    style: TextStyle(
-                                        color: notifier.isDark?Colors.white:Colors.black,
-                                        fontFamily: "Manrop-SemiBold",
-                                        fontSize: 16),
-                                  )
-                                ],
-                              )),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Social login buttons (Apple/Google) removed
                   AppConstants.Height(20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -323,10 +255,10 @@ extension on _LoginState {
         const SnackBar(content: Text('Login successful')),
       );
 
-      // Proceed to next step in the existing flow
+      // Show post-login KYC slides (2 screens) before actual home flow
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const Face()),
+        MaterialPageRoute(builder: (context) => const KYCSLides()),
         (route) => false,
       );
     } catch (e) {
