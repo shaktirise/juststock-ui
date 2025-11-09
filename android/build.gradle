@@ -26,6 +26,22 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
+// Ensure all Android subprojects use Java 17 and silence obsolete option warnings from plugins
+def configureAndroidProject = { Project p ->
+    // Apply -Xlint:-options to all Java compile tasks to suppress the obsolete options warning
+    p.tasks.withType(JavaCompile).configureEach { t ->
+        if (!t.options.compilerArgs.contains('-Xlint:-options')) {
+            t.options.compilerArgs << '-Xlint:-options'
+        }
+    }
+    // Do NOT override Kotlin jvmTarget for libraries to avoid mismatches
+}
+
+subprojects { proj ->
+    proj.plugins.withId('com.android.application') { configureAndroidProject(proj) }
+    proj.plugins.withId('com.android.library') { configureAndroidProject(proj) }
+}
+
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }

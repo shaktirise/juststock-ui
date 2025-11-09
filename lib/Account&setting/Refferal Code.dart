@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crowwn/config/common.dart';
 import 'package:flutter/services.dart';
+import 'package:crowwn/services/api_locator.dart';
 
 import '../Dark mode.dart';
 import 'package:share_plus/share_plus.dart';
@@ -19,16 +20,35 @@ class Reffle_code extends StatefulWidget {
 
 class _Reffle_codeState extends State<Reffle_code> {
   ColorNotifire notifier = ColorNotifire();
-  static const String _refCode = '63LZNWKX';
+  String? _refCode;
   bool _loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRefCode();
+  }
+
+  Future<void> _loadRefCode() async {
+    try {
+      final me = await ApiLocator.user.me();
+      final code = (me['referralCode'] ?? me['refCode'] ?? me['ref'])?.toString();
+      if (!mounted) return;
+      setState(() => _refCode = (code != null && code.isNotEmpty) ? code : null);
+    } catch (_) {
+      // ignore failures; UI will handle null
+    }
+  }
 
   Future<void> _invite() async {
     if (_loading) return;
     setState(() => _loading = true);
     try {
       // Use the fixed base link and append the user's referral code
-      final share =
-          'https://juststock.vercel.app/referalcode?ref=${Uri.encodeComponent(_refCode)}';
+      final rc = (_refCode ?? '').trim();
+      final share = rc.isNotEmpty
+          ? 'https://juststock.vercel.app/${Uri.encodeComponent(rc)}'
+          : 'https://juststock.vercel.app';
       final message =
           "I'm earning commissions through the Just Stock referral system. Join using my code and earn rewards on every activation and renewal.";
       Share.share('$message $share');
@@ -130,7 +150,7 @@ class _Reffle_codeState extends State<Reffle_code> {
                                               fontSize: 13,
                                               fontFamily: "Manrope-Regular")),
                                        Text(
-                                        _refCode,
+                                        _refCode ?? '-',
                                         style: TextStyle(
                                             fontSize: 19,
                                             color: notifier.textColor,
