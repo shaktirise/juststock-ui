@@ -19,6 +19,7 @@ class _ReferralWithdrawPageState extends State<ReferralWithdrawPage> {
   bool _submitting = false;
   int _pendingPaise = 0;
   String? _error;
+  static const bool _demoWithdrawSuccess = true;
 
   // UPI
   final _upiId = TextEditingController();
@@ -65,6 +66,18 @@ class _ReferralWithdrawPageState extends State<ReferralWithdrawPage> {
   }
 
   Future<void> _submit() async {
+    // Demo-only: immediately show success and return without backend call
+    if (_demoWithdrawSuccess) {
+      setState(() => _submitting = true);
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Withdrawal requested successfully')),
+      );
+      setState(() => _submitting = false);
+      Navigator.pop(context, const {'status': 'success', 'mode': 'demo'});
+      return;
+    }
     if (_pendingPaise < 10000) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Minimum ₹100 required to withdraw')));
       return;
@@ -226,4 +239,3 @@ class _ReferralWithdrawPageState extends State<ReferralWithdrawPage> {
     ]);
   }
 }
-

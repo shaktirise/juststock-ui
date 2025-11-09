@@ -14,6 +14,7 @@ import 'Transaction all.dart';
 import 'Transfer balance.dart';
 import 'Withdraw Balance.dart';
 import '../Account&setting/Referral Withdraw.dart';
+import 'package:crowwn/api/wallet_api.dart';
 
 class Wallet extends StatefulWidget {
   const Wallet({super.key});
@@ -25,6 +26,13 @@ class Wallet extends StatefulWidget {
 class _WalletState extends State<Wallet> {
   bool _password = true;
   ColorNotifire notifier = ColorNotifire();
+  Future<List<WalletHistoryItem>>? _historyFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _historyFuture = WalletApi.ledgerOrHistory(limit: 10);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -193,11 +201,13 @@ class _WalletState extends State<Wallet> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const ReferralWithdrawPage(),
-                                  ));
+                          Navigator.of(context).push(
+                            PageRouteBuilder(
+                              pageBuilder: (_, __, ___) => const ReferralWithdrawPage(),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            ),
+                          );
                             },
                             child: Container(
                               height: 56,
@@ -307,11 +317,13 @@ class _WalletState extends State<Wallet> {
                       const Spacer(),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Transaction_all(),
-                              ));
+                          Navigator.of(context).push(
+                            PageRouteBuilder(
+                              pageBuilder: (_, __, ___) => const Transaction_all(),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            ),
+                          );
                         },
                         child: const Text(
                           "See all",
@@ -323,229 +335,74 @@ class _WalletState extends State<Wallet> {
                       )
                     ],
                   ),
-                  AppConstants.Height(20),
-                  const Text(
-                    "20 October 2022",
-                    style: TextStyle(
-                        fontFamily: "Manrope - Regular",
-                        color: Color(0xff64748B),
-                        fontSize: 15),
-                  ),
-                  AppConstants.Height(20),
-                  Container(
-                    height: height / 9,
-                    // width: 365,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                            color: notifier.getContainerBorder, width: 1)),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Image(
-                                image: AssetImage("assets/images/amazon.png"),
-                                height: 40,
-                                width: 40,
-                              ),
-                              const SizedBox(width: 15),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Send (AMZN)",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: notifier.textColor,
-                                        fontFamily: "Manrope-Bold"),
-                                  ),
-                                  AppConstants.Height(10),
-                                  const Text("07:00 PM",
-                                      style: TextStyle(
-                                          color: Color(0xff64748B),
-                                          fontSize: 13)),
-                                ],
-                              ),
-                              // AppConstants.Width(60),
-                              const Spacer(),
-                              Column(
-                                children: [
-                                  Text(
-                                    "- 2.00",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: notifier.textColor,
-                                        fontFamily: "Manrope-Bold"),
-                                  ),
-                                  AppConstants.Height(10),
-                                  const Text(
-                                    " 224.90",
-                                    style: TextStyle(
-                                        color: Color(0xff64748B), fontSize: 13),
-                                  ),
-                                ],
-                              ),
-                            ],
+                  AppConstants.Height(12),
+                  FutureBuilder<List<WalletHistoryItem>>(
+                    future: _historyFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 24),
+                          child: Center(
+                            child: SizedBox(
+                              height: 24,
+                              width: 24,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  AppConstants.Height(20),
-                  const Text(
-                    "15 October 2022",
-                    style: TextStyle(
-                        fontFamily: "Manrope - Regular",
-                        color: Color(0xff64748B),
-                        fontSize: 15),
-                  ),
-                  AppConstants.Height(20),
-                  Container(
-                    height: height / 9,
-                    // width: 365,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: notifier.getContainerBorder,
-                        width: 1,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Image(
-                                image: const AssetImage(
-                                    "assets/images/apple-logo.png"),
-                                height: 40,
-                                width: 40,
-                                color: notifier.textColor,
-                              ),
-                              const SizedBox(width: 15),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Buy AAPL",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: notifier.textColor,
-                                        fontFamily: "Manrope-Bold"),
-                                  ),
-                                  AppConstants.Height(10),
-                                  const Text(
-                                    "04:00 PM",
-                                    style: TextStyle(
-                                      color: Color(0xff64748B),
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              // AppConstants.Width(60),
-                              const Spacer(),
-                              Column(
-                                children: [
-                                  Text(
-                                    "+7.00",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: notifier.textColor,
-                                        fontFamily: "Manrope-Bold"),
-                                  ),
-                                  AppConstants.Height(10),
-                                  const Text(
-                                    " 1,016.33",
-                                    style: TextStyle(
-                                        color: Color(0xff64748B), fontSize: 13),
-                                  ),
-                                ],
-                              ),
-                            ],
+                        );
+                      }
+                      final items = snapshot.data ?? const <WalletHistoryItem>[];
+                      if (items.isEmpty) {
+                        return const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            'No transactions yet',
+                            style: TextStyle(color: Color(0xff64748B)),
                           ),
-                        ],
-                      ),
-                    ),
+                        );
+                      }
+                      return ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: items.length > 5 ? 5 : items.length,
+                        separatorBuilder: (_, __) => const SizedBox(height: 12),
+                        itemBuilder: (context, index) {
+                          final it = items[index];
+                          final isCredit = it.amountPaise > 0;
+                          final amount = (it.amountPaise / 100).toStringAsFixed(2);
+                          final title = it.title ?? it.category ?? (isCredit ? 'Credit' : 'Debit');
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: notifier.getContainerBorder, width: 1),
+                            ),
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                backgroundColor: const Color(0xFF8B0000).withOpacity(0.08),
+                                child: Icon(isCredit ? Icons.call_received : Icons.call_made, color: const Color(0xFF8B0000)),
+                              ),
+                              title: Text(
+                                title,
+                                style: TextStyle(color: notifier.textColor, fontFamily: 'Manrope-Bold'),
+                              ),
+                              subtitle: Text(
+                                it.note ?? '',
+                                style: const TextStyle(color: Color(0xff64748B), fontSize: 12),
+                              ),
+                              trailing: Text(
+                                '${isCredit ? '+' : ''}$amount',
+                                style: TextStyle(color: notifier.textColor, fontFamily: 'Manrope-Bold'),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
-                  AppConstants.Height(20),
-                  Container(
-                    height: height / 9,
-                    // width: 365,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: notifier.getContainerBorder,
-                        width: 1,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Image(
-                                image: AssetImage("assets/images/cardano.png"),
-                                height: 40,
-                                width: 40,
-                              ),
-                              const SizedBox(width: 15),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Sell ADA",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: notifier.textColor,
-                                        fontFamily: "Manrope-Bold"),
-                                  ),
-                                  AppConstants.Height(10),
-                                  const Text("03:00 PM",
-                                      style: TextStyle(
-                                          color: Color(0xff64748B),
-                                          fontSize: 13)),
-                                ],
-                              ),
-                              // AppConstants.Width(60),
-                              const Spacer(),
-                              Column(
-                                children: [
-                                  const Text(
-                                    "- 250",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: Color(0xffE82C81),
-                                        fontFamily: "Manrope-Bold"),
-                                  ),
-                                  AppConstants.Height(10),
-                                  const Text(
-                                    " 87.69",
-                                    style: TextStyle(
-                                        color: Color(0xff64748B), fontSize: 13),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  AppConstants.Height(30),
+                  AppConstants.Height(12),
+                  
+                  
+                  
                 ],
               ),
             )
