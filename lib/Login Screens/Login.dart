@@ -46,7 +46,12 @@ class _LoginState extends State<Login> {
             Container(
                 height: 279,
                 width: 450,
-                 color: const Color(0xff0F172A),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('lib/assets/background.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
                 child: Column(
                   children: [
                     Row(

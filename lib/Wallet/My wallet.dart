@@ -1,4 +1,4 @@
-import 'Withdraw options.dart';
+﻿import 'Withdraw options.dart';
 import 'Top up balance.dart';
 import 'package:crowwn/widgets/topup_helper.dart';
 // ignore_for_file: file_names
@@ -13,6 +13,7 @@ import 'Top up balance.dart';
 import 'Transaction all.dart';
 import 'Transfer balance.dart';
 import 'Withdraw Balance.dart';
+import '../Account&setting/Referral Withdraw.dart';
 
 class Wallet extends StatefulWidget {
   const Wallet({super.key});
@@ -118,7 +119,7 @@ class _WalletState extends State<Wallet> {
                                     (data['totalEarnedPaise'] as num?)?.toInt() ?? 0;
                                 final rupees = (totalEarnedPaise / 100).toStringAsFixed(2);
                                 return Text(
-                                  '₹ $rupees',
+                                  '₹ ',
                                   style: const TextStyle(
                                     fontSize: 32,
                                     color: Color(0xffFFFFFF),
@@ -195,7 +196,7 @@ class _WalletState extends State<Wallet> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const WithdrawOptions(),
+                                    builder: (context) => const ReferralWithdrawPage(),
                                   ));
                             },
                             child: Container(

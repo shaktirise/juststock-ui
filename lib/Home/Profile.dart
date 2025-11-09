@@ -386,7 +386,7 @@ class _ProfileState extends State<Profile> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Notifications(),
+                              builder: (context) => const Push_Notifications(),
                             ));
                       },
                     ),

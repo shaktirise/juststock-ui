@@ -106,7 +106,7 @@ class _AdviceListPageState extends State<AdviceListPage> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 ),
                 onPressed: _unlockLatest,
-                child: const Text('Pay latest', style: TextStyle(color: Colors.white)),
+                child: const Text('Pay latest call', style: TextStyle(color: Colors.white)),
               ),
             ),
         ],
@@ -130,7 +130,7 @@ class _AdviceListPageState extends State<AdviceListPage> {
                   children: [
                     Icon(Icons.inbox_outlined, size: 48, color: notifier.divider),
                     const SizedBox(height: 8),
-                    Text('No advice yet', style: TextStyle(color: notifier.textColor, fontFamily: 'Manrope-Bold')),
+                    Text('No calls yet', style: TextStyle(color: notifier.textColor, fontFamily: 'Manrope-Bold')),
                     const SizedBox(height: 4),
                     const Text('Check back later for new updates', style: TextStyle(color: Color(0xFF94A3B8))),
                   ],
@@ -170,7 +170,7 @@ class _AdviceListPageState extends State<AdviceListPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Advice #${m.id}',
+                              'Call ${index + 1}',
                               style: TextStyle(color: notifier.textColor, fontFamily: 'Manrope-Bold'),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,

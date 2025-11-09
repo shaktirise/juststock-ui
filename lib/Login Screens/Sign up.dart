@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+﻿// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crowwn/api/auth_api.dart';
@@ -103,7 +103,7 @@ class _SignState extends State<Sign> {
               ),
               AppConstants.Height(10),
               const Text(
-                "Let’s get started with a free JustStock account.",
+                "Letâ€™s get started with a free JustStock account.",
                 style: TextStyle(
                     fontSize: 14,
                     color: Color(0xff64748B),
@@ -297,17 +297,7 @@ class _SignState extends State<Sign> {
                       ),
                     ),
                   ),
-                  Flexible(
-                    child: Text(
-                      "I certify that I’m 18 years of age or older, and I \n agree to the User Agreement and Privacy Policy.",
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontFamily: "Manrope-Medium",
-                          color: notifier.textColor),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
-                  ),
+                  // Duplicate 18+ consent removed
                 ],
               ),
               AppConstants.Height(15),
@@ -368,7 +358,7 @@ extension on _SignState {
     final confirm = _confirmCtrl.text;
 
     if (name.length < 2 || name.length > 100) {
-      return 'Name must be 2–100 characters';
+      return 'Name must be 2â€“100 characters';
     }
     final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
     if (!emailRegex.hasMatch(email)) {
@@ -382,7 +372,7 @@ extension on _SignState {
       }
     }
     if (password.length < 8 || password.length > 128) {
-      return 'Password must be 8–128 characters';
+      return 'Password must be 8â€“128 characters';
     }
     if (password != confirm) {
       return 'Passwords do not match';

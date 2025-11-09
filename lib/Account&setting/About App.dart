@@ -94,7 +94,29 @@ class _About_AppState extends State<About_App> {
                         fontFamily: "Manrope-Regular"),
                   ),
                   AppConstants.Height(30),
-                  const SizedBox.shrink(),
+                  Text(
+                    "Contact Us",
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: notifier.textColor,
+                        fontFamily: "Manrope-Bold"),
+                  ),
+                  AppConstants.Height(10),
+                  const Text(
+                    "Email: [your email]",
+                    style: TextStyle(
+                        color: Color(0xff64748B),
+                        fontSize: 16,
+                        fontFamily: "Manrope-Regular"),
+                  ),
+                  const SizedBox(height: 6),
+                  const Text(
+                    "Website: https://juststock.in",
+                    style: TextStyle(
+                        color: Color(0xff64748B),
+                        fontSize: 16,
+                        fontFamily: "Manrope-Regular"),
+                  ),
                   AppConstants.Height(20),
                 ],
               ),

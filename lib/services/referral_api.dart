@@ -91,6 +91,44 @@ class ReferralApi {
     return (r.data as Map).cast<String, dynamic>();
   }
 
+  Future<Map<String, dynamic>> requestWithdrawUpi({
+    required String upiId,
+    required String name,
+    required String mobile,
+    String? note,
+  }) async {
+    final r = await dio.post('/api/auth/referrals/withdraw', data: {
+      'method': 'UPI',
+      'upiId': upiId,
+      'name': name,
+      'mobile': mobile,
+      if (note != null) 'note': note,
+    });
+    return (r.data as Map).cast<String, dynamic>();
+  }
+
+  Future<Map<String, dynamic>> requestWithdrawBank({
+    required String bankAccountName,
+    required String bankAccountNumber,
+    required String bankIfsc,
+    required String bankName,
+    required String contactName,
+    required String contactMobile,
+    String? note,
+  }) async {
+    final r = await dio.post('/api/auth/referrals/withdraw', data: {
+      'method': 'BANK',
+      'bankAccountName': bankAccountName,
+      'bankAccountNumber': bankAccountNumber,
+      'bankIfsc': bankIfsc,
+      'bankName': bankName,
+      'contactName': contactName,
+      'contactMobile': contactMobile,
+      if (note != null) 'note': note,
+    });
+    return (r.data as Map).cast<String, dynamic>();
+  }
+
   Future<List<dynamic>> withdrawals() async {
     final r = await dio.get('/api/auth/referrals/withdrawals');
     final raw = r.data;
