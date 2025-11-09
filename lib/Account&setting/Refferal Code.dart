@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crowwn/config/common.dart';
 import 'package:flutter/services.dart';
-import 'package:crowwn/api/deeplink_api.dart';
 
 import '../Dark mode.dart';
 import 'package:share_plus/share_plus.dart';
@@ -27,18 +26,15 @@ class _Reffle_codeState extends State<Reffle_code> {
     if (_loading) return;
     setState(() => _loading = true);
     try {
-      final res = await DeepLinkApi.createReferral(_refCode);
-      final share = (res['shareUrl'] ?? res['appUrl'] ?? '').toString();
+      // Use the fixed base link and append the user's referral code
+      final share =
+          'https://juststock.vercel.app/referalcode?ref=${Uri.encodeComponent(_refCode)}';
       final message =
           "I'm earning commissions through the Just Stock referral system. Join using my code and earn rewards on every activation and renewal.";
-      if (share.isNotEmpty) {
-        Share.share('$message $share');
-      } else {
-        Share.share(message);
-      }
+      Share.share('$message $share');
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to create invite: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to share invite: $e')));
       }
     } finally {
       if (mounted) setState(() => _loading = false);
