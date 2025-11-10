@@ -50,12 +50,12 @@ class _Get1State extends State<Get1> {
                   color: notifier.textColor),
             ),
             const Text(
-              "Understand. Learn. Apply. Become a smarter investor.",
-              textAlign: TextAlign.center,
+                    "Understand. Learn. Apply. Become a smarter investor.",
               style: TextStyle(
                   fontSize: 16,
                   color: Color(0xff64748B),
                   fontFamily: "Manrope-SemiBold"),
+                  
             ),
             AppConstants.Height(15),
             GestureDetector(
