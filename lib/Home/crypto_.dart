@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../Account&setting/Refferal Code.dart';
 import '../Crypto/Detail_crypto.dart';
 import '../Crypto/Latest News.dart';
-import '../Crypto/See All Assets.dart';
+// import '../Crypto/See All Assets.dart';
 import '../Crypto/Trending see all.dart';
 import '../Dark mode.dart';
 import '../config/common.dart';
@@ -265,20 +265,8 @@ class _crypto_State extends State<crypto_> {
                 ),
               ),
               AppConstants.Height(20),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => see_all(),));
-                },
-                child: Text(
-                  "See All Assets",
-                  style: TextStyle(
-                      fontFamily: "Manrope-Medium",
-                      fontSize: 15,
-                      color: Color(0xFF8B0000),
-                      fontWeight: FontWeight.w700),
-                ),
-              ),
-              AppConstants.Height(20),
+              // See All Assets link removed per request
+              AppConstants.Height(10),
               Stack(
                 children: [
                   GestureDetector(

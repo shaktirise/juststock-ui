@@ -159,27 +159,40 @@ class _Reffle_codeState extends State<Reffle_code> {
                                     ],
                                   ),
                                   const Spacer(),
-                                  const Padding(
-                                    padding: EdgeInsets.only(top: 20),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.copy,
-                                              color: Color(0xFF8B0000),
-                                              size: 14,
-                                            ),
-                                            Text(
-                                              'Copy',
-                                              style: TextStyle(
-                                                  color: Color(0xFF8B0000),
-                                                  fontSize: 12,
-                                                  fontFamily: "Manrope-Bold"),
-                                            )
-                                          ],
-                                        )
-                                      ],
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 20),
+                                    child: InkWell(
+                                      onTap: () async {
+                                        final rc = _refCode?.trim();
+                                        if (rc == null || rc.isEmpty) {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(content: Text('No referral code to copy')),
+                                          );
+                                          return;
+                                        }
+                                        await Clipboard.setData(ClipboardData(text: rc));
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Referral code copied')),
+                                        );
+                                      },
+                                      borderRadius: BorderRadius.circular(6),
+                                      child: const Row(
+                                        children: [
+                                          Icon(
+                                            Icons.copy,
+                                            color: Color(0xFF8B0000),
+                                            size: 14,
+                                          ),
+                                          SizedBox(width: 4),
+                                          Text(
+                                            'Copy',
+                                            style: TextStyle(
+                                                color: Color(0xFF8B0000),
+                                                fontSize: 12,
+                                                fontFamily: "Manrope-Bold"),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],

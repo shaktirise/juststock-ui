@@ -18,6 +18,9 @@ import '../Stocks/Us stocks.dart';
 import '../config/common.dart';
 import '../widgets/wallet_balance_card.dart';
 import '../widgets/wallet_balance_amount.dart';
+import '../widgets/activation_countdown.dart';
+import '../widgets/ad_slider.dart';
+import '../Account&setting/Refferal Code.dart';
 import '../Advice/advice_list.dart';
 import 'package:crowwn/api/advice_api.dart';
 import '../services/advice_seen_store.dart';
@@ -36,9 +39,9 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> with SingleTickerProviderStateMixin {
-static const String _adminWhatsAppNumber = '917066844214';
-  Future<void> _openWhatsapp() async {
-    final uri = Uri.parse('https://wa.me/' + _adminWhatsAppNumber);
+  static const String _telegramUrl = 'https://t.me/justock8';
+  Future<void> _openTelegram() async {
+    final uri = Uri.parse(_telegramUrl);
     await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
   int currentindex = 0;
@@ -131,9 +134,9 @@ static const String _adminWhatsAppNumber = '917066844214';
   actionsIconTheme: const IconThemeData(size: 22),
   actions: [
     IconButton(
-      tooltip: 'WhatsApp',
-      onPressed: _openWhatsapp,
-      icon: const FaIcon(FontAwesomeIcons.whatsapp, color: Color(0xFF25D366)),
+      tooltip: 'Telegram',
+      onPressed: _openTelegram,
+      icon: const FaIcon(FontAwesomeIcons.telegram, color: Color(0xFF229ED9)),
     ),
     IconButton(
       tooltip: 'Notifications',
@@ -183,7 +186,7 @@ static const String _adminWhatsAppNumber = '917066844214';
                                 const Text(
                                   "Total wallet balance",
                                   style: TextStyle(
-                                      color: Color(0xff94A3B8),
+                                      color: Color(0xffFFFFFF),
                                       fontSize: 15,
                                       fontFamily: "Manrope-Regular"),
                                 ),
@@ -210,46 +213,14 @@ static const String _adminWhatsAppNumber = '917066844214';
                                             ? const Icon(
                                                 Icons.remove_red_eye_outlined,
                                                 size: 24,
-                                                color: Color(0xff94A3B8))
+                                                color: Colors.white)
                                             : const Icon(
                                                 Icons.visibility_off_outlined,
                                                 size: 24,
-                                                color: Color(0xff94A3B8))),
+                                                color: Colors.white)),
                                     // Expand
                                     const Spacer(),
-                                    // Expanded(child: AppConstants.Width(90)),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 15),
-                                      child: Container(
-                                        height: 33,
-                                        width: 70,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                          color: const Color(0xff1DCE5C),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Image.asset(
-                                              "assets/images/up-arrow.png",
-                                              height: 15,
-                                              width: 15,
-                                              color: Colors.white,
-                                            ),
-                                            AppConstants.Width(5),
-                                            const Text(
-                                              "23.00%",
-                                              style: TextStyle(
-                                                  fontSize: 10,
-                                                  color: Colors.white,
-                                                  fontFamily: "Manrope-Medium"),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
+                                    // Removed green growth badge on wallet header
                                   ],
                                 ),
                               ],
@@ -420,7 +391,7 @@ static const String _adminWhatsAppNumber = '917066844214';
                       child: Row(
                         children: [
                           Text(
-                            "My Portfolio",
+                            "Activation Countdown",
                             style: TextStyle(
                               fontSize: 17,
                               fontFamily: "Manrope-Bold",
@@ -432,6 +403,11 @@ static const String _adminWhatsAppNumber = '917066844214';
                     ),
                     AppConstants.Height(15),
                     Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: const ActivationCountdownCard(),
+                    ),
+                    // Removed "See All Assets" link as requested
+                    /* if (false) Padding(
                       padding: const EdgeInsets.only(left: 10, right: 10),
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -550,10 +526,13 @@ static const String _adminWhatsAppNumber = '917066844214';
                                         color: notifier.getContainerBorder,
                                       ),
                                       AppConstants.Height(12),
-                                      const Text("Profits",
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: Color(0xff64748B,),),),
+                                      const Text(
+                                        "Profits",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Color(0xff64748B),
+                                        ),
+                                      ),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
@@ -1089,13 +1068,79 @@ static const String _adminWhatsAppNumber = '917066844214';
                           ],
                         ),
                       ),
-                    ),
+                    ),*/
                     Column(
                       children: [
                         // Wallet balance + Add money card
                         const WalletBalanceCard(),
+                        AppConstants.Height(20),
+                        // Earn up to 5% APR promo card (restored)
+                        Stack(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Reffle_code()),
+                                );
+                              },
+                              child: Container(
+                                height: height / 5.5,
+                                decoration: BoxDecoration(
+                                  color: notifier.earn,
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(
+                                      color: notifier.getContainerBorder),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 20),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: const [
+                                          Text(
+                                            'Earn up to 5% APR',
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontFamily: 'Manrope-Bold',
+                                            ),
+                                          ),
+                                          SizedBox(height: 4),
+                                          Text(
+                                            'Learn how to rewards on\nFinancial',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: 'Manrope-Regular',
+                                              color: Color(0xff64748B),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    const Padding(
+                                      padding: EdgeInsets.only(right: 20),
+                                      child: Image(
+                                        image: AssetImage('assets/images/Piggy bank.png'),
+                                        height: 96,
+                                        width: 90,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        const AdSlider(),
                         // Existing content
-                        Padding(
+                        /*Padding(
                           padding:
                               const EdgeInsets.only(left: 10, right: 10, top: 20),
                           child: Row(
@@ -1123,11 +1168,11 @@ static const String _adminWhatsAppNumber = '917066844214';
                               ),
                             ],
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
-                    AppConstants.Height(10),
-                    Padding(
+                    // Removed: Watchlist TabBar
+                    /*Padding(
                       padding: const EdgeInsets.only(left: 2, right: 2),
                       child: TabBar(
                         labelPadding: EdgeInsetsDirectional.symmetric(
@@ -1205,7 +1250,7 @@ static const String _adminWhatsAppNumber = '917066844214';
                             ),
                           ),
                         ],
-                      ),
+                      ),*/
 
                       //   child: TabBar(
                       //     physics: BouncingScrollPhysics(),
@@ -1342,20 +1387,12 @@ static const String _adminWhatsAppNumber = '917066844214';
                       //       ),
                       //     ],
                       //   ),
-                    ),
                   ],
                 ),
               ),
             ];
           },
-          body: const TabBarView(
-            children: [
-              Crypto_(),
-              Stock(),
-              gold(),
-              nfts(),
-            ],
-          ),
+          body: const SizedBox.shrink(),
         ),
         // bottomNavigationBar: BottomAppBar(
         //   color: Colors.blue,

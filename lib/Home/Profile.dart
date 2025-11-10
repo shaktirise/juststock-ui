@@ -8,7 +8,6 @@ import '../Account&setting/Bank Account.dart';
 import '../Account&setting/Help Center.dart';
 import '../Account&setting/Personal data.dart';
 import '../Account&setting/Privacy&Policy.dart';
-import '../Account&setting/Push Notification.dart';
 import '../Account&setting/Refferal Code.dart';
 import '../Account&setting/Select Language.dart';
 import '../Account&setting/Social Media Link.dart';
@@ -333,25 +332,9 @@ class _ProfileState extends State<Profile> {
                       onPress: () {},
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: accountDetails_(
-                      image: "assets/images/refresh-circle.png",
-                      name: "Auto Invest",
-                      desc: "Manage auto investment",
-                      onPress: () {},
-                    ),
-                  ),
+                  // Removed: Auto Invest
                   // Temporarily disabled: Social Media
-                  GestureDetector(
-                    onTap: () {},
-                    child: accountDetails_(
-                      image: "assets/images/Instagram outlined.png",
-                      name: "Social Media",
-                      desc: "All Social Media",
-                      onPress: null,
-                    ),
-                  ),
+                  // Removed: Social Media
                   AppConstants.Height(20),
                   Text(
                     "Settings",
@@ -372,35 +355,30 @@ class _ProfileState extends State<Profile> {
                   ),
                   GestureDetector(
                     onTap: () {
+                      // Route to the same Notifications page as the Home bell icon
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Push_Notifications(),
-                          ));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Notifications(),
+                        ),
+                      );
                     },
                     child: accountDetails(
                       image: "assets/images/notification.png",
                       name: "Push Notifications",
                       desc: "Notification preferences",
                       onPress: () {
+                        // Keep behavior consistent if inner onPress is used
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Push_Notifications(),
-                            ));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Notifications(),
+                          ),
+                        );
                       },
                     ),
                   ),
-                  // Temporarily disabled: Language
-                  GestureDetector(
-                    onTap: () {},
-                    child: accountDetails1(
-                      image: "assets/images/Translate.png",
-                      name: "Languange",
-                      desc: "English (USA)",
-                      onPress: null,
-                    ),
-                  ),
+                  // Removed: Language
                   Container(
                     height: 75,
                     decoration: BoxDecoration(
@@ -469,16 +447,7 @@ class _ProfileState extends State<Profile> {
                         fontSize: 16),
                   ),
                   AppConstants.Height(20),
-                  // Temporarily disabled: Help Center
-                  GestureDetector(
-                    onTap: () {},
-                    child: accountDetails(
-                      image: "assets/images/question-circle-outlined.png",
-                      name: "Help Center",
-                      desc: "Get supports",
-                      onPress: null,
-                    ),
-                  ),
+                  // Removed: Help Center
                   GestureDetector(
                     onTap: () {
                       Navigator.push(

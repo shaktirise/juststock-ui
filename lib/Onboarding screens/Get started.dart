@@ -50,7 +50,8 @@ class _Get1State extends State<Get1> {
                   color: notifier.textColor),
             ),
             const Text(
-              "Your Stock Market Learning Hub",
+              "Understand. Learn. Apply. Become a smarter investor.",
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 16,
                   color: Color(0xff64748B),

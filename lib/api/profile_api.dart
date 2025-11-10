@@ -35,5 +35,35 @@ class ProfileApi {
       return false;
     }
   }
+
+  /// Returns the activation timestamp if available.
+  /// Uses `referralActivatedAt` from profile and supports ISO strings or
+  /// unix epoch (seconds/millis). Returns local time.
+  static Future<DateTime?> activationAt() async {
+    try {
+      final profile = await fetchProfile();
+      if (profile == null) return null;
+      final val = profile['referralActivatedAt'];
+      if (val == null) return null;
+      if (val is String) {
+        if (val.trim().isEmpty) return null;
+        final parsed = DateTime.tryParse(val);
+        if (parsed != null) return parsed.toLocal();
+      }
+      if (val is num) {
+        final v = val.toInt();
+        // Heuristic: > 10^12 => ms, > 10^9 => s
+        if (v > 1000000000000) {
+          return DateTime.fromMillisecondsSinceEpoch(v).toLocal();
+        }
+        if (v > 1000000000) {
+          return DateTime.fromMillisecondsSinceEpoch(v * 1000).toLocal();
+        }
+      }
+      return null;
+    } catch (_) {
+      return null;
+    }
+  }
 }
 

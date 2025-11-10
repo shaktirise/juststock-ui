@@ -179,37 +179,6 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                   ),
-                  AppConstants.Height(10),
-                  const Text(
-                    "--------------- Or sign in with ---------------",
-                    style: TextStyle(
-                        fontSize: 13,
-                        color: Color(0xff64748B),
-                        fontFamily: "Manrope-Medium"),
-                  ),
-                  // Social login buttons (Apple/Google) removed
-                  AppConstants.Height(20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Don't have an account?",
-                        style: TextStyle(
-                            fontFamily: "Manrope-Medium", color: Color(0xff64748B)),
-                      ),
-                      GestureDetector(
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const Sign(),));
-                          },
-                          child: const Text(
-                            "Sign Up",
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xFF8B0000),
-                                fontFamily: "Manrope-Bold"),
-                          )),
-                    ],
-                  ),
                 ],
               ),
             ),

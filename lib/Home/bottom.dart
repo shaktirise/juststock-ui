@@ -1,4 +1,5 @@
-import 'package:crowwn/Home/Market.dart';
+// import 'package:crowwn/Home/Market.dart';
+import 'package:crowwn/Home/classes.dart';
 import 'package:crowwn/Home/Portfolio.dart';
 import 'package:crowwn/Home/Profile.dart';
 import 'package:crowwn/Home/home.dart';
@@ -19,7 +20,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   int currentIndex = 0;
   List<Widget> myChildren = [
     const home(),
-    const Market(),
+    const ClassesPage(),
     const Wallet(),
     const Portfolio(),
     const Profile(),
@@ -90,18 +91,13 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.only(bottom: 8),
-                child: Image.asset(
-                  "assets/images/Market.png",
-                  scale: 3.5,
-                    color: notifier.bottom
-                ),
+                child: Icon(Icons.school_outlined, color: notifier.bottom),
               ),
               activeIcon: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.asset("assets/images/Market_fill.png",
-                    scale: 3.5, color: notifier.bottom),
+                child: Icon(Icons.school, color: notifier.bottom),
               ),
-              label: "Market"),
+              label: "Classes"),
           const BottomNavigationBarItem(
             label: "",
             icon: Text(""),
