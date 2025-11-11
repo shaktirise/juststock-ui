@@ -1,0 +1,53 @@
+{
+  "info": {
+    "name": "Wallet Withdrawal Flow",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Minimal examples to create and list wallet withdrawals. Set {{baseUrl}} and {{token}} in environment."
+  },
+  "item": [
+    {
+      "name": "Create Wallet Withdrawal (UPI)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/wallet/withdrawals", "host": ["{{baseUrl}}"], "path": ["api","wallet","withdrawals"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amountInRupees\": 620,\n  \"method\": \"UPI\",\n  \"upiId\": \"8446031622-2@axl\",\n  \"name\": \"rohan gangadhar dede\",\n  \"mobile\": \"8446031622\",\n  \"note\": \"withdraw money\"\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Wallet Withdrawal (BANK)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/wallet/withdrawals", "host": ["{{baseUrl}}"], "path": ["api","wallet","withdrawals"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amountInRupees\": 620,\n  \"method\": \"BANK\",\n  \"bankAccountName\": \"Rohan Gangadhar Dede\",\n  \"bankAccountNumber\": \"1234567890\",\n  \"bankIfsc\": \"HDFC0001234\",\n  \"bankName\": \"HDFC Bank\",\n  \"name\": \"rohan gangadhar dede\",\n  \"mobile\": \"8446031622\",\n  \"note\": \"withdraw money\"\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "List My Wallet Withdrawals",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/wallet/withdrawals", "host": ["{{baseUrl}}"], "path": ["api","wallet","withdrawals"] }
+      },
+      "response": []
+    }
+  ]
+}
+
