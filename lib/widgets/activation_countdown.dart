@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../Dark mode.dart';
-import '../api/profile_api.dart';
+import '../services/api_locator.dart';
 
 class ActivationCountdownCard extends StatefulWidget {
   const ActivationCountdownCard({super.key});
@@ -15,10 +15,13 @@ class ActivationCountdownCard extends StatefulWidget {
 class _ActivationCountdownCardState extends State<ActivationCountdownCard> {
   Timer? _ticker;
   Timer? _refetchTimer;
-  DateTime? _activationAt;
   DateTime? _target;
   Duration _remaining = Duration.zero;
   bool _loading = true;
+  bool _active = false;
+  String _cycle = 'none';
+  int _cycleDays = 0;
+  int _nextRequiredTopupRupees = 2100;
 
   @override
   void initState() {
@@ -35,20 +38,53 @@ class _ActivationCountdownCardState extends State<ActivationCountdownCard> {
 
   Future<void> _loadActivation() async {
     setState(() => _loading = true);
-    final at = await ProfileApi.activationAt();
-    if (!mounted) return;
-    if (at != null) {
-      final t = at.add(const Duration(days: 60));
+    try {
+      final data = await ApiLocator.walletActivation.countdown();
+      if (!mounted) return;
+      final active = (data['active'] as bool?) ?? false;
+      _active = active;
+      _cycle = (data['currentCycle']?.toString() ?? 'none');
+      _cycleDays = (data['currentCycleDays'] as num?)?.toInt() ?? 0;
+      _nextRequiredTopupRupees = (data['nextRequiredTopupRupees'] as num?)?.toInt() ?? 2100;
+
+      DateTime? activeUntil;
+      final msRaw = (data['activeUntilMs'] as num?)?.toInt();
+      if (msRaw != null && msRaw > 0) {
+        // Heuristic: if looks like seconds, convert to ms
+        final ms = msRaw < 100000000000 ? (msRaw * 1000) : msRaw;
+        activeUntil = DateTime.fromMillisecondsSinceEpoch(ms).toLocal();
+      } else {
+        final s = data['activeUntil']?.toString();
+        if (s != null && s.isNotEmpty) {
+          activeUntil = DateTime.tryParse(s)?.toLocal();
+        }
+      }
+
+      final sr = (data['secondsRemaining'] as num?)?.toInt();
+      if (activeUntil == null && sr != null && sr > 0) {
+        activeUntil = DateTime.now().add(Duration(seconds: sr));
+      }
+
+      if ((active || (sr != null && sr > 0)) && activeUntil != null) {
+        setState(() {
+          _target = activeUntil;
+          _remaining = activeUntil!.difference(DateTime.now());
+          _loading = false;
+          _active = true;
+        });
+        _startTicker();
+        _refetchTimer?.cancel();
+      } else {
+        setState(() {
+          _target = null;
+          _remaining = Duration.zero;
+          _loading = false;
+        });
+        _startRefetch();
+      }
+    } catch (_) {
+      if (!mounted) return;
       setState(() {
-        _activationAt = at;
-        _target = t;
-        _remaining = t.difference(DateTime.now());
-        _loading = false;
-      });
-      _startTicker();
-    } else {
-      setState(() {
-        _activationAt = null;
         _target = null;
         _remaining = Duration.zero;
         _loading = false;
@@ -62,26 +98,21 @@ class _ActivationCountdownCardState extends State<ActivationCountdownCard> {
     _ticker = Timer.periodic(const Duration(seconds: 1), (_) {
       if (!mounted || _target == null) return;
       final diff = _target!.difference(DateTime.now());
-      setState(() => _remaining = diff.isNegative ? Duration.zero : diff);
+      if (diff.isNegative || diff.inSeconds <= 0) {
+        setState(() => _remaining = Duration.zero);
+        // when expired, try to refresh the window status
+        _loadActivation();
+      } else {
+        setState(() => _remaining = diff);
+      }
     });
   }
 
   void _startRefetch() {
     _refetchTimer?.cancel();
-    // Re-check activation every 15s until detected, then stop
-    _refetchTimer = Timer.periodic(const Duration(seconds: 15), (_) async {
-      final at = await ProfileApi.activationAt();
-      if (at != null) {
-        if (!mounted) return;
-        final t = at.add(const Duration(days: 60));
-        setState(() {
-          _activationAt = at;
-          _target = t;
-          _remaining = t.difference(DateTime.now());
-        });
-        _startTicker();
-        _refetchTimer?.cancel();
-      }
+    // Poll the countdown endpoint periodically when inactive
+    _refetchTimer = Timer.periodic(const Duration(seconds: 20), (_) async {
+      await _loadActivation();
     });
   }
 
@@ -160,7 +191,7 @@ class _ActivationCountdownCardState extends State<ActivationCountdownCard> {
                 ),
               ),
             )
-          : (_activationAt == null
+          : (!_active
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -200,13 +231,9 @@ class _ActivationCountdownCardState extends State<ActivationCountdownCard> {
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
-                      'COMING SOON ....',
-                      style: TextStyle(
-                        fontSize: 18,
-                        letterSpacing: 1.2,
-                        fontFamily: 'Manrope-Bold',
-                      ),
+                    Text(
+                      _cycle == 'registration' ? 'Registration window (' + _cycleDays.toString() + ' days)' : 'Renewal window (' + _cycleDays.toString() + ' days)',
+                      style: const TextStyle(fontSize: 14, color: Color(0xff64748B)),
                     ),
                     const SizedBox(height: 12),
                     Row(
@@ -223,6 +250,12 @@ class _ActivationCountdownCardState extends State<ActivationCountdownCard> {
                         'Expires on ${_formatDate(_target!)}',
                         style: const TextStyle(fontSize: 12, color: Color(0xff64748B)),
                       ),
+                    const SizedBox(height: 6),
+                    const Text(
+                      'First cycle is 60 days after ₹2100. Renewals are 30 days per ₹1000.',
+                      style: TextStyle(fontSize: 12, color: Color(0xff64748B)),
+                      textAlign: TextAlign.center,
+                    ),
                   ],
                 )),
     );
