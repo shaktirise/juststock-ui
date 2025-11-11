@@ -20,6 +20,7 @@ import '../widgets/wallet_balance_card.dart';
 import '../widgets/wallet_balance_amount.dart';
 import '../widgets/activation_countdown.dart';
 import '../widgets/ad_slider.dart';
+import '../widgets/cloud_image_slider.dart';
 import '../Account&setting/Refferal Code.dart';
 import '../Advice/advice_list.dart';
 import 'package:crowwn/api/advice_api.dart';
@@ -1139,6 +1140,8 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                         ),
                         const SizedBox(height: 12),
                         const AdSlider(),
+                        const SizedBox(height: 12),
+                        const CloudImageSlider(limit: 5),
                         // Existing content
                         /*Padding(
                           padding:

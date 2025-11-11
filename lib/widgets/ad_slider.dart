@@ -49,16 +49,28 @@ class _AdSliderState extends State<AdSlider> {
       if (!mounted) return;
       setState(() => _ads = ads);
       if (_ads.isEmpty) return;
+      // Initialize all videos concurrently so swiping on mobile doesn't show loaders.
+      final inits = <Future<void>>[];
       for (final path in _ads) {
         final c = VideoPlayerController.asset(path)
           ..setLooping(true)
           ..setVolume(0.0);
         _controllers.add(c);
-        await c.initialize().catchError((_) {});
+        inits.add(c.initialize().catchError((_) {}));
+      }
+      // Ensure first ad is ready quickly; others keep initializing concurrently.
+      if (inits.isNotEmpty) {
+        await inits.first;
       }
       if (!mounted) return;
       setState(() {});
-      if (_controllers.isNotEmpty) _controllers.first.play();
+      if (_controllers.isNotEmpty && _controllers.first.value.isInitialized) {
+        _controllers.first.play();
+      }
+      // Do not await the rest, but when they finish they'll render without spinner.
+      // Best-effort: wait for remaining in background (no need to handle result).
+      // ignore: unawaited_futures
+      Future.wait(inits).catchError((_) {});
       _timer = Timer.periodic(const Duration(seconds: 6), (_) {
         if (!mounted || _controllers.isEmpty) return;
         final next = (_index + 1) % _ads.length;
@@ -101,6 +113,7 @@ class _AdSliderState extends State<AdSlider> {
                 aspectRatio: 16 / 9,
                 child: PageView.builder(
                   controller: _pageController,
+                  allowImplicitScrolling: true,
                   onPageChanged: (i) {
                     setState(() => _index = i);
                     for (int k = 0; k < _controllers.length; k++) {
