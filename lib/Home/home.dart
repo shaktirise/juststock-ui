@@ -19,7 +19,7 @@ import '../config/common.dart';
 import '../widgets/wallet_balance_card.dart';
 import '../widgets/wallet_balance_amount.dart';
 import '../widgets/activation_countdown.dart';
-import '../widgets/ad_slider.dart';
+// sliders removed from home page
 import '../widgets/cloud_image_slider.dart';
 import '../Account&setting/Refferal Code.dart';
 import '../Advice/advice_list.dart';
@@ -1139,9 +1139,8 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                           ],
                         ),
                         const SizedBox(height: 12),
-                        const AdSlider(),
-                        const SizedBox(height: 12),
                         const CloudImageSlider(limit: 5),
+                        const SizedBox(height: 12),
                         // Existing content
                         /*Padding(
                           padding:
