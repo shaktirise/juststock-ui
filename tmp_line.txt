@@ -1,0 +1,2 @@
+            Text('Available: ₹ ${(_pendingPaise / 100).toStringAsFixed(2)}', style: TextStyle(color: notifier.textColor, fontFamily: 'Manrope-Bold')),
+

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:dio/dio.dart';
 import 'package:crowwn/services/api_locator.dart';
 
 import '../Dark mode.dart';
@@ -19,7 +20,7 @@ class _ReferralWithdrawPageState extends State<ReferralWithdrawPage> {
   bool _submitting = false;
   int _pendingPaise = 0;
   String? _error;
-  static const bool _demoWithdrawSuccess = true;
+  static const bool _demoWithdrawSuccess = false;
 
   // UPI
   final _upiId = TextEditingController();
@@ -112,6 +113,25 @@ class _ReferralWithdrawPageState extends State<ReferralWithdrawPage> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Withdrawal requested')));
       Navigator.pop(context, res);
+    } on DioException catch (e) {
+      if (!mounted) return;
+      if (e.response?.statusCode == 409) {
+        // Friendly message for existing pending referral withdrawal
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('You already have a pending withdrawal. View history for status.')),
+        );
+        try {
+          // Optional: trigger a refresh of withdrawals elsewhere if needed
+          await ApiLocator.referral.withdrawals();
+        } catch (_) {}
+      } else if (e.response?.statusCode == 400) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No commission available to withdraw')));
+      } else if (e.response?.statusCode == 403) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Demo accounts cannot withdraw')));
+      } else {
+        final sc = e.response?.statusCode;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed (${sc ?? '-'})')));
+      }
     } catch (e) {
       if (!mounted) return;
       final msg = e.toString().replaceFirst('Exception: ', '');

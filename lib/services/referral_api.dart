@@ -93,15 +93,15 @@ class ReferralApi {
 
   Future<Map<String, dynamic>> requestWithdrawUpi({
     required String upiId,
-    required String name,
-    required String mobile,
+    String? name,
+    String? mobile,
     String? note,
   }) async {
     final r = await dio.post('/api/auth/referrals/withdraw', data: {
       'method': 'UPI',
       'upiId': upiId,
-      'name': name,
-      'mobile': mobile,
+      if (name != null && name.isNotEmpty) 'name': name,
+      if (mobile != null && mobile.isNotEmpty) 'mobile': mobile,
       if (note != null) 'note': note,
     });
     return (r.data as Map).cast<String, dynamic>();
@@ -112,8 +112,8 @@ class ReferralApi {
     required String bankAccountNumber,
     required String bankIfsc,
     required String bankName,
-    required String contactName,
-    required String contactMobile,
+    String? contactName,
+    String? contactMobile,
     String? note,
   }) async {
     final r = await dio.post('/api/auth/referrals/withdraw', data: {
@@ -122,8 +122,8 @@ class ReferralApi {
       'bankAccountNumber': bankAccountNumber,
       'bankIfsc': bankIfsc,
       'bankName': bankName,
-      'contactName': contactName,
-      'contactMobile': contactMobile,
+      if (contactName != null && contactName.isNotEmpty) 'contactName': contactName,
+      if (contactMobile != null && contactMobile.isNotEmpty) 'contactMobile': contactMobile,
       if (note != null) 'note': note,
     });
     return (r.data as Map).cast<String, dynamic>();

@@ -1,11 +1,14 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'Wallet Withdraw UPI.dart';
 import 'package:provider/provider.dart';
 import '../Dark mode.dart';
 
 class WithdrawOptions extends StatelessWidget {
-  const WithdrawOptions({super.key});
+  const WithdrawOptions({super.key, required this.amountInRupees});
+
+  final int amountInRupees;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,12 @@ class WithdrawOptions extends StatelessWidget {
               subtitle: 'Withdraw to UPI ID',
               icon: Icons.qr_code_2,
               onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('UPI option (coming soon)')));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WalletWithdrawUpiPage(amountInRupees: amountInRupees),
+                  ),
+                );
               },
             ),
             const SizedBox(height: 12),

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../Dark mode.dart';
 import 'Withdraw select bank.dart';
+import 'Withdraw options.dart';
 
 class Withdraw extends StatefulWidget {
   const Withdraw({super.key});
@@ -306,10 +307,15 @@ class _WithdrawState extends State<Withdraw> {
         child: GestureDetector(
           onTap: () {
             final parsed = double.tryParse(_amountController.text.replaceAll(',', '').trim());
+            if (parsed == null || parsed <= 0) {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Enter a valid amount')));
+              return;
+            }
+            final amountInRupees = parsed.round();
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => Withdraw_select(amount: parsed),
+                builder: (context) => WithdrawOptions(amountInRupees: amountInRupees),
               ),
             );
           },
