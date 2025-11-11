@@ -372,7 +372,7 @@ class _Crypto_State extends State<Crypto_> with SingleTickerProviderStateMixin {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Earn up to 5% APR",
+                                  "Your Referral Code Awaits!",
                                   style: TextStyle(
                                     fontSize: 20,
                                     color: notifier.textColor,
@@ -380,7 +380,7 @@ class _Crypto_State extends State<Crypto_> with SingleTickerProviderStateMixin {
                                   ),
                                 ),
                                 const Text(
-                                  "Learn how to rewards on \nFinancial",
+                                  "Share it. Earn cashbacks. Repeat.",
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontFamily: "Manrope-Regular",

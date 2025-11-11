@@ -515,14 +515,14 @@ class _StockState extends State<Stock> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Earn up to 5% APR",
+                                "Your Referral Code Awaits!",
                                 style: TextStyle(
                                     fontSize: 22,
                                     color: Color(0xffFFFFFF),
                                     fontFamily: "Manrope-Bold"),
                               ),
                               Text(
-                                "Learn how to rewards on \n Financial",
+                                "Share it. Earn cashbacks. Repeat.",
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontFamily: "Manrope-Regular",

@@ -291,14 +291,14 @@ class _crypto_State extends State<crypto_> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Earn up to 5% APR",
+                                  "Your Referral Code Awaits!",
                                   style: TextStyle(
                                       fontSize: 20,
                                       color: notifier.textColor,
                                       fontFamily: "Manrope-Bold"),
                                 ),
                                 Text(
-                                  "Learn how to rewards on \nFinancial",
+                                  "Share it. Earn cashbacks. Repeat.",
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: "Manrope-Regular",

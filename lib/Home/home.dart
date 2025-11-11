@@ -1104,15 +1104,15 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                             CrossAxisAlignment.start,
                                         children: const [
                                           Text(
-                                            'Earn up to 5% APR',
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontFamily: 'Manrope-Bold',
-                                            ),
+                                            'Your Referral Code Awaits!',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontFamily: 'Manrope-Bold',
+                                          ),
                                           ),
                                           SizedBox(height: 4),
                                           Text(
-                                            'Learn how to rewards on\nFinancial',
+                                            'Share it. Earn cashbacks. Repeat.',
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontFamily: 'Manrope-Regular',
