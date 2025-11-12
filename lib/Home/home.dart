@@ -28,6 +28,7 @@ import '../services/advice_seen_store.dart';
 import 'Search.dart';
 import 'crypto_.dart';
 import 'gold_.dart';
+import '../DailyTip/daily_tip_page.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -138,6 +139,16 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
       tooltip: 'Telegram',
       onPressed: _openTelegram,
       icon: const FaIcon(FontAwesomeIcons.telegram, color: Color(0xFF229ED9)),
+    ),
+    IconButton(
+      tooltip: 'Daily Tip',
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const DailyTipPage()),
+        );
+      },
+      icon: const FaIcon(FontAwesomeIcons.lightbulb, color: Color(0xFFF59E0B)),
     ),
     IconButton(
       tooltip: 'Notifications',

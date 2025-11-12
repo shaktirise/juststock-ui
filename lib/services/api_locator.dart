@@ -6,6 +6,7 @@ import 'user_api_v2.dart';
 import 'referral_api.dart';
 import 'wallet_withdraw_api.dart';
 import 'wallet_activation_api.dart';
+import 'daily_tip_api.dart';
 
 /// Simple global locator for API singletons.
 class ApiLocator {
@@ -16,6 +17,7 @@ class ApiLocator {
   static late final ReferralApi referral;
   static late final WalletWithdrawApi wallet;
   static late final WalletActivationApi walletActivation;
+  static late final DailyTipApi dailyTip;
 
   static bool _inited = false;
 
@@ -28,6 +30,7 @@ class ApiLocator {
     referral = ReferralApi(dio);
     wallet = WalletWithdrawApi(dio);
     walletActivation = WalletActivationApi(dio);
+    dailyTip = DailyTipApi(dio);
     _inited = true;
   }
 }

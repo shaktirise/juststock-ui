@@ -89,8 +89,19 @@ class ReferralApi {
       'offset': offset,
     });
     final raw = r.data;
-    if (raw is Map) return raw.cast<String, dynamic>();
     if (raw is List) return {'items': raw};
+    if (raw is Map) {
+      final map = raw.cast<String, dynamic>();
+      // Normalize potential combined response to a common shape
+      if (!map.containsKey('items')) {
+        if (map['referrals'] is List) {
+          map['items'] = (map['referrals'] as List).toList();
+        } else if (map['data'] is List) {
+          map['items'] = (map['data'] as List).toList();
+        }
+      }
+      return map;
+    }
     return {'items': const []};
   }
 
@@ -107,18 +118,32 @@ class ReferralApi {
 
   /// Non-paid referrals (pending activation)
   Future<Map<String, dynamic>> pending({int limit = 50, int offset = 0}) async {
-    try {
-      final r = await dio.get('/api/auth/referrals/pending', queryParameters: {
-        'limit': limit,
-        'offset': offset,
-      });
-      final raw = r.data;
-      if (raw is Map) return raw.cast<String, dynamic>();
-      if (raw is List) return {'items': raw, 'total': raw.length, 'offset': offset, 'limit': limit};
-      return {'items': const [], 'total': 0, 'offset': offset, 'limit': limit};
-    } catch (_) {
-      return {'items': const [], 'total': 0, 'offset': offset, 'limit': limit};
+    Map<String, dynamic>? res;
+    // Try new alias first, then fall back to legacy paths
+    for (final path in const [
+      '/api/auth/referrals/non-paid',
+      '/api/auth/referrals/nonpaid',
+      '/api/auth/referrals/pending',
+    ]) {
+      try {
+        final r = await dio.get(path, queryParameters: {
+          'limit': limit,
+          'offset': offset,
+        });
+        final raw = r.data;
+        if (raw is Map) {
+          res = raw.cast<String, dynamic>();
+        } else if (raw is List) {
+          res = {'items': raw, 'total': raw.length, 'offset': offset, 'limit': limit};
+        } else {
+          res = {'items': const [], 'total': 0, 'offset': offset, 'limit': limit};
+        }
+        break; // success
+      } catch (_) {
+        // try next alias
+      }
     }
+    return res ?? {'items': const [], 'total': 0, 'offset': offset, 'limit': limit};
   }
 
   /// Activated referrals
