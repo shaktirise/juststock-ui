@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../Dark mode.dart';
 import '../services/api_locator.dart';
+import '../api/profile_api.dart';
 
 class ActivationCountdownCard extends StatefulWidget {
   const ActivationCountdownCard({super.key});
@@ -40,9 +41,10 @@ class _ActivationCountdownCardState extends State<ActivationCountdownCard> {
   Future<void> _loadActivation() async {
     setState(() => _loading = true);
     try {
-      Map<String, dynamic>? data = await ApiLocator.user.membershipSnapshot();
-      // Fallback to legacy countdown endpoint if membership missing
-      data ??= await ApiLocator.walletActivation.countdown();
+      Map<String, dynamic>? data = await ProfileApi.membershipSnapshot();
+      // Fallback to dio and legacy endpoint if needed
+      data ??= await ApiLocator.user.membershipSnapshot().catchError((_) => null);
+      data ??= await ApiLocator.walletActivation.countdown().catchError((_) => null);
       if (data == null) throw Exception('No membership data');
       if (!mounted) return;
 
@@ -106,7 +108,7 @@ class _ActivationCountdownCardState extends State<ActivationCountdownCard> {
         if (!_backfillAttempted) {
           _backfillAttempted = true;
           try {
-            await ApiLocator.user.backfillMembership();
+            await ProfileApi.backfillMembership();
             await _loadActivation();
             return;
           } catch (_) {}

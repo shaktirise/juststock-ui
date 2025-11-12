@@ -65,5 +65,42 @@ class ProfileApi {
       return null;
     }
   }
+
+  /// Returns the membership snapshot from /api/auth/me.
+  /// Looks for `membership` at top-level or inside `user.membership`.
+  static Future<Map<String, dynamic>?> membershipSnapshot() async {
+    try {
+      final headers = await TokenStorage.authHeaders(extra: const {'Accept': 'application/json'});
+      final res = await http.get(_uri('/api/auth/me'), headers: headers);
+      if (res.statusCode != 200) return null;
+      final decoded = jsonDecode(res.body);
+      if (decoded is Map<String, dynamic>) {
+        final m = decoded['membership'];
+        if (m is Map<String, dynamic>) return m;
+        final user = decoded['user'];
+        if (user is Map<String, dynamic> && user['membership'] is Map<String, dynamic>) {
+          return (user['membership'] as Map<String, dynamic>);
+        }
+      }
+    } catch (_) {}
+    return null;
+  }
+
+  /// POST /api/auth/membership/backfill
+  static Future<Map<String, dynamic>?> backfillMembership({bool dryRun = false}) async {
+    try {
+      final headers = await TokenStorage.authHeaders(extra: const {'Content-Type': 'application/json'});
+      final res = await http.post(
+        _uri('/api/auth/membership/backfill'),
+        headers: headers,
+        body: jsonEncode({if (dryRun) 'dryRun': true}),
+      );
+      if (res.statusCode == 200) {
+        final decoded = jsonDecode(res.body);
+        if (decoded is Map<String, dynamic>) return decoded;
+      }
+    } catch (_) {}
+    return null;
+  }
 }
 

@@ -25,7 +25,11 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
   Map<String, dynamic>? _config;
   List<dynamic>? _withdrawals;
   bool _loading = true;
-  String? _error;
+  String? _error;
+
+  // New lists for referral views
+  List<Map<String, dynamic>> _pending = const [];
+  List<Map<String, dynamic>> _active = const [];
 
   int _amountPaiseFrom(Map<String, dynamic> m) {
     final ap = m['amountPaise'];
@@ -38,7 +42,7 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
   @override
   void initState() {
     super.initState();
-    _tab = TabController(length: 3, vsync: this);
+    _tab = TabController(length: 5, vsync: this);
     _load();
   }
 
@@ -49,17 +53,21 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
     });
     try {
       final ref = ApiLocator.referral;
-      final results = await Future.wait([
-        ref.earnings(),
-        ref.tree(depth: 10),
-        ref.config(),
-        ref.withdrawals(),
-      ]);
+      final results = await Future.wait([
+        ref.earnings(),
+        ref.tree(depth: 10),
+        ref.config(),
+        ref.withdrawals(),
+        ref.pending(limit: 100, offset: 0),
+        ref.active(limit: 100, offset: 0),
+      ]);
       setState(() {
         _earn = results[0] as Map<String, dynamic>;
         _levels = results[1] as List<dynamic>;
         _config = results[2] as Map<String, dynamic>;
-        _withdrawals = results[3] as List<dynamic>;
+        _withdrawals = results[3] as List<dynamic>;
+        _pending = ((results[4] as Map<String, dynamic>)['items'] as List?)?.cast<Map<String, dynamic>>() ?? const [];
+        _active = ((results[5] as Map<String, dynamic>)['items'] as List?)?.cast<Map<String, dynamic>>() ?? const [];
       });
     } catch (e) {
       setState(() => _error = e.toString());
@@ -80,28 +88,32 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
           icon: const Icon(Icons.close),
           onPressed: () => Navigator.pop(context),
         ),
-        bottom: TabBar(
-          controller: _tab,
-          labelColor: notifier.textColor,
-          tabs: const [
-            Tab(text: 'Tree'),
-            Tab(text: 'Earnings'),
-            Tab(text: 'Plan Details'),
-          ],
-        ),
+        bottom: TabBar(
+          controller: _tab,
+          labelColor: notifier.textColor,
+          tabs: const [
+            Tab(text: 'Tree'),
+            Tab(text: 'Earnings'),
+            Tab(text: 'Plan Details'),
+            Tab(text: 'Non-paid'),
+            Tab(text: 'Active'),
+          ],
+        ),
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _error != null
               ? Center(child: Text(_error!, style: TextStyle(color: notifier.textColor)))
-              : TabBarView(
-                  controller: _tab,
-                  children: [
-                    _buildTree(),
-                    _buildEarnings(),
-                    _buildConfig(),
-                  ],
-                ),
+              : TabBarView(
+                  controller: _tab,
+                  children: [
+                    _buildTree(),
+                    _buildEarnings(),
+                    _buildConfig(),
+                    _buildPending(),
+                    _buildActive(),
+                  ],
+                ),
     );
   }
 
@@ -248,7 +260,7 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
     );
   }
 
-  Widget _buildConfig() {
+  Widget _buildConfig() {
     final c = _config ?? {};
     final levelPercentages = (c['levelPercentages'] as List?)?.cast<num>() ?? const [];
     final maxDepth = c['maxDepth']?.toString() ?? '-';
@@ -262,7 +274,91 @@ class _ReferralsPageState extends State<ReferralsPage> with SingleTickerProvider
         _row('Re-top', '${rupees(renFee).toStringAsFixed(2)}'),
       ],
     );
-  }
+  }
+
+  Widget _buildPending() {
+    final items = _pending;
+    return RefreshIndicator(
+      onRefresh: _load,
+      child: ListView.separated(
+        padding: const EdgeInsets.all(16),
+        itemCount: items.length,
+        separatorBuilder: (_, __) => const SizedBox(height: 8),
+        itemBuilder: (context, i) {
+          final u = items[i];
+          final name = (u['name'] ?? u['fullName'] ?? u['username'] ?? '-').toString();
+          final phone = (u['phone'] ?? u['mobile'] ?? '').toString();
+          return Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: notifier.getContainerBorder),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.person_outline),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(name, style: TextStyle(fontFamily: 'Manrope-Bold', color: notifier.textColor)),
+                      const SizedBox(height: 2),
+                      Text(phone.isEmpty ? '-' : phone, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 6),
+                const Text('Non-paid', style: TextStyle(color: Colors.orange, fontSize: 12)),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildActive() {
+    final items = _active;
+    return RefreshIndicator(
+      onRefresh: _load,
+      child: ListView.separated(
+        padding: const EdgeInsets.all(16),
+        itemCount: items.length,
+        separatorBuilder: (_, __) => const SizedBox(height: 8),
+        itemBuilder: (context, i) {
+          final u = items[i];
+          final name = (u['name'] ?? u['fullName'] ?? u['username'] ?? '-').toString();
+          final phone = (u['phone'] ?? u['mobile'] ?? '').toString();
+          final count = (u['loginCount'] as num?)?.toInt();
+          return Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: notifier.getContainerBorder),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.verified_outlined, color: Color(0xFF16A34A)),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(name, style: TextStyle(fontFamily: 'Manrope-Bold', color: notifier.textColor)),
+                      const SizedBox(height: 2),
+                      Text(phone.isEmpty ? '-' : phone, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                    ],
+                  ),
+                ),
+                if (count != null) Text('Logins: $count', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
 
   Widget _statTile(String title, num value) {
     return Container(
