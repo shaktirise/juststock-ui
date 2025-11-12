@@ -22,6 +22,7 @@ class _ActivationCountdownCardState extends State<ActivationCountdownCard> {
   String _cycle = 'none';
   int _cycleDays = 0;
   int _nextRequiredTopupRupees = 2100;
+  bool _backfillAttempted = false;
 
   @override
   void initState() {
@@ -39,18 +40,41 @@ class _ActivationCountdownCardState extends State<ActivationCountdownCard> {
   Future<void> _loadActivation() async {
     setState(() => _loading = true);
     try {
-      final data = await ApiLocator.walletActivation.countdown();
+      Map<String, dynamic>? data = await ApiLocator.user.membershipSnapshot();
+      // Fallback to legacy countdown endpoint if membership missing
+      data ??= await ApiLocator.walletActivation.countdown();
+      if (data == null) throw Exception('No membership data');
       if (!mounted) return;
-      final active = (data['active'] as bool?) ?? false;
+
+      final status = (data['status']?.toString().toUpperCase());
+      bool active = false;
+      if (data['isActive'] is bool) {
+        active = data['isActive'] as bool;
+      } else if (status == 'ACTIVE') {
+        active = true;
+      } else if (data['active'] is bool) {
+        active = data['active'] as bool; // legacy field
+      }
       _active = active;
-      _cycle = (data['currentCycle']?.toString() ?? 'none');
-      _cycleDays = (data['currentCycleDays'] as num?)?.toInt() ?? 0;
-      _nextRequiredTopupRupees = (data['nextRequiredTopupRupees'] as num?)?.toInt() ?? 2100;
+
+      // Compute cycle details
+      final activatedMs = (data['activatedAtMs'] as num?)?.toInt();
+      final activeUntilMs = (data['activeUntilMs'] as num?)?.toInt();
+      if (activatedMs != null && activeUntilMs != null) {
+        final start = DateTime.fromMillisecondsSinceEpoch(activatedMs).toLocal();
+        final end = DateTime.fromMillisecondsSinceEpoch(activeUntilMs).toLocal();
+        _cycleDays = end.difference(start).inDays.abs();
+        _cycle = _cycleDays >= 45 ? 'registration' : 'renewal';
+      } else {
+        _cycleDays = (data['remainingDays'] as num?)?.toInt() ?? (data['currentCycleDays'] as num?)?.toInt() ?? 0;
+        final legacyCycle = (data['currentCycle']?.toString());
+        _cycle = legacyCycle ?? ((_cycleDays >= 45) ? 'registration' : 'renewal');
+      }
+      _nextRequiredTopupRupees = 2100;
 
       DateTime? activeUntil;
       final msRaw = (data['activeUntilMs'] as num?)?.toInt();
       if (msRaw != null && msRaw > 0) {
-        // Heuristic: if looks like seconds, convert to ms
         final ms = msRaw < 100000000000 ? (msRaw * 1000) : msRaw;
         activeUntil = DateTime.fromMillisecondsSinceEpoch(ms).toLocal();
       } else {
@@ -60,9 +84,12 @@ class _ActivationCountdownCardState extends State<ActivationCountdownCard> {
         }
       }
 
-      final sr = (data['secondsRemaining'] as num?)?.toInt();
+      final sr = (data['remainingSeconds'] as num?)?.toInt() ?? (data['secondsRemaining'] as num?)?.toInt();
+      final rm = (data['remainingMs'] as num?)?.toInt();
       if (activeUntil == null && sr != null && sr > 0) {
         activeUntil = DateTime.now().add(Duration(seconds: sr));
+      } else if (activeUntil == null && rm != null && rm > 0) {
+        activeUntil = DateTime.now().add(Duration(milliseconds: rm));
       }
 
       if ((active || (sr != null && sr > 0)) && activeUntil != null) {
@@ -75,6 +102,15 @@ class _ActivationCountdownCardState extends State<ActivationCountdownCard> {
         _startTicker();
         _refetchTimer?.cancel();
       } else {
+        // One-time backfill for older active users
+        if (!_backfillAttempted) {
+          _backfillAttempted = true;
+          try {
+            await ApiLocator.user.backfillMembership();
+            await _loadActivation();
+            return;
+          } catch (_) {}
+        }
         setState(() {
           _target = null;
           _remaining = Duration.zero;

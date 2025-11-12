@@ -195,7 +195,7 @@ class _AdviceListPageState extends State<AdviceListPage> {
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              _dateFmt.format(m.createdAt),
+                              m.createdAtLocal ?? _dateFmt.format(m.createdAt),
                               style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 13),
                             ),
                           ],

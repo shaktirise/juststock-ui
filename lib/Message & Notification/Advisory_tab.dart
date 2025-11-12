@@ -99,7 +99,7 @@ class AdvisoryTab extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      _formatTimestamp(item.createdAt),
+                      _formatTimestamp(item),
                       style: const TextStyle(
                         fontSize: 12,
                         color: Color(0xff94A3B8),
@@ -151,7 +151,7 @@ class AdvisoryTab extends StatelessWidget {
               ),
               AppConstants.Height(15),
               Text(
-                "Posted on ${DateFormat('MMM d, yyyy – hh:mm a').format(item.createdAt)}",
+                "Posted on ${item.createdAtLocalText ?? DateFormat('MMM d, yyyy – hh:mm a').format(item.createdAt)}",
                 style: const TextStyle(
                   fontSize: 12,
                   color: Color(0xff94A3B8),
@@ -180,13 +180,14 @@ class AdvisoryTab extends StatelessWidget {
     );
   }
 
-  static String _formatTimestamp(DateTime timestamp) {
+  static String _formatTimestamp(InAppNotification item) {
+    final timestamp = item.createdAt;
     final now = DateTime.now();
     final diff = now.difference(timestamp);
     if (diff.inMinutes < 1) return "Just now";
     if (diff.inHours < 1) return "${diff.inMinutes}m ago";
     if (diff.inDays < 1) return "${diff.inHours}h ago";
-    return DateFormat("d MMM, hh:mm a").format(timestamp);
+    return item.createdAtLocalText ?? DateFormat("d MMM, hh:mm a").format(timestamp);
   }
 }
 

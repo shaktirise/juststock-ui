@@ -111,13 +111,37 @@ class AdviceMeta {
   final String category;
   final DateTime createdAt;
   final num price;
-  AdviceMeta({required this.id, required this.category, required this.createdAt, required this.price});
-  factory AdviceMeta.fromJson(Map<String, dynamic> json) => AdviceMeta(
-        id: json['id']?.toString() ?? json['_id']?.toString() ?? '',
-        category: json['category']?.toString() ?? '',
-        createdAt: DateTime.tryParse(json['createdAt']?.toString() ?? '') ?? DateTime.now(),
-        price: json['price'] ?? 0,
-      );
+  // IST-friendly fields provided by API
+  final String? createdAtLocal;
+  final int? createdAtMs;
+
+  AdviceMeta({
+    required this.id,
+    required this.category,
+    required this.createdAt,
+    required this.price,
+    this.createdAtLocal,
+    this.createdAtMs,
+  });
+
+  factory AdviceMeta.fromJson(Map<String, dynamic> json) {
+    final createdMs = (json['createdAtMs'] as num?)?.toInt() ?? int.tryParse(json['createdAtMs']?.toString() ?? '');
+    DateTime created;
+    if (createdMs != null) {
+      created = DateTime.fromMillisecondsSinceEpoch(createdMs).toLocal();
+    } else {
+      final parsed = DateTime.tryParse(json['createdAt']?.toString() ?? '');
+      created = (parsed ?? DateTime.now()).toLocal();
+    }
+    return AdviceMeta(
+      id: json['id']?.toString() ?? json['_id']?.toString() ?? '',
+      category: json['category']?.toString() ?? '',
+      createdAt: created,
+      price: json['price'] ?? 0,
+      createdAtLocal: json['createdAtLocal']?.toString(),
+      createdAtMs: createdMs,
+    );
+  }
 }
 
 class AdviceUnlocked {
@@ -143,6 +167,9 @@ class AdviceDetail {
   final String? stoploss;
   final num? price;
   final DateTime? createdAt;
+  // IST-friendly fields provided by API
+  final String? createdAtLocal;
+  final int? createdAtMs;
   AdviceDetail({
     required this.id,
     required this.category,
@@ -152,17 +179,31 @@ class AdviceDetail {
     this.stoploss,
     this.price,
     this.createdAt,
+    this.createdAtLocal,
+    this.createdAtMs,
   });
-  factory AdviceDetail.fromJson(Map<String, dynamic> json) => AdviceDetail(
-        id: json['id']?.toString() ?? json['_id']?.toString() ?? '',
-        category: json['category']?.toString() ?? '',
-        text: json['text']?.toString(),
-        buy: json['buy']?.toString(),
-        target: json['target']?.toString(),
-        stoploss: json['stoploss']?.toString(),
-        price: json['price'] as num?,
-        createdAt: DateTime.tryParse(json['createdAt']?.toString() ?? ''),
-      );
+  factory AdviceDetail.fromJson(Map<String, dynamic> json) {
+    final createdMs = (json['createdAtMs'] as num?)?.toInt() ?? int.tryParse(json['createdAtMs']?.toString() ?? '');
+    DateTime? created;
+    if (createdMs != null) {
+      created = DateTime.fromMillisecondsSinceEpoch(createdMs).toLocal();
+    } else {
+      final parsed = DateTime.tryParse(json['createdAt']?.toString() ?? '');
+      created = parsed?.toLocal();
+    }
+    return AdviceDetail(
+      id: json['id']?.toString() ?? json['_id']?.toString() ?? '',
+      category: json['category']?.toString() ?? '',
+      text: json['text']?.toString(),
+      buy: json['buy']?.toString(),
+      target: json['target']?.toString(),
+      stoploss: json['stoploss']?.toString(),
+      price: json['price'] as num?,
+      createdAt: created,
+      createdAtLocal: json['createdAtLocal']?.toString(),
+      createdAtMs: createdMs,
+    );
+  }
 }
 
 class HttpException implements Exception {

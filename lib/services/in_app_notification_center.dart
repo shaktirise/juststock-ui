@@ -17,6 +17,7 @@ class InAppNotification {
     required this.title,
     required this.body,
     required this.createdAt,
+    this.createdAtLocalText,
     this.category,
     this.tag,
     this.amount,
@@ -29,6 +30,8 @@ class InAppNotification {
   final String title;
   final String body;
   final DateTime createdAt;
+  // If server provided a preformatted IST time string, prefer using this for exact display.
+  final String? createdAtLocalText;
   final String? category;
   final String? tag;
   final double? amount;
@@ -188,6 +191,7 @@ class NotificationCenter extends ChangeNotifier {
         title: 'New ${category.toUpperCase()} call',
         body: latest.price == null ? 'A fresh advisory is available.' : 'Entry at ${_formatAmount(latest.price!.toDouble(), 'INR')}',
         createdAt: created,
+        createdAtLocalText: latest.createdAtLocal,
         category: category.toUpperCase(),
       );
       _advisory.insert(0, item);
