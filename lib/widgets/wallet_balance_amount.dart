@@ -8,7 +8,7 @@ class WalletBalanceAmount extends StatelessWidget {
 
   String _formatRupees(int paise) {
     final rupees = (paise / 100).toStringAsFixed(2);
-    return '₹$rupees';
+    return '\u20B9 $rupees';
   }
 
   @override
@@ -20,7 +20,7 @@ class WalletBalanceAmount extends StatelessWidget {
       future: WalletApi.getBalancePaise(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text('₹0.00', style: style);
+          return Text('\u20B9 0.00', style: style);
         }
         final paise = snapshot.data ?? 0;
         return Text(_formatRupees(paise), style: style);

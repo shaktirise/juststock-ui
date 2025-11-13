@@ -1,4 +1,4 @@
-﻿import 'Withdraw options.dart';
+import 'Withdraw options.dart';
 import 'Top up balance.dart';
 import 'package:crowwn/widgets/topup_helper.dart';
 // ignore_for_file: file_names
@@ -127,7 +127,7 @@ class _WalletState extends State<Wallet> {
                                     (data['totalEarnedPaise'] as num?)?.toInt() ?? 0;
                                 final rupees = (totalEarnedPaise / 100).toStringAsFixed(2);
                                 return Text(
-                                  '₹ ',
+                                  '\u20B9 $rupees',
                                   style: const TextStyle(
                                     fontSize: 32,
                                     color: Color(0xffFFFFFF),
@@ -412,3 +412,4 @@ class _WalletState extends State<Wallet> {
     );
   }
 }
+
