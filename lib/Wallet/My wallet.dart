@@ -8,10 +8,7 @@ import 'package:provider/provider.dart';
 import '../Dark mode.dart';
 import 'package:crowwn/services/api_locator.dart';
 import '../config/common.dart';
-import 'Recieve balance.dart';
-import 'Top up balance.dart';
 import 'Transaction all.dart';
-import 'Transfer balance.dart';
 import 'Withdraw Balance.dart';
 import '../Account&setting/Referral Withdraw.dart';
 import 'package:crowwn/api/wallet_api.dart';
@@ -57,10 +54,10 @@ class _WalletState extends State<Wallet> {
           child: Image.asset(
             "assets/images/arrow-narrow-left (1).png",
             scale: 2.9,
-            color: Color(0xFF0F172A),
+            color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF8B0000),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -73,7 +70,8 @@ class _WalletState extends State<Wallet> {
                 Container(
                   clipBehavior: Clip.none,
                   alignment: Alignment.center,
-                  height: MediaQuery.of(context).size.height / 2.8,
+                  // Increased header height for breathing room
+                  height: 220,
                   width: double.infinity,
                   decoration: const BoxDecoration(
                       image: DecorationImage(
@@ -99,9 +97,13 @@ class _WalletState extends State<Wallet> {
                             ),
                           ],
                         ),
-                        AppConstants.Height(10),
-                        Row(
-                          children: [
+                    AppConstants.Height(10),
+                    // Add right padding so the eye icon doesn't collide
+                    // with the centered Withdraw action.
+                    Padding(
+                      padding: const EdgeInsets.only(right: 72),
+                      child: Row(
+                      children: [
                             FutureBuilder<Map<String, dynamic>>(
                               future: ApiLocator.referral.earnings(),
                               builder: (context, snap) {
@@ -154,53 +156,25 @@ class _WalletState extends State<Wallet> {
                                       color: Color(0xffFFFFFF),
                                     ),
                             ),
-                            // Expand
-                            // Expanded(child: AppConstants.Width(90)),
                           ],
                         ),
+                      ),
                         // Removed secondary label/value; big value shows referral earnings
                       ],
                     ),
                   ),
                 ),
+                // Place Withdraw just below the earnings row, centered.
                 Positioned(
-                  bottom: 30,
-                  left: 35,
-                  right: 35,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  bottom: 14,
+                  left: 0,
+                  right: 0,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () { TopupHelper.ensureFunds(context); },
-                            child: Container(
-                              height: 56,
-                              width: 56,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(28),
-                                  color: Color(0xFF8B0000).withOpacity(0.25)),
-                              child: const Center(
-                                  child: Icon(
-                                Icons.add_circle_outline,
-                                color: Colors.white,
-                              )),
-                            ),
-                          ),
-                          AppConstants.Height(5),
-                          const Text(
-                            "Deposit",
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xffFFFFFF),
-                                fontFamily: "Manrope-SemiBold",),
-                          )
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
+                      GestureDetector(
+                        onTap: () {
                           Navigator.of(context).push(
                             PageRouteBuilder(
                               pageBuilder: (_, __, ___) => const ReferralWithdrawPage(),
@@ -208,98 +182,40 @@ class _WalletState extends State<Wallet> {
                               reverseTransitionDuration: Duration.zero,
                             ),
                           );
-                            },
-                            child: Container(
-                              height: 56,
-                              width: 56,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(28),
-                                  color: Color(0xFF8B0000).withOpacity(0.25)),
-                              child: Center(
-                                  child: Image.asset(
-                                      "assets/images/Recieve.png",
-                                      scale: 2.5,),),
+                        },
+                        child: Container(
+                          height: 72,
+                          width: 72,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(36),
+                            color: const Color(0xFF8B0000).withOpacity(0.3),
+                          ),
+                          child: Center(
+                            child: Image.asset(
+                              "assets/images/Recieve.png",
+                              scale: 2.0,
                             ),
                           ),
-                          AppConstants.Height(5),
-                          const Text(
-                            "Withdraw",
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xffFFFFFF),
-                                fontFamily: "Manrope-SemiBold",),
-                          )
-                        ],
+                        ),
                       ),
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () { return;                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const Transfer_balance(),
-                                  ),);
-                            },
-                            child: Container(
-                              height: 56,
-                              width: 56,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(28),
-                                  color: Color(0xFF8B0000).withOpacity(0.25),),
-                              child: Center(
-                                  child: Image.asset("assets/images/logout.png",
-                                      scale: 2.5,),),
-                            ),
+                      const SizedBox(height: 0),
+                      Transform.translate(
+                        offset: const Offset(0, -12),
+                        child: const Text(
+                          "Withdraw",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xffFFFFFF),
+                            fontFamily: "Manrope-SemiBold",
                           ),
-                          AppConstants.Height(5),
-                          const Text(
-                            "Send",
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xffFFFFFF),
-                                fontFamily: "Manrope-SemiBold",),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () { return;                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const Recevie_balance(),
-                                  ),);
-                            },
-                            child: Container(
-                              height: 56,
-                              width: 56,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(28),
-                                  color: Color(0xFF8B0000).withOpacity(0.25)),
-                              child: Center(
-                                  child: Image.asset(
-                                      "assets/images/coin white.png",
-                                      scale: 2.5)),
-                            ),
-                          ),
-                          AppConstants.Height(5),
-                          const Text(
-                            "Receive",
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xffFFFFFF),
-                                fontFamily: "Manrope-SemiBold"),
-                          )
-                        ],
-                      ),
+                        ),
+                      )
                     ],
                   ),
                 ),
               ],
             ),
-            AppConstants.Height(20),
+            AppConstants.Height(8),
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
               child: Column(
@@ -412,4 +328,3 @@ class _WalletState extends State<Wallet> {
     );
   }
 }
-
