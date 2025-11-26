@@ -41,7 +41,7 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> with SingleTickerProviderStateMixin {
-  static const String _telegramUrl = 'https://t.me/justock8';
+  static const String _telegramUrl = 'https://t.me/';
   Future<void> _openTelegram() async {
     final uri = Uri.parse(_telegramUrl);
     await launchUrl(uri, mode: LaunchMode.externalApplication);
