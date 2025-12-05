@@ -1,10 +1,10 @@
 // ignore_for_file: file_names
 
-import 'package:crowwn/services/api_locator.dart';
-import 'package:crowwn/services/referral_api.dart';
+import 'package:juststock/services/api_locator.dart';
+import 'package:juststock/services/referral_api.dart';
 
 import '../widgets/topup_helper.dart';
-import 'package:crowwn/Wallet/Withdraw Balance.dart';
+import 'package:juststock/Wallet/Withdraw Balance.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

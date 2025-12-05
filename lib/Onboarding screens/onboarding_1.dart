@@ -1,5 +1,5 @@
-import 'package:crowwn/Onboarding%20screens/splash_screen.dart';
-import 'package:crowwn/config/common.dart';
+import 'package:juststock/Onboarding%20screens/splash_screen.dart';
+import 'package:juststock/config/common.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

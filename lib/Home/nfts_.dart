@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// import 'package:Crowwn/NFT/Statics.dart';
+// import 'package:juststock/NFT/Statics.dart';
 
 import '../Dark mode.dart';
 import '../NFT/Collections.dart';
@@ -877,7 +877,7 @@ class _nfts_State extends State<nfts_> {
 /*
 // ignore_for_file: camel_case_types
 
-import 'package:crowwn/NFT/Statics.dart';
+import 'package:juststock/NFT/Statics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

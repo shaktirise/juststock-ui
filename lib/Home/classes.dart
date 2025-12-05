@@ -1,10 +1,10 @@
 import 'dart:ui';
 
-import 'package:crowwn/DailyTip/daily_tip_page.dart';
-import 'package:crowwn/Dark%20mode.dart';
-import 'package:crowwn/Home/videodata.dart';
-import 'package:crowwn/Home/videos_detaiils.dart';
-import 'package:crowwn/Message%20&%20Notification/Notifications.dart';
+import 'package:juststock/DailyTip/daily_tip_page.dart';
+import 'package:juststock/Dark%20mode.dart';
+import 'package:juststock/Home/videodata.dart';
+import 'package:juststock/Home/videos_detaiils.dart';
+import 'package:juststock/Message%20&%20Notification/Notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';

@@ -1,7 +1,7 @@
 // ignore_for_file: camel_case_types
-import 'package:crowwn/Home/home_video.dart';
-import 'package:crowwn/Home/stocks_.dart';
-import 'package:crowwn/Home/videos_detaiils.dart';
+import 'package:juststock/Home/home_video.dart';
+import 'package:juststock/Home/stocks_.dart';
+import 'package:juststock/Home/videos_detaiils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -24,7 +24,7 @@ import '../widgets/activation_countdown.dart';
 import '../widgets/cloud_image_slider.dart';
 import '../Account&setting/Refferal Code.dart';
 import '../Advice/advice_list.dart';
-import 'package:crowwn/api/advice_api.dart';
+import 'package:juststock/api/advice_api.dart';
 import '../services/advice_seen_store.dart';
 import 'Search.dart';
 import 'crypto_.dart';

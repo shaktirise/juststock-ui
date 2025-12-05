@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
-import 'package:crowwn/Message%20&%20Notification/Message_ofline.dart';
-import 'package:crowwn/config/common.dart';
-import 'package:crowwn/config/message_model.dart';
+import 'package:juststock/Message%20&%20Notification/Message_ofline.dart';
+import 'package:juststock/config/common.dart';
+import 'package:juststock/config/message_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

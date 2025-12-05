@@ -1,17 +1,17 @@
 import 'Withdraw options.dart';
 import 'Top up balance.dart';
-import 'package:crowwn/widgets/topup_helper.dart';
+import 'package:juststock/widgets/topup_helper.dart';
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../Dark mode.dart';
-import 'package:crowwn/services/api_locator.dart';
+import 'package:juststock/services/api_locator.dart';
 import '../config/common.dart';
 import 'Transaction all.dart';
 import 'Withdraw Balance.dart';
 import '../Account&setting/Referral Withdraw.dart';
-import 'package:crowwn/api/wallet_api.dart';
+import 'package:juststock/api/wallet_api.dart';
 
 class Wallet extends StatefulWidget {
   const Wallet({super.key});

@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:crowwn/config/common.dart';
+import 'package:juststock/config/common.dart';
 
 class Faq extends StatefulWidget {
   const Faq({super.key});

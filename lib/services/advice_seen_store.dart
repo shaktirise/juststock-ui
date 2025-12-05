@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:crowwn/api/token_storage.dart';
+import 'package:juststock/api/token_storage.dart';
 
 class AdviceSeenStore {
   static const _kSeen = 'advice_v2_seen_ids_v1';

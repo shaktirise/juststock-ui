@@ -1,6 +1,6 @@
-import 'package:crowwn/config/common.dart';
-import 'package:crowwn/services/api_locator.dart';
-import 'package:crowwn/Home/bottom.dart';
+import 'package:juststock/config/common.dart';
+import 'package:juststock/services/api_locator.dart';
+import 'package:juststock/Home/bottom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

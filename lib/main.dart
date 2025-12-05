@@ -1,11 +1,11 @@
-import 'package:crowwn/Onboarding%20screens/splash_screen.dart';
+import 'package:juststock/Onboarding%20screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:crowwn/Dark%20mode.dart';
-import 'package:crowwn/services/api_locator.dart';
-import 'package:crowwn/services/in_app_notification_center.dart';
-import 'package:crowwn/services/local_push_notifications.dart';
-import 'package:crowwn/services/push_messaging_bridge.dart';
+import 'package:juststock/Dark%20mode.dart';
+import 'package:juststock/services/api_locator.dart';
+import 'package:juststock/services/in_app_notification_center.dart';
+import 'package:juststock/services/local_push_notifications.dart';
+import 'package:juststock/services/push_messaging_bridge.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 

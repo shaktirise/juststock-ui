@@ -1,8 +1,8 @@
-// import 'package:crowwn/Home/Market.dart';
-import 'package:crowwn/Home/classes.dart';
-import 'package:crowwn/Home/Portfolio.dart';
-import 'package:crowwn/Home/Profile.dart';
-import 'package:crowwn/Home/home.dart';
+// import 'package:juststock/Home/Market.dart';
+import 'package:juststock/Home/classes.dart';
+import 'package:juststock/Home/Portfolio.dart';
+import 'package:juststock/Home/Profile.dart';
+import 'package:juststock/Home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

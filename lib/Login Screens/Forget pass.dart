@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:crowwn/api/auth_api.dart';
+import 'package:juststock/api/auth_api.dart';
 
 import '../Dark mode.dart';
 import 'Password update.dart';

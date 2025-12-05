@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:crowwn/api/advice_api.dart';
-import 'package:crowwn/services/advice_seen_store.dart';
+import 'package:juststock/api/advice_api.dart';
+import 'package:juststock/services/advice_seen_store.dart';
 import 'package:flutter/material.dart';
-import 'package:crowwn/services/local_push_notifications.dart';
+import 'package:juststock/services/local_push_notifications.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 

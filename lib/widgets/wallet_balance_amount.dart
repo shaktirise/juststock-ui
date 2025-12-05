@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:crowwn/api/wallet_api.dart';
+import 'package:juststock/api/wallet_api.dart';
 
 class WalletBalanceAmount extends StatelessWidget {
   final bool visible;

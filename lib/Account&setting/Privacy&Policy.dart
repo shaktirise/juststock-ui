@@ -1,7 +1,7 @@
 // ignore_for_file: file_names, camel_case_types
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:crowwn/config/common.dart';
+import 'package:juststock/config/common.dart';
 import '../Dark mode.dart';
 
 class Policy extends StatefulWidget {

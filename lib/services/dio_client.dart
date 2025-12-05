@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'api_config.dart';
 import 'token_store.dart';
-import 'package:crowwn/api/token_storage.dart' as legacy;
-import 'package:crowwn/api/auth_api.dart' show TokenPair;
+import 'package:juststock/api/token_storage.dart' as legacy;
+import 'package:juststock/api/auth_api.dart' show TokenPair;
 
 Dio createDio(TokenStore store) {
   final dio = Dio(

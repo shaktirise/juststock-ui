@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'package:crowwn/api/wallet_api.dart';
-import 'package:crowwn/api/profile_api.dart';
+import 'package:juststock/api/wallet_api.dart';
+import 'package:juststock/api/profile_api.dart';
 import 'package:provider/provider.dart';
 import '../Dark mode.dart';
 

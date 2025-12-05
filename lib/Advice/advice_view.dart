@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:crowwn/api/advice_api.dart';
+import 'package:juststock/api/advice_api.dart';
 import '../Dark mode.dart';
 
 class AdviceViewPage extends StatelessWidget {

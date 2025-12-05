@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:crowwn/config/Latest_News_model.dart';
+import 'package:juststock/config/Latest_News_model.dart';
 
 import '../Dark mode.dart';
 import '../Gold/Detail_gold.dart';

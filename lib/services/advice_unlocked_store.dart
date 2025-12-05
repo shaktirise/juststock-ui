@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:crowwn/api/advice_api.dart';
-import 'package:crowwn/api/token_storage.dart';
+import 'package:juststock/api/advice_api.dart';
+import 'package:juststock/api/token_storage.dart';
 
 class AdviceUnlockedStore {
   static const _kUnlocked = 'advice_v2_unlocked_cache_v1';

@@ -1,5 +1,5 @@
 // ignore_for_file: file_names
-// import 'package:Crowwn/Home/bottom.dart';
+// import 'package:juststock/Home/bottom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,9 +17,9 @@ import '../Dark mode.dart';
 import '../Message & Notification/Notifications.dart';
 import '../config/common.dart';
 import 'bottom.dart';
-import 'package:crowwn/services/api_locator.dart';
-import 'package:crowwn/Login Screens/Login.dart';
-import 'package:crowwn/Account&setting/Referrals.dart';
+import 'package:juststock/services/api_locator.dart';
+import 'package:juststock/Login Screens/Login.dart';
+import 'package:juststock/Account&setting/Referrals.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});

@@ -4,9 +4,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:crowwn/config/common.dart';
+import 'package:juststock/config/common.dart';
 import 'package:flutter/services.dart';
-import 'package:crowwn/services/api_locator.dart';
+import 'package:juststock/services/api_locator.dart';
 
 import '../Dark mode.dart';
 import 'package:share_plus/share_plus.dart';

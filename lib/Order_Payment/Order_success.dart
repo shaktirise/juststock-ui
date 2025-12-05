@@ -1,6 +1,6 @@
 // ignore_for_file: file_names, camel_case_types
 
-import 'package:crowwn/Home/bottom.dart';
+import 'package:juststock/Home/bottom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Dark mode.dart';

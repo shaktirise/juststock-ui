@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../config/common.dart';
-import 'package:crowwn/api/wallet_api.dart';
+import 'package:juststock/api/wallet_api.dart';
 
 class Transaction_all extends StatefulWidget {
   const Transaction_all({super.key});

@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:crowwn/Wallet/Transferbalance_confirmation.dart';
-import 'package:crowwn/config/Contact_list.dart';
+import 'package:juststock/Wallet/Transferbalance_confirmation.dart';
+import 'package:juststock/config/Contact_list.dart';
 
 import '../Dark mode.dart';
 import '../config/common.dart';

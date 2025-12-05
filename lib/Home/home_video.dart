@@ -1,7 +1,7 @@
 import 'dart:ui';
-import 'package:crowwn/Home/videodata.dart';
+import 'package:juststock/Home/videodata.dart';
 import 'package:flutter/material.dart';
-import 'package:crowwn/Home/videos_detaiils.dart';
+import 'package:juststock/Home/videos_detaiils.dart';
 
 class HomeVedioPage extends StatefulWidget {
   final String? driveApiKey;

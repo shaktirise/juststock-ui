@@ -1,13 +1,13 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:crowwn/api/auth_api.dart';
-import 'package:crowwn/api/token_storage.dart';
+import 'package:juststock/api/auth_api.dart';
+import 'package:juststock/api/token_storage.dart';
 import '../Dark mode.dart';
 import '../config/common.dart';
 import 'Face id.dart';
 import 'KYC Slides.dart';
-import 'package:crowwn/services/api_locator.dart';
+import 'package:juststock/services/api_locator.dart';
 import 'Forget pass.dart';
 import 'Sign up.dart';
 

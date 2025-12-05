@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:crowwn/api/advice_api.dart';
-import 'package:crowwn/widgets/topup_helper.dart';
-import 'package:crowwn/services/advice_unlocked_store.dart';
-import 'package:crowwn/services/advice_seen_store.dart';
+import 'package:juststock/api/advice_api.dart';
+import 'package:juststock/widgets/topup_helper.dart';
+import 'package:juststock/services/advice_unlocked_store.dart';
+import 'package:juststock/services/advice_seen_store.dart';
 import 'advice_view.dart';
 import '../Dark mode.dart';
 

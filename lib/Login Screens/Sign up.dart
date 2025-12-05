@@ -1,15 +1,15 @@
-﻿// ignore_for_file: file_names
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:crowwn/api/auth_api.dart';
-import 'package:crowwn/api/token_storage.dart';
+import 'package:juststock/api/auth_api.dart';
+import 'package:juststock/api/token_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/gestures.dart';
 import '../Dark mode.dart';
 import '../config/common.dart';
 import 'Login.dart';
 // Removed phone/OTP flow after signup
-import 'package:crowwn/services/api_locator.dart';
+import 'package:juststock/services/api_locator.dart';
 
 
 class Sign extends StatefulWidget {

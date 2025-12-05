@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:crowwn/config/Push_notification.dart';
+import 'package:juststock/config/Push_notification.dart';
 
 import '../Dark mode.dart';
 
