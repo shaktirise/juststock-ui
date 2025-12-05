@@ -17,26 +17,36 @@ class BottomBarScreen extends StatefulWidget {
 }
 
 class _BottomBarScreenState extends State<BottomBarScreen> {
+  // Fixed index mapping
+  static const int INDEX_CLASSES = 0;
+  static const int INDEX_HOME = 1;
+  static const int INDEX_WALLET = 2;
+  static const int INDEX_PORTFOLIO = 3;
+  static const int INDEX_PROFILE = 4;
+
   int currentIndex = 0;
-  List<Widget> myChildren = [
-    const home(),
-    const ClassesPage(),
-    const Wallet(),
-    const Portfolio(),
-    const Profile(),
+
+  final List<Widget> screens = const [
+    ClassesPage(), // 0 → Home button
+    home(), // 1 → Purchase
+    Wallet(), // 2 → Floating Button
+    Portfolio(), // 3 → Demat
+    Profile(), // 4 → Profile
   ];
+
   ColorNotifire notifier = ColorNotifire();
+
   @override
   Widget build(BuildContext context) {
     notifier = Provider.of<ColorNotifire>(context, listen: true);
+
     return Scaffold(
-      // Keep footer stable when keyboard opens
       resizeToAvoidBottomInset: false,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            currentIndex = 2;
+            currentIndex = INDEX_WALLET;
           });
         },
         backgroundColor: const Color(0xFF8B0000),
@@ -47,15 +57,13 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor:  notifier.background,
+        backgroundColor: notifier.background,
         type: BottomNavigationBarType.fixed,
-        currentIndex: currentIndex,
+        currentIndex: _getBottomIndex(),
         elevation: 0,
-        onTap: (int index) {
-          // Disable Demat (index 3)
-          if (index == 3) return;
+        onTap: (index) {
           setState(() {
-            currentIndex = index;
+            currentIndex = _mapBottomIndexToScreen(index);
           });
         },
         unselectedItemColor: notifier.textColor,
@@ -65,7 +73,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           fontSize: 10,
           letterSpacing: 0.2,
         ),
-        selectedLabelStyle:  TextStyle(
+        selectedLabelStyle: TextStyle(
           fontFamily: "Manrope_bold",
           fontSize: 10,
           fontWeight: FontWeight.w700,
@@ -74,66 +82,88 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         ),
         items: [
           BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Image.asset("assets/images/home.png", scale: 3.5,color: notifier.bottom),
-              ),
-              activeIcon: Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Image.asset(
-                  "assets/images/home_fill.png",
-                  scale: 3.5,
-                  color: notifier.bottom,
-                ),
-              ),
-              label: "Home",
+            icon: Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Image.asset("assets/images/home.png",
+                  scale: 3.5, color: notifier.bottom),
+            ),
+            activeIcon: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Image.asset("assets/images/home_fill.png",
+                  scale: 3.5, color: notifier.bottom),
+            ),
+            label: "Home",
           ),
-          BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Icon(Icons.school_outlined, color: notifier.bottom),
-              ),
-              activeIcon: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(Icons.school, color: notifier.bottom),
-              ),
-              label: "Classes"),
           const BottomNavigationBarItem(
-            label: "",
-            icon: Text(""),
+            icon: Padding(
+                padding: EdgeInsets.only(bottom: 8),
+                child: Icon(Icons.shopping_cart_checkout)),
+            activeIcon: Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Icon(Icons.shopping_cart_sharp)),
+            label: "Purchase",
           ),
           BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Image.asset(
-                  "assets/images/Portfolio.png",
-                  scale: 3.5,
-                    color: notifier.bottom
-                ),
-              ),
-              activeIcon: Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Image.asset(
-                  "assets/images/Portfolio_fill.png",
-                  // color: Colors.black,
-                  scale: 3.5,
-                    color: notifier.bottom
-                ),
-              ),
-              label: "Demat"),
+            icon: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Image.asset("assets/images/Portfolio.png",
+                  scale: 3.5, color: notifier.bottom),
+            ),
+            activeIcon: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Image.asset("assets/images/Portfolio_fill.png",
+                  scale: 3.5, color: notifier.bottom),
+            ),
+            label: "Demat",
+          ),
           BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(bottom: 8.0,right: 5),
-                child: Image.asset("assets/images/Person.png", scale: 3.5,color: notifier.bottom),
-              ),
-              activeIcon: Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Image.asset("assets/images/Person_fill.png", scale: 3.5,color: notifier.bottom),
-              ),
-              label: "Profile"),
+            icon: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0, right: 5),
+              child: Image.asset("assets/images/Person.png",
+                  scale: 3.5, color: notifier.bottom),
+            ),
+            activeIcon: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Image.asset("assets/images/Person_fill.png",
+                  scale: 3.5, color: notifier.bottom),
+            ),
+            label: "Profile",
+          ),
         ],
       ),
-      body: myChildren.elementAt(currentIndex),
+      body: screens[currentIndex],
     );
+  }
+
+  // Map bottom bar tap to actual screen index
+  int _mapBottomIndexToScreen(int bottomIndex) {
+    switch (bottomIndex) {
+      case 0:
+        return INDEX_CLASSES; // Home → Classes
+      case 1:
+        return INDEX_HOME; // Purchase → Home
+      case 2:
+        return currentIndex; // Demat → Portfolio
+      case 3:
+        return INDEX_PROFILE; // Profile → Profile
+      default:
+        return INDEX_HOME;
+    }
+  }
+
+  // Highlight correct bottom icon
+  int _getBottomIndex() {
+    switch (currentIndex) {
+      case INDEX_CLASSES:
+        return 0;
+      case INDEX_HOME:
+        return 1;
+      case INDEX_PORTFOLIO:
+        return 2;
+      case INDEX_PROFILE:
+        return 3;
+      default:
+        return 1;
+    }
   }
 }

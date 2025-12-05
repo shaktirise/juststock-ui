@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "463940205858",
+    "project_id": "juststock-d806a",
+    "storage_bucket": "juststock-d806a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463940205858:android:5c8fb3646573bab67f797b",
+        "android_client_info": {
+          "package_name": "juststock.in"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSXQhUUBcev5dA2bATk5Mx9nlKGoBEFus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

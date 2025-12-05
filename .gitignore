@@ -42,3 +42,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Secrets and credentials
+lib/services/get_serice_key.dart
+juststock-release.keystore
+key.properties
+
+# Third-party build outputs
+third_party/fluttertoast/example/build/

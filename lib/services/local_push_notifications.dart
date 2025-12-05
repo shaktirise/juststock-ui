@@ -1,10 +1,10 @@
-import 'dart:io';
+import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class LocalPushNotifications {
-  static final FlutterLocalNotificationsPlugin _plugin = FlutterLocalNotificationsPlugin();
+  static final FlutterLocalNotificationsPlugin _plugin =
+      FlutterLocalNotificationsPlugin();
 
   static const AndroidNotificationChannel _channel = AndroidNotificationChannel(
     'juststock_alerts',
@@ -25,12 +25,14 @@ class LocalPushNotifications {
       requestBadgePermission: true,
       requestSoundPermission: true,
     );
-    const initSettings = InitializationSettings(android: androidInit, iOS: iosInit);
+    const initSettings =
+        InitializationSettings(android: androidInit, iOS: iosInit);
 
     await _plugin.initialize(initSettings);
 
     // Android: create channel and request POST_NOTIFICATIONS runtime permission (API 33+)
-    final androidImpl = _plugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+    final androidImpl = _plugin.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
     if (androidImpl != null) {
       await androidImpl.createNotificationChannel(_channel);
       // On Android 13+, explicit runtime permission is required.
@@ -61,18 +63,23 @@ class LocalPushNotifications {
       enableVibration: true,
       ticker: 'alert',
       icon: null, // use default app icon
+      styleInformation: const BigTextStyleInformation(''),
     );
 
     const iosDetails = DarwinNotificationDetails(
       presentAlert: true,
       presentBadge: true,
       presentSound: true,
+      interruptionLevel: InterruptionLevel.timeSensitive,
     );
 
-    final details = NotificationDetails(android: androidDetails, iOS: iosDetails);
+    final details =
+        NotificationDetails(android: androidDetails, iOS: iosDetails);
 
-    // Use a simple unique id based on current timestamp to avoid collisions.
+    // Use a unique id based on timestamp
     final id = DateTime.now().millisecondsSinceEpoch.remainder(0x7FFFFFFF);
+
+    log('📢 Showing notification: ID=$id, Title=$title, Payload=$payload');
     await _plugin.show(id, title, body, details, payload: payload);
   }
 }

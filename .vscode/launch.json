@@ -1,0 +1,65 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "juststock-ui",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "juststock-ui (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "juststock-ui (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "fluttertoast",
+            "cwd": "third_party\\fluttertoast",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "fluttertoast (profile mode)",
+            "cwd": "third_party\\fluttertoast",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "fluttertoast (release mode)",
+            "cwd": "third_party\\fluttertoast",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "example",
+            "cwd": "third_party\\fluttertoast\\example",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "example (profile mode)",
+            "cwd": "third_party\\fluttertoast\\example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "example (release mode)",
+            "cwd": "third_party\\fluttertoast\\example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

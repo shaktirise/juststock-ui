@@ -1,5 +1,6 @@
-name: crowwn
-description: A new Flutter project.
+name: Just stock 
+description: Just stock application
+# version: 1.0.0+1
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -56,7 +57,13 @@ dependencies:
   firebase_messaging: ^14.9.4
   font_awesome_flutter: ^10.7.0
   video_player: ^2.8.6
+  googleapis_auth: ^1.6.0
   youtube_player_flutter: ^9.0.4
+  # firebase_storage: ^12.0.0
+  # cloud_firestore: ^5.0.0
+  # file_picker: ^8.0.0
+
+
 
 
 dev_dependencies:

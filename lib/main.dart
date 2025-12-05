@@ -6,13 +6,15 @@ import 'package:crowwn/services/api_locator.dart';
 import 'package:crowwn/services/in_app_notification_center.dart';
 import 'package:crowwn/services/local_push_notifications.dart';
 import 'package:crowwn/services/push_messaging_bridge.dart';
+
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ApiLocator.init();
   await LocalPushNotifications.initialize();
-  // Initialize remote push (FCM) if configured\n  await initPushMessaging();
+  // Initialize remote push (FCM) if configured
+  await initPushMessaging();
   runApp(const MyApp());
 }
 
@@ -46,7 +48,8 @@ class _MyAppState extends State<MyApp> {
               secondary: Color(0xFF8B0000),
             ),
             elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF8B0000)),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF8B0000)),
             ),
             appBarTheme: const AppBarTheme(
               backgroundColor: Colors.white,

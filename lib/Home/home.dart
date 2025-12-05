@@ -1,9 +1,10 @@
 // ignore_for_file: camel_case_types
-
+import 'package:crowwn/Home/home_video.dart';
 import 'package:crowwn/Home/stocks_.dart';
+import 'package:crowwn/Home/videos_detaiils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../Crypto/Detail_crypto.dart';
 import '../Crypto/crypto.dart';
 import '../Dark mode.dart';
@@ -41,11 +42,12 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> with SingleTickerProviderStateMixin {
-  static const String _telegramUrl = 'https://t.me/';
+  static const String _telegramUrl = 'https://t.me/justock8';
   Future<void> _openTelegram() async {
     final uri = Uri.parse(_telegramUrl);
     await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
+
   int currentindex = 0;
   int selectIndex = 0;
   bool _password = true;
@@ -67,13 +69,22 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
     "NFTs",
   ];
 
+  String? selectedVideo;
+  int selectedIndex = 0;
+
   late final TabController _tabController;
+
+  String getVideoId(String url) {
+    return YoutubePlayer.convertUrlToId(url) ?? "";
+  }
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
     _refreshUnread();
+    super.initState();
+    super.initState();
   }
 
   @override
@@ -89,7 +100,8 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
         _latestByCat[cat] = latest;
         final seen = await AdviceSeenStore.getSeenId(cat);
         final latestId = latest?.id;
-        final isUnread = latestId != null && latestId.isNotEmpty && latestId != seen;
+        final isUnread =
+            latestId != null && latestId.isNotEmpty && latestId != seen;
         if (mounted) setState(() => _unread[cat] = isUnread);
       } catch (_) {
         // ignore errors silently on home badges
@@ -122,53 +134,55 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
       child: Scaffold(
         backgroundColor: notifier.background,
         appBar: AppBar(
-  elevation: 0,
-  automaticallyImplyLeading: false,
-  title: Row(
-    children: [
-      Image.asset(
-        'lib/assets/inside-logo.png',
-        width: 140,
-        fit: BoxFit.contain,
-      ),
-    ],
-  ),
-  actionsIconTheme: const IconThemeData(size: 22),
-  actions: [
-    IconButton(
-      tooltip: 'Telegram',
-      onPressed: _openTelegram,
-      icon: const FaIcon(FontAwesomeIcons.telegram, color: Color(0xFF229ED9)),
-    ),
-    IconButton(
-      tooltip: 'Daily Tip',
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const DailyTipPage()),
-        );
-      },
-      icon: const FaIcon(FontAwesomeIcons.lightbulb, color: Color(0xFFF59E0B)),
-    ),
-    IconButton(
-      tooltip: 'Notifications',
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Notifications(),
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          title: Row(
+            children: [
+              Image.asset(
+                'lib/assets/inside-logo.png',
+                width: 140,
+                fit: BoxFit.contain,
+              ),
+            ],
           ),
-        );
-      },
-      icon: Image.asset(
-        "assets/images/notification.png",
-        height: 22,
-        width: 22,
-      ),
-    ),
-  ],
-  backgroundColor: notifier.background,
-),
+          actionsIconTheme: const IconThemeData(size: 22),
+          actions: [
+            IconButton(
+              tooltip: 'Telegram',
+              onPressed: _openTelegram,
+              icon: const FaIcon(FontAwesomeIcons.telegram,
+                  color: Color(0xFF229ED9)),
+            ),
+            IconButton(
+              tooltip: 'Daily Tip',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const DailyTipPage()),
+                );
+              },
+              icon: const FaIcon(FontAwesomeIcons.lightbulb,
+                  color: Color(0xFFF59E0B)),
+            ),
+            IconButton(
+              tooltip: 'Notifications',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Notifications(),
+                  ),
+                );
+              },
+              icon: Image.asset(
+                "assets/images/notification.png",
+                height: 22,
+                width: 22,
+              ),
+            ),
+          ],
+          backgroundColor: notifier.background,
+        ),
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
@@ -265,25 +279,40 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                         children: [
                                           Center(
                                             child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
-                                                Icon(Icons.stacked_line_chart, size: 26, color: notifier.bottom),
+                                                Icon(Icons.stacked_line_chart,
+                                                    size: 26,
+                                                    color: notifier.bottom),
                                                 AppConstants.Height(4),
                                                 const SizedBox(
                                                   width: 68,
                                                   child: Text(
                                                     "Stocks",
                                                     maxLines: 1,
-                                                    overflow: TextOverflow.ellipsis,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                     textAlign: TextAlign.center,
-                                                    style: TextStyle(fontSize: 12, color: Color(0xff64748B), fontFamily: "Manrope-Bold"),
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color:
+                                                            Color(0xff64748B),
+                                                        fontFamily:
+                                                            "Manrope-Bold"),
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           ),
                                           if (_unread['stocks'] == true)
-                                            const Positioned(right: 8, top: 8, child: CircleAvatar(radius: 4, backgroundColor: Colors.red)),
+                                            const Positioned(
+                                                right: 8,
+                                                top: 8,
+                                                child: CircleAvatar(
+                                                    radius: 4,
+                                                    backgroundColor:
+                                                        Colors.red)),
                                         ],
                                       ),
                                     ),
@@ -298,26 +327,42 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                         children: [
                                           Center(
                                             child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
                                               children: [
-                                                Icon(Icons.swap_calls, size: 26, color: notifier.bottom),
+                                                Icon(Icons.swap_calls,
+                                                    size: 26,
+                                                    color: notifier.bottom),
                                                 AppConstants.Height(4),
                                                 const SizedBox(
                                                   width: 68,
                                                   child: Text(
                                                     "Options",
                                                     maxLines: 1,
-                                                    overflow: TextOverflow.ellipsis,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                     textAlign: TextAlign.center,
-                                                    style: TextStyle(fontSize: 12, color: Color(0xff64748B), fontFamily: "Manrope-Bold"),
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color:
+                                                            Color(0xff64748B),
+                                                        fontFamily:
+                                                            "Manrope-Bold"),
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           ),
                                           if (_unread['options'] == true)
-                                            const Positioned(right: 8, top: 8, child: CircleAvatar(radius: 4, backgroundColor: Colors.red)),
+                                            const Positioned(
+                                                right: 8,
+                                                top: 8,
+                                                child: CircleAvatar(
+                                                    radius: 4,
+                                                    backgroundColor:
+                                                        Colors.red)),
                                         ],
                                       ),
                                     ),
@@ -332,26 +377,42 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                         children: [
                                           Center(
                                             child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
                                               children: [
-                                                Icon(Icons.timeline, size: 26, color: notifier.bottom),
+                                                Icon(Icons.timeline,
+                                                    size: 26,
+                                                    color: notifier.bottom),
                                                 AppConstants.Height(4),
                                                 const SizedBox(
                                                   width: 68,
                                                   child: Text(
                                                     "Future",
                                                     maxLines: 1,
-                                                    overflow: TextOverflow.ellipsis,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                     textAlign: TextAlign.center,
-                                                    style: TextStyle(fontSize: 12, color: Color(0xff64748B), fontFamily: "Manrope-Bold"),
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color:
+                                                            Color(0xff64748B),
+                                                        fontFamily:
+                                                            "Manrope-Bold"),
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           ),
                                           if (_unread['future'] == true)
-                                            const Positioned(right: 8, top: 8, child: CircleAvatar(radius: 4, backgroundColor: Colors.red)),
+                                            const Positioned(
+                                                right: 8,
+                                                top: 8,
+                                                child: CircleAvatar(
+                                                    radius: 4,
+                                                    backgroundColor:
+                                                        Colors.red)),
                                         ],
                                       ),
                                     ),
@@ -366,26 +427,43 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                         children: [
                                           Center(
                                             child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
                                               children: [
-                                                Icon(Icons.shopping_bag_outlined, size: 26, color: notifier.bottom),
+                                                Icon(
+                                                    Icons.shopping_bag_outlined,
+                                                    size: 26,
+                                                    color: notifier.bottom),
                                                 AppConstants.Height(4),
                                                 const SizedBox(
                                                   width: 68,
                                                   child: Text(
                                                     "Commodity",
                                                     maxLines: 1,
-                                                    overflow: TextOverflow.ellipsis,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                     textAlign: TextAlign.center,
-                                                    style: TextStyle(fontSize: 12, color: Color(0xff64748B), fontFamily: "Manrope-Bold"),
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color:
+                                                            Color(0xff64748B),
+                                                        fontFamily:
+                                                            "Manrope-Bold"),
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           ),
                                           if (_unread['commodity'] == true)
-                                            const Positioned(right: 8, top: 8, child: CircleAvatar(radius: 4, backgroundColor: Colors.red)),
+                                            const Positioned(
+                                                right: 8,
+                                                top: 8,
+                                                child: CircleAvatar(
+                                                    radius: 4,
+                                                    backgroundColor:
+                                                        Colors.red)),
                                         ],
                                       ),
                                     ),
@@ -398,1192 +476,127 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                       ],
                     ),
                     AppConstants.Height(80),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Row(
-                        children: [
-                          Text(
-                            "Activation Countdown",
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontFamily: "Manrope-Bold",
-                              color: notifier.textColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    AppConstants.Height(15),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: const ActivationCountdownCard(),
-                    ),
-                    // Removed "See All Assets" link as requested
-                    /* if (false) Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const Detail_crypto(),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                height: height / 4.8,
-                                width: width / 1.2,
-                                padding:
-                                    const EdgeInsets.only(right: 5, left: 5),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                        color: notifier.getContainerBorder,
-                                        width: 1,),),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, top: 20, right: 20, bottom: 20),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Container(
-                                            alignment: Alignment.center,
-                                            height: height / 18,
-                                            width: width / 10,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(35),
-                                                color: notifier.textField,),
-                                            child: Image.asset(
-                                              notifier.isDark
-                                                  ? "assets/images/crypto_dark.png"
-                                                  : "assets/images/Crypto.png",
-                                              height: height / 30,
-                                              width: width / 4,
-                                            ),
-                                          ),
-                                          AppConstants.Width(10),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              // AppConstants.Width(90),
-                                              Text(
-                                                "Crypto",
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontFamily: "Manrope-Bold",
-                                                  color: notifier.textColor,
-                                                ),
-                                              ),
-                                              AppConstants.Height(5),
-                                              const Padding(
-                                                padding:
-                                                    EdgeInsets.only(bottom: 5),
-                                                child: Text("10 Assets",
-                                                    style: TextStyle(
-                                                        color:
-                                                            Color(0xff64748B),
-                                                        fontSize: 12,
-                                                        fontFamily:
-                                                            "Manrope-Regular",),),
-                                              ),
-                                            ],
-                                          ),
-                                          const Spacer(),
-                                          Column(
-                                            children: [
-                                              Text("\$20,321.00",
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontFamily: "Manrope-Bold",
-                                                    color: notifier.textColor,
-                                                  )),
-                                              AppConstants.Height(5),
-                                              Row(
-                                                children: [
-                                                  Image.asset(
-                                                      "assets/images/up-arrow.png",
-                                                      height: 10,
-                                                      width: 10),
-                                                  AppConstants.Width(3),
-                                                  const Text(
-                                                    "0.24%",
-                                                    style: TextStyle(
-                                                        fontSize: 13,
-                                                        color:
-                                                            Color(0xff1DCE5C),),
-                                                  )
-                                                ],
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                      AppConstants.Height(10),
-                                      Divider(
-                                        height: 2,
-                                        thickness: 2,
-                                        color: notifier.getContainerBorder,
-                                      ),
-                                      AppConstants.Height(12),
-                                      const Text(
-                                        "Profits",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Color(0xff64748B),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text("\$16,988.00",
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontFamily: "Manrope-Bold",
-                                                color: notifier.textColor,
-                                              )),
-                                          const Spacer(),
-                                          Container(
-                                            height: 32,
-                                            width: 64,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: const Color(0xFF94A3B8),
-                                            ),
-                                            child: const Center(
-                                                child: Text("",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontFamily:
-                                                            "Manrope-SemiBold",),),),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            AppConstants.Width(10),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const Detail_stock(),
-                                    ),);
-                              },
-                              child: Container(
-                                height: height / 4.8,
-                                width: width / 1.2,
-                                padding:
-                                    const EdgeInsets.only(right: 5, left: 5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    color: notifier.getContainerBorder,
-                                    width: 1,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, top: 20, right: 20, bottom: 20),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Container(
-                                            alignment: Alignment.center,
-                                            height: height / 18,
-                                            width: width / 10,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(35),
-                                                color: notifier.textField),
-                                            child: Image.asset(
-                                              notifier.isDark
-                                                  ? "assets/images/stocks_dark.png"
-                                                  : "assets/images/Stocks.png",
-                                              height: height / 30,
-                                              width: width / 4,
-                                              // color: notifier.textColor,
-                                            ),
-                                          ),
-                                          AppConstants.Width(10),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              // AppConstants.Width(90),
-                                              Text(
-                                                "Stocks",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontFamily: "Manrope-Bold",
-                                                    color: notifier.textColor),
-                                              ),
-                                              AppConstants.Height(5),
-                                              const Padding(
-                                                padding:
-                                                    EdgeInsets.only(bottom: 5),
-                                                child: Text("10 Assets",
-                                                    style: TextStyle(
-                                                        color:
-                                                            Color(0xff64748B),
-                                                        fontSize: 12,
-                                                        fontFamily:
-                                                            "Manrope-Regular")),
-                                              ),
-                                            ],
-                                          ),
-                                          const Spacer(),
-                                          Column(
-                                            children: [
-                                              Text("\$20,000.00",
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontFamily:
-                                                          "Manrope-Bold",
-                                                      color:
-                                                          notifier.textColor)),
-                                              AppConstants.Height(5),
-                                              Row(
-                                                children: [
-                                                  Image.asset(
-                                                      "assets/images/up-arrow.png",
-                                                      height: 10,
-                                                      width: 10),
-                                                  AppConstants.Width(3),
-                                                  const Text(
-                                                    "0.29%",
-                                                    style: TextStyle(
-                                                      fontSize: 13,
-                                                      color: Color(
-                                                        0xff1DCE5C,
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                      AppConstants.Height(10),
-                                      Divider(
-                                        height: 2,
-                                        thickness: 2,
-                                        color: notifier.getContainerBorder,
-                                      ),
-                                      AppConstants.Height(12),
-                                      const Text(
-                                        "Profits",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Color(0xff64748B),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            "\$20,000.00",
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: "Manrope-Bold",
-                                              color: notifier.textColor,
-                                            ),
-                                          ),
-                                          const Spacer(),
-                                          Container(
-                                            height: 32,
-                                            width: 64,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: const Color(0xFF94A3B8),
-                                            ),
-                                            child: const Center(
-                                              child: Text(
-                                                "",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontFamily:
-                                                      "Manrope-SemiBold",
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            AppConstants.Width(10),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const Detail_gold(),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                height: height / 4.8,
-                                width: width / 1.2,
-                                padding:
-                                    const EdgeInsets.only(right: 5, left: 5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    color: notifier.getContainerBorder,
-                                    width: 1,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, top: 20, right: 20, bottom: 20),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Container(
-                                            alignment: Alignment.center,
-                                            height: height / 18,
-                                            width: width / 10,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(35),
-                                                color: notifier.textField),
-                                            child: Image.asset(
-                                              notifier.isDark
-                                                  ? "assets/images/gold_dark.png"
-                                                  : "assets/images/Gold.png",
-                                              height: height / 30,
-                                              width: width / 4,
-                                              // color: notifier.textColor,
-                                            ),
-                                          ),
-                                          AppConstants.Width(10),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              // AppConstants.Width(90),
-                                              Text(
-                                                "Gold",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontFamily: "Manrope-Bold",
-                                                    color: notifier.textColor),
-                                              ),
-                                              AppConstants.Height(5),
-                                              const Padding(
-                                                padding:
-                                                    EdgeInsets.only(bottom: 5),
-                                                child: Text(
-                                                  "17 Assets",
-                                                  style: TextStyle(
-                                                    color: Color(0xff64748B),
-                                                    fontSize: 12,
-                                                    fontFamily:
-                                                        "Manrope-Regular",
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Spacer(),
-                                          Column(
-                                            children: [
-                                              Text(
-                                                "\$90,000.00",
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontFamily: "Manrope-Bold",
-                                                  color: notifier.textColor,
-                                                ),
-                                              ),
-                                              AppConstants.Height(5),
-                                              Row(
-                                                children: [
-                                                  Image.asset(
-                                                      "assets/images/up-arrow.png",
-                                                      height: 10,
-                                                      width: 10),
-                                                  AppConstants.Width(3),
-                                                  const Text(
-                                                    "0.90%",
-                                                    style: TextStyle(
-                                                      fontSize: 13,
-                                                      color: Color(0xff1DCE5C),
-                                                    ),
-                                                  )
-                                                ],
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                      AppConstants.Height(10),
-                                      Divider(
-                                        height: 2,
-                                        thickness: 2,
-                                        color: notifier.getContainerBorder,
-                                      ),
-                                      AppConstants.Height(12),
-                                      const Text(
-                                        "Profits",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Color(0xff64748B),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            "\$40,000.00",
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: "Manrope-Bold",
-                                              color: notifier.textColor,
-                                            ),
-                                          ),
-                                          const Spacer(),
-                                          Container(
-                                            height: 32,
-                                            width: 64,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: const Color(0xFF94A3B8),
-                                            ),
-                                            child: const Center(
-                                              child: Text(
-                                                "",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontFamily:
-                                                      "Manrope-SemiBold",
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            AppConstants.Width(10),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const Collections(),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                height: height / 4.8,
-                                width: width / 1.2,
-                                padding:
-                                    const EdgeInsets.only(right: 5, left: 5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    color: notifier.getContainerBorder,
-                                    width: 1,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, top: 20, right: 20, bottom: 20),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Container(
-                                            alignment: Alignment.center,
-                                            height: height / 18,
-                                            width: width / 10,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(35),
-                                              color: notifier.textField,
-                                            ),
-                                            child: Image.asset(
-                                              notifier.isDark
-                                                  ? "assets/images/nft_dark.png"
-                                                  : "assets/images/NFTs.png",
-                                              height: height / 30,
-                                              width: width / 4,
-                                              // color: notifier.textColor,
-                                            ),
-                                          ),
-                                          AppConstants.Width(10),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              // AppConstants.Width(90),
-                                              Text(
-                                                "NFT",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontFamily: "Manrope-Bold",
-                                                    color: notifier.textColor),
-                                              ),
-                                              AppConstants.Height(5),
-                                              const Padding(
-                                                padding:
-                                                    EdgeInsets.only(bottom: 5),
-                                                child: Text(
-                                                  "20 Assets",
-                                                  style: TextStyle(
-                                                    color: Color(0xff64748B),
-                                                    fontSize: 12,
-                                                    fontFamily:
-                                                        "Manrope-Regular",
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Spacer(),
-                                          Column(
-                                            children: [
-                                              Text(
-                                                "\$30,000.00",
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontFamily: "Manrope-Bold",
-                                                  color: notifier.textColor,
-                                                ),
-                                              ),
-                                              AppConstants.Height(5),
-                                              Row(
-                                                children: [
-                                                  Image.asset(
-                                                    "assets/images/up-arrow.png",
-                                                    height: 10,
-                                                    width: 10,
-                                                  ),
-                                                  AppConstants.Width(3),
-                                                  const Text(
-                                                    "0.40%",
-                                                    style: TextStyle(
-                                                      fontSize: 13,
-                                                      color: Color(0xff1DCE5C),
-                                                    ),
-                                                  )
-                                                ],
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                      AppConstants.Height(10),
-                                      Divider(
-                                        height: 2,
-                                        thickness: 2,
-                                        color: notifier.getContainerBorder,
-                                      ),
-                                      AppConstants.Height(12),
-                                      const Text(
-                                        "Profits",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Color(0xff64748B),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            "\$10,000.00",
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: "Manrope-Bold",
-                                              color: notifier.textColor,
-                                            ),
-                                          ),
-                                          const Spacer(),
-                                          Container(
-                                            height: 32,
-                                            width: 64,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: const Color(0xFF94A3B8),
-                                            ),
-                                            child: const Center(
-                                              child: Text(
-                                                "",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontFamily:
-                                                      "Manrope-SemiBold",
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),*/
-                    Column(
-                      children: [
-                        // Wallet balance + Add money card
-                        const WalletBalanceCard(),
-                        AppConstants.Height(20),
-                        // Earn up to 5% APR promo card (restored)
-                        Stack(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const Reffle_code()),
-                                );
-                              },
-                              child: Container(
-                                height: height / 5.5,
-                                decoration: BoxDecoration(
-                                  color: notifier.earn,
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(
-                                      color: notifier.getContainerBorder),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 20),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: const [
-                                          Text(
-                                            'Your Referral Code Awaits!',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontFamily: 'Manrope-Bold',
-                                          ),
-                                          ),
-                                          SizedBox(height: 4),
-                                          Text(
-                                            'Share it. Earn cashbacks. Repeat.',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: 'Manrope-Regular',
-                                              color: Color(0xff64748B),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    const Padding(
-                                      padding: EdgeInsets.only(right: 20),
-                                      child: Image(
-                                        image: AssetImage('assets/images/Piggy bank.png'),
-                                        height: 96,
-                                        width: 90,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        const CloudImageSlider(limit: 5),
-                        const SizedBox(height: 12),
-                        // Existing content
-                        /*Padding(
-                          padding:
-                              const EdgeInsets.only(left: 10, right: 10, top: 20),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Watchlist",
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontFamily: "Manrope-Bold",
-                                  color: notifier.textColor,
-                                ),
-                              ),
-                              AppConstants.Width(5),
-                              const Icon(
-                                Icons.add_circle_outline_outlined,
-                                size: 22,
-                                color: Color(0xff94A3B8),
-                              ),
-                              const Spacer(),
-                              const Text(
-                                "Edit Watchlist",
-                                style: TextStyle(
-                                  color: Color(0xFF94A3B8),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),*/
-                      ],
-                    ),
-                    // Removed: Watchlist TabBar
-                    /*Padding(
-                      padding: const EdgeInsets.only(left: 2, right: 2),
-                      child: TabBar(
-                        labelPadding: EdgeInsetsDirectional.symmetric(
-                            horizontal: 5, vertical: 3),
-                        physics: const BouncingScrollPhysics(),
-                        labelColor: const Color(0xFF94A3B8),
-                        labelStyle: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: "Manrope_bold",
-                          letterSpacing: 0.2,
-                        ),
-                        dividerColor: Colors.transparent,
-                        isScrollable: false,
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        enableFeedback: false,
-                        unselectedLabelColor: notifier.isDark
-                            ? const Color(0xff64748B)
-                            : const Color(0xff94A3B8),
-                        // indicator: BoxDecoration(
-                        //   borderRadius: BorderRadius.circular(10),
-                        //   color: notifier.isDark
-                        //       ? const Color(0xff1E293B)
-                        //       : const Color(0xffF8F5FF),
-                        // ),
-                        indicator: BoxDecoration(color: Colors.transparent),
-                        tabs: [
-                          Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: notifier.isDark
-                                  ? const Color(0xff1E293B)
-                                  : const Color(0xffF8F9FD),
-                              // color: Colors.red,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: const Tab(
-                              child: Text("Crypto Assets"),
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: notifier.isDark
-                                  ? const Color(0xff1E293B)
-                                  : const Color(0xffF8F9FD),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: const Tab(
-                              child: Text("Us stock"),
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: notifier.isDark
-                                  ? const Color(0xff1E293B)
-                                  : const Color(0xffF8F9FD),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: const Tab(
-                              child: Text("Gold"),
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: notifier.isDark
-                                  ? const Color(0xff1E293B)
-                                  : const Color(0xffF8F9FD),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: const Tab(
-                              child: Text("Nfts"),
-                            ),
-                          ),
-                        ],
-                      ),*/
-
-                      //   child: TabBar(
-                      //     physics: BouncingScrollPhysics(),
-                      //     isScrollable: true,
-                      //     labelPadding: EdgeInsets.only(left: 5, right: 5),
-                      //     indicatorColor: Colors.transparent,
-                      //     unselectedLabelColor: notifier.isDark?notifier.tabBar1:notifier.tabBar1,
-                      //
-                      //     indicator:  BoxDecoration(
-                      //       borderRadius: BorderRadius.circular(10),
-                      //   color: notifier.tabBar2,
-                      //   border: Border.all(
-                      //     width: 1,
-                      //     color:  notifier.tabBar2,
-                      //   ),
-                      // ),
-                      //     // onTap: (index) {
-                      //     //   setState(() {
-                      //     //     selectIndex = index;
-                      //     //   },
-                      //     //   );
-                      //     // },
-                      //     labelColor: notifier.isDark? notifier.tabBar1 : notifier.tabBar2,
-                      //     tabs: [
-                      //       Tab(
-                      //         child: Container(
-                      //           height: 40,
-                      //           width: 120,
-                      //           alignment: Alignment.center,
-                      //           decoration: const BoxDecoration(),
-                      //           child: Text(
-                      //             " ",
-                      //             style: TextStyle(
-                      //                 fontSize: 14,
-                      //                 fontFamily: "gilroy_medium",
-                      //                 color: selectIndex == 0
-                      //                     ? notifier.tabBarText1
-                      //                     : notifier.tabBarText2),
-                      //             // overflow: TextOverflow.ellipsis,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       Tab(
-                      //         child: Container(
-                      //           height: 40,
-                      //           width: 100,
-                      //           alignment: Alignment.center,
-                      //           // width: 140,
-                      //           decoration: BoxDecoration(
-                      //             borderRadius: BorderRadius.circular(10),
-                      //             color: selectIndex == 1
-                      //                 ? notifier.tabBar1
-                      //                 : notifier.tabBar2,
-                      //             border: Border.all(
-                      //               width: 1,
-                      //               color: selectIndex == 1
-                      //                   ? notifier.tabBar1
-                      //                   : notifier.tabBar2,
-                      //             ),
-                      //           ),
-                      //           child: Center(
-                      //             child: Text(
-                      //               "Us stocks",
-                      //               style: TextStyle(
-                      //                   fontSize: 14,
-                      //                   fontFamily: "gilroy_medium",
-                      //                   color: selectIndex == 1
-                      //                       ? notifier.tabBarText1
-                      //                       : notifier.tabBarText2,
-                      //               ),
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       Tab(
-                      //         child: Container(
-                      //           height: 35,
-                      //           width: 100,
-                      //           alignment: Alignment.center,
-                      //           decoration: BoxDecoration(
-                      //             borderRadius: BorderRadius.circular(10),
-                      //             color: selectIndex == 2
-                      //                 ? notifier.tabBar1
-                      //                 : notifier.tabBar2,
-                      //             border: Border.all(
-                      //               width: 1,
-                      //               color: selectIndex == 2
-                      //                   ? notifier.tabBar1
-                      //                   : notifier.tabBar2,
-                      //             ),
-                      //           ),
-                      //           child: Center(
-                      //             child: Text(
-                      //               "Gold",
-                      //               style: TextStyle(
-                      //                   fontSize: 14,
-                      //                   fontFamily: "gilroy_medium",
-                      //                   color: selectIndex == 2
-                      //                       ? notifier.tabBarText1
-                      //                       : notifier.tabBarText2),
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       Tab(
-                      //         child: Container(
-                      //           height: 35,
-                      //           width: 100,
-                      //           decoration: BoxDecoration(
-                      //             borderRadius: BorderRadius.circular(10),
-                      //             color: selectIndex == 3
-                      //                 ? notifier.tabBar1
-                      //                 : notifier.tabBar2,
-                      //             border: Border.all(
-                      //               width: 1,
-                      //               color: selectIndex == 3
-                      //                   ? notifier.tabBar1
-                      //                   : notifier.tabBar2,
-                      //             ),
-                      //           ),
-                      //           child: Center(
-                      //             child: Text(
-                      //               "NFT",
-                      //               style: TextStyle(
-                      //                   fontSize: 14,
-                      //                   fontFamily: "gilroy_medium",
-                      //                   color: selectIndex == 3
-                      //                       ? notifier.tabBarText1
-                      //                       : notifier.tabBarText2,
-                      //               ),
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
                   ],
                 ),
               ),
             ];
           },
-          body: const SizedBox.shrink(),
+          body: ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Row(
+                  children: [
+                    Text(
+                      "Activation Countdown",
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontFamily: "Manrope-Bold",
+                        color: notifier.textColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              AppConstants.Height(15),
+              const Padding(
+                padding: EdgeInsets.only(left: 10, right: 10),
+                child: ActivationCountdownCard(),
+              ),
+              Column(
+                children: [
+                  // Wallet balance + Add money card
+                  const WalletBalanceCard(),
+                  AppConstants.Height(20),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: SizedBox(
+                      height: 408,
+                      child: Card(
+                        margin: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          child: HomeVedioPage(),
+                        ),
+                      ),
+                    ),
+                  ),
+                  AppConstants.Height(20),
+
+                  // Earn up to 5% APR promo card (restored)
+                  Stack(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Reffle_code()),
+                          );
+                        },
+                        child: Container(
+                          height: height / 5.5,
+                          decoration: BoxDecoration(
+                            color: notifier.earn,
+                            borderRadius: BorderRadius.circular(15),
+                            border:
+                                Border.all(color: notifier.getContainerBorder),
+                          ),
+                          child: const Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Your Referral Code Awaits!',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontFamily: 'Manrope-Bold',
+                                      ),
+                                    ),
+                                    SizedBox(height: 4),
+                                    Text(
+                                      'Share it. Earn cashbacks. Repeat.',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: 'Manrope-Regular',
+                                        color: Color(0xff64748B),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const Spacer(),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 20),
+                                child: Image(
+                                  image: AssetImage(
+                                      'assets/images/Piggy bank.png'),
+                                  height: 96,
+                                  width: 90,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  // HomeVedioPage(),
+                  const SizedBox(height: 12),
+                  const CloudImageSlider(limit: 5),
+                ],
+              ),
+            ],
+          ),
         ),
-        // bottomNavigationBar: BottomAppBar(
-        //   color: Colors.blue,
-        //   clipBehavior: Clip.hardEdge,
-        //   child: SizedBox(
-        //     height: 65,
-        //     child: Padding(
-        //       padding: const EdgeInsets.only(left: 10,right: 10),
-        //       child: Row(
-        //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //         children: [
-        //           Column(
-        //             mainAxisAlignment: MainAxisAlignment.center,
-        //             children: [
-        //               Icon(Icons.home,color: Colors.white,),
-        //               AppConstants.Height(5),
-        //               Text("Home")
-        //
-        //             ],
-        //           )
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        //
-        // ),
-        // bottomNavigationBar: BottomAppBar(
-        //   elevation: 0,
-        //   color: Colors.white,
-        //   clipBehavior: Clip.hardEdge,
-        //   child: SizedBox(
-        //     height: 84,
-        //     width: double.infinity,
-        //     child: Padding(
-        //       padding: const EdgeInsets.only(left: 10, right: 10),
-        //       child: Row(
-        //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //         children: [
-        //           GestureDetector(
-        //               onTap: () {
-        //                 setState(() {
-        //                   fillb1 = !fillb1;
-        //                 });
-        //                 // Navigator.push(context, MaterialPageRoute(builder: (context) => ,));
-        //
-        //               },
-        //               child: Column(
-        //                 mainAxisAlignment: MainAxisAlignment.center,
-        //                 children: [
-        //                    Icon(
-        //                           Icons.home,
-        //                           color: Colors.grey,
-        //                         ),
-        //                       Icon(
-        //                           Icons.home_filled,
-        //                           color: Colors.black,
-        //                         ),
-        //                   const SizedBox(
-        //                     height: 5,
-        //                   ),
-        //                    Text(
-        //                           'Home',
-        //                           style: TextStyle(
-        //                               fontSize: 12, color: Colors.grey),
-        //                         ),
-        //                        Text(
-        //                           'Home',
-        //                           style: TextStyle(
-        //                               fontSize: 12, color: Colors.black),
-        //                         )
-        //                 ],
-        //               )),
-        //           GestureDetector(
-        //               onTap: () {
-        //                 setState(() {
-        //                   fillb2 = !fillb2;
-        //                 });
-        //                 // Navigator.push(context, MaterialPageRoute(builder: (context) => ,));
-        //
-        //               },
-        //               child: Column(
-        //                 mainAxisAlignment: MainAxisAlignment.center,
-        //                 children: [
-        //                    Image.asset("assets/images/Market.png",
-        //                           height: 25, width: 25, color: Colors.grey),
-        //                        Image.asset("assets/images/Market.png",
-        //                           height: 25, width: 25, color: Colors.black),
-        //                   const SizedBox(
-        //                     height: 5,
-        //                   ),
-        //                    Text(
-        //                           'Market',
-        //                           style: TextStyle(
-        //                               fontSize: 12, color: Colors.grey),
-        //                         ),
-        //                        Text(
-        //                           'Market',
-        //                           style: TextStyle(
-        //                               fontSize: 12, color: Colors.black),
-        //                         )
-        //                 ],
-        //               )),
-        //           AppConstants.Width(20),
-        //           GestureDetector(
-        //               onTap: () {
-        //                 setState(() {
-        //                   fillb3 = !fillb3;
-        //                 });
-        //                 // Navigator.push(context, MaterialPageRoute(builder: (context) => ,));
-        //
-        //               },
-        //               child: Column(
-        //                 mainAxisAlignment: MainAxisAlignment.center,
-        //                 children: [
-        //                    Image.asset("assets/images/Portfolio.png",
-        //                           height: 19, width: 19, color: Colors.grey),
-        //                        Image.asset("assets/images/Portfolio.png",
-        //                           height: 19, width: 19, color: Colors.black),
-        //                   const SizedBox(
-        //                     height: 5,
-        //                   ),
-        //                    Text(
-        //                           'Portfolio',
-        //                           style: TextStyle(
-        //                               fontSize: 12, color: Colors.grey),
-        //                         ),
-        //                        Text(
-        //                           'Portfolio',
-        //                           style: TextStyle(
-        //                               fontSize: 12, color: Colors.black),
-        //                         )
-        //                 ],
-        //               )),
-        //           GestureDetector(
-        //             onTap: () {
-        //               setState(() {
-        //                 fillb4 = !fillb4;
-        //               });
-        //               // Navigator.push(context, MaterialPageRoute(builder: (context) => ,));
-        //             },
-        //             child: Column(
-        //               mainAxisAlignment: MainAxisAlignment.center,
-        //               children: [
-        //                  Icon(Icons.perm_identity, color: Colors.grey),
-        //                 Icon(Icons.person, color: Colors.black),
-        //                 const SizedBox(
-        //                   height: 5,
-        //                 ),
-        //                  Text(
-        //                         'Profile',
-        //                         style:
-        //                             TextStyle(fontSize: 12, color: Colors.grey),
-        //                       ),
-        //                      Text(
-        //                         'Profile',
-        //                         style: TextStyle(
-        //                             fontSize: 12, color: Colors.black),
-        //                       ),
-        //               ],
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        // floatingActionButton: Align(
-        //   alignment: Alignment(0.1, 1.23),
-        //   child: FloatingActionButton(
-        //     splashColor: Colors.blue,
-        //     backgroundColor: Color(0xFF8B0000),
-        //     child: Image(
-        //         image: AssetImage("assets/images/Floating action.png"),
-        //         height: 20,
-        //         width: 20),
-        //     onPressed: () {},
-        //   ),
-        // ),
       ),
     );
   }

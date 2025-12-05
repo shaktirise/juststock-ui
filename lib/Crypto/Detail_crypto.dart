@@ -23,7 +23,7 @@ class _Detail_cryptoState extends State<Detail_crypto> {
   void initState() {
     // TODO: implement initState
     data1 = [
-      _ChartData1(5,  10),
+      _ChartData1(5, 10),
       _ChartData1(8, 20),
       _ChartData1(10, 3),
       _ChartData1(20, 40),
@@ -40,6 +40,7 @@ class _Detail_cryptoState extends State<Detail_crypto> {
     _tooltip1 = TooltipBehavior(enable: true);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     notifier = Provider.of<ColorNotifire>(context, listen: true);
@@ -55,23 +56,25 @@ class _Detail_cryptoState extends State<Detail_crypto> {
           },
           child: Image.asset(
             "assets/images/arrow-narrow-left (1).png",
-            scale: 2.9,color: notifier.textColor,
+            scale: 2.9,
+            color: notifier.textColor,
           ),
         ),
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Image.asset("assets/images/bell-plus.png",
-                height: 23, width: 23,color: notifier.textFieldHintText),
+                height: 23, width: 23, color: notifier.textFieldHintText),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 20),
-            child:
-            Image.asset("assets/images/receipt.png", height: 23, width: 23,color: notifier.textFieldHintText),
+            child: Image.asset("assets/images/receipt.png",
+                height: 23, width: 23, color: notifier.textFieldHintText),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 20),
-            child: Icon(Icons.star_border,  size: 23,color: notifier.textFieldHintText),
+            child: Icon(Icons.star_border,
+                size: 23, color: notifier.textFieldHintText),
           ),
         ],
         backgroundColor: notifier.background,
@@ -139,12 +142,13 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                       });
                     },
                     child: Container(
-                      height: height/20,
-                      width: width/8,
+                      height: height / 20,
+                      width: width / 8,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color:
-                        _index == 0 ? notifier.outlinedButtonColor : notifier.tabBar4 ,
+                        color: _index == 0
+                            ? notifier.outlinedButtonColor
+                            : notifier.tabBar4,
                       ),
                       child: Center(
                           child: Text("24H",
@@ -163,11 +167,14 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                       });
                     },
                     child: Container(
-                      height: height/20,
-                      width: width/8,
+                      height: height / 20,
+                      width: width / 8,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: _index == 1 ? notifier.outlinedButtonColor  : notifier.tabBar4,/*? Color(0xFF8B0000) : Color(0xffF8F9FD),*/
+                        color: _index == 1
+                            ? notifier.outlinedButtonColor
+                            : notifier
+                                .tabBar4, /*? Color(0xFF8B0000) : Color(0xffF8F9FD),*/
                       ),
                       child: Center(
                           child: Text("1W",
@@ -175,9 +182,9 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                                   color: _index == 1
                                       ? const Color(0xffFFFFFF)
                                       : const Color(0xff94A3B8),
-                                      /*? notifier.tabBarText1
+                                  /*? notifier.tabBarText1
                                       : Colors.white,*/
-                                     /* ? Colors.white
+                                  /* ? Colors.white
                                       : Color(0xff94A3B8),*/
                                   fontSize: 12,
                                   fontFamily: "Manrope-Bold"))),
@@ -190,12 +197,13 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                       });
                     },
                     child: Container(
-                      height: height/20,
-                      width: width/8,
+                      height: height / 20,
+                      width: width / 8,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color:
-                        _index == 2 ? notifier.outlinedButtonColor  : notifier.tabBar4,
+                        color: _index == 2
+                            ? notifier.outlinedButtonColor
+                            : notifier.tabBar4,
                       ),
                       child: Center(
                           child: Text("1M",
@@ -214,12 +222,13 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                       });
                     },
                     child: Container(
-                      height: height/20,
-                      width: width/8,
+                      height: height / 20,
+                      width: width / 8,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color:
-                        _index == 3 ? notifier.outlinedButtonColor  : notifier.tabBar4,
+                        color: _index == 3
+                            ? notifier.outlinedButtonColor
+                            : notifier.tabBar4,
                       ),
                       child: Center(
                           child: Text("1Y",
@@ -238,12 +247,13 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                       });
                     },
                     child: Container(
-                      height: height/20,
-                      width: width/8,
+                      height: height / 20,
+                      width: width / 8,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color:
-                        _index == 4 ? notifier.outlinedButtonColor  : notifier.tabBar4,
+                        color: _index == 4
+                            ? notifier.outlinedButtonColor
+                            : notifier.tabBar4,
                       ),
                       child: Center(
                           child: Text("ALL",
@@ -256,13 +266,13 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                     ),
                   ),
                   Container(
-                    height: height/20,
-                    width: width/8,
+                    height: height / 20,
+                    width: width / 8,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(7),
                         border: Border.all(color: notifier.textFieldHintText)),
                     child:
-                    Image.asset("assets/images/chart-line.png", scale: 2.6),
+                        Image.asset("assets/images/chart-line.png", scale: 2.6),
                   )
                 ],
               ),
@@ -279,7 +289,8 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                   AppConstants.Width(5),
                   Image.asset(
                     "assets/images/question-circle-outlined.png",
-                    scale: 4,color: notifier.textFieldHintText,
+                    scale: 4,
+                    color: notifier.textFieldHintText,
                   ),
                 ],
               ),
@@ -307,7 +318,9 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                           ],
                         ),
                       ),
-                       const SizedBox(width: 20,),
+                      const SizedBox(
+                        width: 20,
+                      ),
                       SizedBox(
                         height: 44,
                         width: width / 2.4,
@@ -362,7 +375,9 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                           ],
                         ),
                       ),
-                      const SizedBox(width: 20,),
+                      const SizedBox(
+                        width: 20,
+                      ),
                       Container(
                         height: 50,
                         width: width / 2.4,
@@ -425,7 +440,9 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                           ],
                         ),
                       ),
-                      const SizedBox(width: 20,),
+                      const SizedBox(
+                        width: 20,
+                      ),
                       Container(
                         height: 50,
                         width: width / 2.4,
@@ -488,7 +505,9 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                           ],
                         ),
                       ),
-                      const SizedBox(width: 20,),
+                      const SizedBox(
+                        width: 20,
+                      ),
                       Container(
                         height: 50,
                         width: MediaQuery.of(context).size.width / 2.4,
@@ -508,11 +527,14 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                                     fontFamily: "Manrope-Regular",
                                     fontSize: 16)),
                             const Spacer(),
-                            Text("98.85",
-                                style: TextStyle(
-                                    color: notifier.textColor,
-                                    fontFamily: "Manrope-Bold",
-                                    fontSize: 14,),),
+                            Text(
+                              "98.85",
+                              style: TextStyle(
+                                color: notifier.textColor,
+                                fontFamily: "Manrope-Bold",
+                                fontSize: 14,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -528,6 +550,7 @@ class _Detail_cryptoState extends State<Detail_crypto> {
       // bottomNavigationBar intentionally omitted
     );
   }
+
   Widget cryptochart() {
     return Container(
       // margin: const EdgeInsets.only(top: 0,bottom: 0),
@@ -539,36 +562,35 @@ class _Detail_cryptoState extends State<Detail_crypto> {
         children: [
           SfCartesianChart(
             plotAreaBorderWidth: 0,
-              primaryXAxis: CategoryAxis(
-                isVisible: false,
+            primaryXAxis: CategoryAxis(
+              isVisible: false,
+            ),
+            primaryYAxis: CategoryAxis(
+              isVisible: false,
+            ),
+            backgroundColor: notifier.background,
+            palette: const [
+              Color(0xFFD32F2F),
+            ],
+            // primaryYAxis: NumericAxis(minimum: 0, maximum: 100, interval: 5),
+            tooltipBehavior: _tooltip1,
+            series: <CartesianSeries<_ChartData1, double>>[
+              FastLineSeries<_ChartData1, double>(
+                dataSource: data1,
+                xValueMapper: (_ChartData1 data1, _) => data1.x,
+                yValueMapper: (_ChartData1 data1, _) => data1.y,
+                // animationDelay: 5,
+                // animationDuration: 10,
+                // markerSettings: MarkerSettings(borderColor: Colors.red)
               ),
-              primaryYAxis: CategoryAxis(
-                 isVisible: false,
-              ),
-              backgroundColor: notifier.background,
-             palette: const [
-               Color(0xFFD32F2F),
-             ],
-              // primaryYAxis: NumericAxis(minimum: 0, maximum: 100, interval: 5),
-              tooltipBehavior: _tooltip1,
-              series: <CartesianSeries<_ChartData1, double>>[
-                FastLineSeries<_ChartData1, double>(
-                    dataSource: data1,
-                    xValueMapper: (_ChartData1 data1, _) => data1.x,
-                    yValueMapper: (_ChartData1 data1, _) => data1.y,
-                  // animationDelay: 5,
-                  // animationDuration: 10,
-                  // markerSettings: MarkerSettings(borderColor: Colors.red)
-
-                ),
-              ],
+            ],
           ),
         ],
       ),
     );
   }
-
 }
+
 class _ChartData1 {
   _ChartData1(this.x, this.y);
 
