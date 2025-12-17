@@ -106,12 +106,8 @@ class _ClassesPageState extends State<ClassesPage> {
               ],
             ),
             actions: [
-              Container(
-                margin: const EdgeInsets.only(right: 4),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF229ED9).withOpacity(0.1),
-                  shape: BoxShape.circle,
-                ),
+              Padding(
+                padding: const EdgeInsets.only(right: 4),
                 child: IconButton(
                   tooltip: 'Telegram',
                   onPressed: _openTelegram,
@@ -122,12 +118,8 @@ class _ClassesPageState extends State<ClassesPage> {
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(right: 4),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF59E0B).withOpacity(0.1),
-                  shape: BoxShape.circle,
-                ),
+              Padding(
+                padding: const EdgeInsets.only(right: 4),
                 child: IconButton(
                   tooltip: 'Daily Tip',
                   onPressed: () {
@@ -144,12 +136,8 @@ class _ClassesPageState extends State<ClassesPage> {
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(right: 12),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF8B0000).withOpacity(0.1),
-                  shape: BoxShape.circle,
-                ),
+              Padding(
+                padding: const EdgeInsets.only(right: 12),
                 child: IconButton(
                   tooltip: 'Notifications',
                   onPressed: () {

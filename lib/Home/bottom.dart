@@ -30,7 +30,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
     ClassesPage(), // 0 → Home button
     home(), // 1 → Purchase
     Wallet(), // 2 → Floating Button
-    Portfolio(), // 3 → Demat
+    Portfolio(), // 3 → Coming Soon
     Profile(), // 4 → Profile
   ];
 
@@ -114,7 +114,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
               child: Image.asset("assets/images/Portfolio_fill.png",
                   scale: 3.5, color: notifier.bottom),
             ),
-            label: "Demat",
+            label: "Coming Soon",
           ),
           BottomNavigationBarItem(
             icon: Padding(
@@ -143,7 +143,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
       case 1:
         return INDEX_HOME; // Purchase → Home
       case 2:
-        return currentIndex; // Demat → Portfolio
+        return currentIndex; // Coming Soon → Portfolio
       case 3:
         return INDEX_PROFILE; // Profile → Profile
       default:
