@@ -5,10 +5,44 @@ import 'package:juststock/Dark%20mode.dart';
 import 'package:juststock/Home/videodata.dart';
 import 'package:juststock/Home/videos_detaiils.dart';
 import 'package:juststock/Message%20&%20Notification/Notifications.dart';
+import 'package:juststock/api/profile_api.dart';
+import 'package:juststock/widgets/topup_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+Future<bool> _ensureActiveAccess(BuildContext context) async {
+  final isActive = await ProfileApi.isActivated();
+  if (isActive) return true;
+
+  await showDialog<void>(
+    context: context,
+    builder: (dialogContext) {
+      return AlertDialog(
+        title: const Text('Activation required'),
+        content: const Text(
+          'To access classes, you need to activate your account.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('Not now'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              TopupHelper.ensureFunds(context);
+            },
+            child: const Text('Pay Rs 2100'),
+          ),
+        ],
+      );
+    },
+  );
+
+  return false;
+}
 
 class ClassesPage extends StatefulWidget {
   const ClassesPage({super.key});
@@ -21,7 +55,7 @@ class _ClassesPageState extends State<ClassesPage> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  static const String _telegramUrl = 'https://t.me/justock8';
+  static const String _whatsappPhone = '919898767665';
   ColorNotifire notifier = ColorNotifire();
 
   final List<String> _bannerImages = [
@@ -75,8 +109,15 @@ class _ClassesPageState extends State<ClassesPage> {
     super.dispose();
   }
 
-  Future<void> _openTelegram() async {
-    final uri = Uri.parse(_telegramUrl);
+  Future<void> _openWhatsApp() async {
+    final profile = await ProfileApi.fetchProfile();
+    final rawEmail = profile?['email'] ?? profile?['userEmail'];
+    final email = rawEmail?.toString().trim();
+    final message = (email != null && email.isNotEmpty)
+        ? 'Hi, I need help with Just Stock. My email is $email.'
+        : 'Hi, I need help with Just Stock.';
+    final encoded = Uri.encodeComponent(message);
+    final uri = Uri.parse('https://wa.me/$_whatsappPhone?text=$encoded');
     await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
@@ -109,11 +150,11 @@ class _ClassesPageState extends State<ClassesPage> {
               Padding(
                 padding: const EdgeInsets.only(right: 4),
                 child: IconButton(
-                  tooltip: 'Telegram',
-                  onPressed: _openTelegram,
+                  tooltip: 'WhatsApp',
+                  onPressed: _openWhatsApp,
                   icon: const FaIcon(
-                    FontAwesomeIcons.telegram,
-                    color: Color(0xFF229ED9),
+                    FontAwesomeIcons.whatsapp,
+                    color: Color(0xFF25D366),
                     size: 20,
                   ),
                 ),
@@ -541,7 +582,8 @@ class _ClassesPageState extends State<ClassesPage> {
                 ),
                 const SizedBox(height: 12),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    if (!await _ensureActiveAccess(context)) return;
                     // Get the 10 videos for this course
                     final courseVideos = videos.sublist(start, end);
                     final courseVideoNames = videoNames.sublist(start, end);
@@ -869,7 +911,8 @@ class CourseDetailPage extends StatelessWidget {
                 ],
                 const SizedBox(height: 12),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    if (!await _ensureActiveAccess(context)) return;
                     if (videoUrl.isNotEmpty) {
                       Navigator.push(
                         context,

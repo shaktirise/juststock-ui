@@ -63,10 +63,13 @@ class NotificationCenter extends ChangeNotifier {
   final List<String> _advisoryCategories = const ['stocks', 'options', 'future', 'commodity'];
   final NumberFormat _currencyFormat = NumberFormat.currency(locale: 'en_IN', symbol: '₹');
 
+  final Set<String> _remoteIds = <String>{};
+
   Timer? _pollTimer;
   bool _pollInFlight = false;
   bool _popupVisible = false;
   int _infoCounter = 0;
+  int _remoteCounter = 0;
 
   UnmodifiableListView<InAppNotification> get advisoryNotifications => UnmodifiableListView(_advisory);
   UnmodifiableListView<InAppNotification> get informationNotifications => UnmodifiableListView(_information);
@@ -123,6 +126,46 @@ class NotificationCenter extends ChangeNotifier {
       amount: amount,
       currency: currency,
     );
+  }
+
+  void recordRemoteNotification({
+    required String title,
+    required String body,
+    NotificationChannel channel = NotificationChannel.information,
+    String? id,
+    String? category,
+    String? tag,
+    DateTime? createdAt,
+    String? createdAtLocalText,
+    double? amount,
+    String? currency,
+  }) {
+    final trimmedId = (id ?? '').trim();
+    if (trimmedId.isNotEmpty && _remoteIds.contains(trimmedId)) return;
+    final resolvedId = trimmedId.isNotEmpty
+        ? trimmedId
+        : 'remote-${DateTime.now().microsecondsSinceEpoch}-${_remoteCounter++}';
+    if (_containsId(resolvedId)) return;
+    if (trimmedId.isNotEmpty) _remoteIds.add(trimmedId);
+
+    final item = InAppNotification(
+      id: resolvedId,
+      channel: channel,
+      title: title,
+      body: body,
+      createdAt: createdAt ?? DateTime.now(),
+      createdAtLocalText: createdAtLocalText,
+      category: category,
+      tag: tag,
+      amount: amount,
+      currency: currency,
+    );
+    if (channel == NotificationChannel.advisory) {
+      _advisory.insert(0, item);
+    } else {
+      _information.insert(0, item);
+    }
+    notifyListeners();
   }
 
   void _recordInformation({
@@ -247,6 +290,16 @@ class NotificationCenter extends ChangeNotifier {
     } finally {
       _popupVisible = false;
     }
+  }
+
+  bool _containsId(String id) {
+    for (final item in _advisory) {
+      if (item.id == id) return true;
+    }
+    for (final item in _information) {
+      if (item.id == id) return true;
+    }
+    return false;
   }
 
   String _formatAmount(double value, String? currency) {

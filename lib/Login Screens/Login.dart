@@ -8,6 +8,7 @@ import '../config/common.dart';
 import 'Face id.dart';
 import 'KYC Slides.dart';
 import 'package:juststock/services/api_locator.dart';
+import 'package:juststock/services/push_messaging_bridge.dart';
 import 'Forget pass.dart';
 import 'Sign up.dart';
 
@@ -223,6 +224,7 @@ extension on _LoginState {
       await TokenStorage.saveAuth(auth);
       // Also persist to secure storage for Dio client
       await ApiLocator.tokenStore.save(auth.token, auth.refreshToken);
+      await registerFcmTokenAfterLogin();
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(

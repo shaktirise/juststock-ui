@@ -2,6 +2,7 @@
 import 'package:juststock/Home/home_video.dart';
 import 'package:juststock/Home/stocks_.dart';
 import 'package:juststock/Home/videos_detaiils.dart';
+import 'package:juststock/api/profile_api.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -42,9 +43,16 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> with SingleTickerProviderStateMixin {
-  static const String _telegramUrl = 'https://t.me/justock8';
-  Future<void> _openTelegram() async {
-    final uri = Uri.parse(_telegramUrl);
+  static const String _whatsappPhone = '919898767665';
+  Future<void> _openWhatsApp() async {
+    final profile = await ProfileApi.fetchProfile();
+    final rawEmail = profile?['email'] ?? profile?['userEmail'];
+    final email = rawEmail?.toString().trim();
+    final message = (email != null && email.isNotEmpty)
+        ? 'Hi, I need help with Just Stock. My email is $email.'
+        : 'Hi, I need help with Just Stock.';
+    final encoded = Uri.encodeComponent(message);
+    final uri = Uri.parse('https://wa.me/$_whatsappPhone?text=$encoded');
     await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
@@ -148,10 +156,10 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
           actionsIconTheme: const IconThemeData(size: 22),
           actions: [
             IconButton(
-              tooltip: 'Telegram',
-              onPressed: _openTelegram,
-              icon: const FaIcon(FontAwesomeIcons.telegram,
-                  color: Color(0xFF229ED9)),
+              tooltip: 'WhatsApp',
+              onPressed: _openWhatsApp,
+              icon: const FaIcon(FontAwesomeIcons.whatsapp,
+                  color: Color(0xFF25D366)),
             ),
             IconButton(
               tooltip: 'Daily Tip',

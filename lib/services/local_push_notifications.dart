@@ -6,10 +6,12 @@ class LocalPushNotifications {
   static final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
 
+  // Must match backend FCM_ANDROID_CHANNEL_ID (example: "high-priority").
+  static const String _androidChannelId = 'high-priority';
   static const AndroidNotificationChannel _channel = AndroidNotificationChannel(
-    'juststock_alerts',
-    'JustStock Alerts',
-    description: 'Trade calls and admin messages',
+    _androidChannelId,
+    'High Priority Alerts',
+    description: 'Push alerts for trade calls and admin messages',
     importance: Importance.max,
     playSound: true,
   );
