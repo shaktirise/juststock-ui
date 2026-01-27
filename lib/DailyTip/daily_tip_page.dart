@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../Dark mode.dart';
 import '../services/api_locator.dart';
+import '../services/daily_tip_notifier.dart';
 
 class DailyTipPage extends StatefulWidget {
   const DailyTipPage({super.key});
@@ -21,6 +22,9 @@ class _DailyTipPageState extends State<DailyTipPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<DailyTipNotifier>(context, listen: false).markTipSeen();
+    });
     _load();
   }
 
@@ -36,7 +40,9 @@ class _DailyTipPageState extends State<DailyTipPage> {
       // De-duplicate latest in list if present
       if (latest != null && list.isNotEmpty) {
         final lid = (latest['id'] ?? latest['_id'])?.toString();
-        _items = list.where((e) => (e['id'] ?? e['_id'])?.toString() != lid).toList();
+        _items = list
+            .where((e) => (e['id'] ?? e['_id'])?.toString() != lid)
+            .toList();
       } else {
         _items = list;
       }
@@ -70,19 +76,27 @@ class _DailyTipPageState extends State<DailyTipPage> {
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _error != null
-              ? Center(child: Text(_error!, style: TextStyle(color: notifier.textColor)))
+              ? Center(
+                  child: Text(_error!,
+                      style: TextStyle(color: notifier.textColor)))
               : RefreshIndicator(
                   onRefresh: _load,
                   child: ListView(
                     padding: const EdgeInsets.all(16),
                     children: [
                       if (_latest != null) ...[
-                        Text('Latest', style: TextStyle(fontFamily: 'Manrope-Bold', color: notifier.textColor)),
+                        Text('Latest',
+                            style: TextStyle(
+                                fontFamily: 'Manrope-Bold',
+                                color: notifier.textColor)),
                         const SizedBox(height: 8),
                         _TipCard(tip: _latest!, subtitle: _formatTs(_latest!)),
                         const SizedBox(height: 16),
                       ],
-                      Text('Recent', style: TextStyle(fontFamily: 'Manrope-Bold', color: notifier.textColor)),
+                      Text('Recent',
+                          style: TextStyle(
+                              fontFamily: 'Manrope-Bold',
+                              color: notifier.textColor)),
                       const SizedBox(height: 8),
                       if (_items.isEmpty)
                         const Text('No recent tips')
@@ -119,15 +133,19 @@ class _TipCard extends StatelessWidget {
         children: [
           Text(
             msg,
-            style: TextStyle(fontSize: 15, height: 1.5, color: notifier.textColor, fontFamily: 'Manrope-Medium'),
+            style: TextStyle(
+                fontSize: 15,
+                height: 1.5,
+                color: notifier.textColor,
+                fontFamily: 'Manrope-Medium'),
           ),
           if (subtitle != null && subtitle!.isNotEmpty) ...[
             const SizedBox(height: 8),
-            Text(subtitle!, style: const TextStyle(color: Color(0xff94A3B8), fontSize: 12)),
+            Text(subtitle!,
+                style: const TextStyle(color: Color(0xff94A3B8), fontSize: 12)),
           ],
         ],
       ),
     );
   }
 }
-

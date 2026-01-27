@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:juststock/Dark%20mode.dart';
 import 'package:juststock/services/api_locator.dart';
+import 'package:juststock/services/daily_tip_notifier.dart';
 import 'package:juststock/services/in_app_notification_center.dart';
 import 'package:juststock/services/local_push_notifications.dart';
 import 'package:juststock/services/push_messaging_bridge.dart';
@@ -56,6 +57,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ),
         ChangeNotifierProvider(
           create: (_) => NotificationCenter(rootNavigatorKey),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => DailyTipNotifier(),
         ),
       ],
       builder: (_, context) {

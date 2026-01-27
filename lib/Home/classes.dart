@@ -6,6 +6,9 @@ import 'package:juststock/Home/videodata.dart';
 import 'package:juststock/Home/videos_detaiils.dart';
 import 'package:juststock/Message%20&%20Notification/Notifications.dart';
 import 'package:juststock/api/profile_api.dart';
+import 'package:juststock/services/daily_tip_notifier.dart';
+import 'package:juststock/services/in_app_notification_center.dart';
+import 'package:juststock/widgets/pulse_badge.dart';
 import 'package:juststock/widgets/topup_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -125,6 +128,11 @@ class _ClassesPageState extends State<ClassesPage> {
   Widget build(BuildContext context) {
     final int courseCount = (videos.length / 10).ceil();
     notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final notificationCenter = Provider.of<NotificationCenter>(context);
+    final hasUnreadAdmin =
+        notificationCenter.advisoryNotifications.any((item) => !item.isRead);
+    final dailyTipNotifier = Provider.of<DailyTipNotifier>(context);
+    final hasNewDailyTip = dailyTipNotifier.hasNewTip;
 
     return Scaffold(
       backgroundColor: notifier.background,
@@ -161,40 +169,68 @@ class _ClassesPageState extends State<ClassesPage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 4),
-                child: IconButton(
-                  tooltip: 'Daily Tip',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DailyTipPage()),
-                    );
-                  },
-                  icon: const FaIcon(
-                    FontAwesomeIcons.lightbulb,
-                    color: Color(0xFFF59E0B),
-                    size: 20,
-                  ),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    IconButton(
+                      tooltip: 'Daily Tip',
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const DailyTipPage()),
+                        );
+                      },
+                      icon: const FaIcon(
+                        FontAwesomeIcons.lightbulb,
+                        color: Color(0xFFF59E0B),
+                        size: 20,
+                      ),
+                    ),
+                    if (hasNewDailyTip)
+                      const Positioned(
+                        top: 4,
+                        right: 4,
+                        child: PulseBadge(
+                          size: 16,
+                          color: Color(0xFFF59E0B),
+                        ),
+                      ),
+                  ],
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 12),
-                child: IconButton(
-                  tooltip: 'Notifications',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Notifications(),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    IconButton(
+                      tooltip: 'Notifications',
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Notifications(),
+                          ),
+                        );
+                      },
+                      icon: Image.asset(
+                        "assets/images/notification.png",
+                        height: 20,
+                        width: 20,
+                        color: const Color(0xFF8B0000),
                       ),
-                    );
-                  },
-                  icon: Image.asset(
-                    "assets/images/notification.png",
-                    height: 20,
-                    width: 20,
-                    color: const Color(0xFF8B0000),
-                  ),
+                    ),
+                    if (hasUnreadAdmin)
+                      const Positioned(
+                        top: 4,
+                        right: 4,
+                        child: PulseBadge(
+                          size: 16,
+                          color: Color(0xFF8B0000),
+                        ),
+                      ),
+                  ],
                 ),
               ),
             ],

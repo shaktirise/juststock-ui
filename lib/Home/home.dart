@@ -27,6 +27,9 @@ import '../Account&setting/Refferal Code.dart';
 import '../Advice/advice_list.dart';
 import 'package:juststock/api/advice_api.dart';
 import '../services/advice_seen_store.dart';
+import '../services/daily_tip_notifier.dart';
+import '../services/in_app_notification_center.dart';
+import '../widgets/pulse_badge.dart';
 import 'Search.dart';
 import 'crypto_.dart';
 import 'gold_.dart';
@@ -137,6 +140,11 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
     notifier = Provider.of<ColorNotifire>(context, listen: true);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    final notificationCenter = Provider.of<NotificationCenter>(context);
+    final hasUnreadAdmin =
+        notificationCenter.advisoryNotifications.any((item) => !item.isRead);
+    final dailyTipNotifier = Provider.of<DailyTipNotifier>(context);
+    final hasNewDailyTip = dailyTipNotifier.hasNewTip;
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -161,32 +169,61 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
               icon: const FaIcon(FontAwesomeIcons.whatsapp,
                   color: Color(0xFF25D366)),
             ),
-            IconButton(
-              tooltip: 'Daily Tip',
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const DailyTipPage()),
-                );
-              },
-              icon: const FaIcon(FontAwesomeIcons.lightbulb,
-                  color: Color(0xFFF59E0B)),
-            ),
-            IconButton(
-              tooltip: 'Notifications',
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Notifications(),
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                IconButton(
+                  tooltip: 'Daily Tip',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DailyTipPage()),
+                    );
+                  },
+                  icon: const FaIcon(FontAwesomeIcons.lightbulb,
+                      color: Color(0xFFF59E0B)),
+                ),
+                if (hasNewDailyTip)
+                  const Positioned(
+                    top: 6,
+                    right: 6,
+                    child: PulseBadge(
+                      size: 16,
+                      color: Color(0xFFF59E0B),
+                    ),
                   ),
-                );
-              },
-              icon: Image.asset(
-                "assets/images/notification.png",
-                height: 22,
-                width: 22,
-              ),
+              ],
+            ),
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                IconButton(
+                  tooltip: 'Notifications',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Notifications(),
+                      ),
+                    );
+                  },
+                  icon: Image.asset(
+                    "assets/images/notification.png",
+                    height: 22,
+                    width: 22,
+                  ),
+                ),
+                if (hasUnreadAdmin)
+                  const Positioned(
+                    top: 6,
+                    right: 6,
+                    child: PulseBadge(
+                      size: 16,
+                      color: Color(0xFF8B0000),
+                    ),
+                  ),
+              ],
             ),
           ],
           backgroundColor: notifier.background,
