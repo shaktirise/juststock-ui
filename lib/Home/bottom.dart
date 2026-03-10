@@ -1,6 +1,6 @@
 // import 'package:juststock/Home/Market.dart';
 import 'package:juststock/Home/classes.dart';
-import 'package:juststock/Home/Portfolio.dart';
+import 'package:juststock/Home/mutual_fund.dart';
 import 'package:juststock/Home/Profile.dart';
 import 'package:juststock/Home/home.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
     ClassesPage(), // 0 → Home button
     home(), // 1 → Purchase
     Wallet(), // 2 → Floating Button
-    Portfolio(), // 3 → Coming Soon
+    MutualFundPage(), // 3 → Mutual Fund
     Profile(), // 4 → Profile
   ];
 
@@ -114,7 +114,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
               child: Image.asset("assets/images/Portfolio_fill.png",
                   scale: 3.5, color: notifier.bottom),
             ),
-            label: "Coming Soon",
+            label: "Mutual Fund",
           ),
           BottomNavigationBarItem(
             icon: Padding(
@@ -143,7 +143,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
       case 1:
         return INDEX_HOME; // Purchase → Home
       case 2:
-        return currentIndex; // Coming Soon → Portfolio
+        return INDEX_PORTFOLIO; // Mutual Fund
       case 3:
         return INDEX_PROFILE; // Profile → Profile
       default:

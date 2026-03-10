@@ -352,12 +352,10 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                           ),
                                           if (_unread['stocks'] == true)
                                             const Positioned(
-                                                right: 8,
-                                                top: 8,
-                                                child: CircleAvatar(
-                                                    radius: 4,
-                                                    backgroundColor:
-                                                        Colors.red)),
+                                              right: 4,
+                                              top: 6,
+                                              child: _BlinkingBellBadge(),
+                                            ),
                                         ],
                                       ),
                                     ),
@@ -402,12 +400,10 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                           ),
                                           if (_unread['options'] == true)
                                             const Positioned(
-                                                right: 8,
-                                                top: 8,
-                                                child: CircleAvatar(
-                                                    radius: 4,
-                                                    backgroundColor:
-                                                        Colors.red)),
+                                              right: 4,
+                                              top: 6,
+                                              child: _BlinkingBellBadge(),
+                                            ),
                                         ],
                                       ),
                                     ),
@@ -452,12 +448,10 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                           ),
                                           if (_unread['future'] == true)
                                             const Positioned(
-                                                right: 8,
-                                                top: 8,
-                                                child: CircleAvatar(
-                                                    radius: 4,
-                                                    backgroundColor:
-                                                        Colors.red)),
+                                              right: 4,
+                                              top: 6,
+                                              child: _BlinkingBellBadge(),
+                                            ),
                                         ],
                                       ),
                                     ),
@@ -503,12 +497,10 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                           ),
                                           if (_unread['commodity'] == true)
                                             const Positioned(
-                                                right: 8,
-                                                top: 8,
-                                                child: CircleAvatar(
-                                                    radius: 4,
-                                                    backgroundColor:
-                                                        Colors.red)),
+                                              right: 4,
+                                              top: 6,
+                                              child: _BlinkingBellBadge(),
+                                            ),
                                         ],
                                       ),
                                     ),
@@ -643,6 +635,70 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _BlinkingBellBadge extends StatefulWidget {
+  const _BlinkingBellBadge();
+
+  @override
+  State<_BlinkingBellBadge> createState() => _BlinkingBellBadgeState();
+}
+
+class _BlinkingBellBadgeState extends State<_BlinkingBellBadge>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 950),
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        final t = _controller.value;
+        return Opacity(
+          opacity: 0.6 + (0.4 * t),
+          child: Transform.scale(
+            scale: 0.9 + (0.2 * t),
+            child: Container(
+              height: 18,
+              width: 18,
+              decoration: BoxDecoration(
+                color: const Color(0xFF7F1D1D),
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFFEF4444).withOpacity(0.65),
+                    blurRadius: 6 + (6 * t),
+                    spreadRadius: 0.8,
+                  ),
+                ],
+              ),
+              alignment: Alignment.center,
+              child: const Icon(
+                Icons.notifications_active_rounded,
+                size: 11,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
