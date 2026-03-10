@@ -11,7 +11,8 @@ class MutualFundPage extends StatefulWidget {
   State<MutualFundPage> createState() => _MutualFundPageState();
 }
 
-class _MutualFundPageState extends State<MutualFundPage> {
+class _MutualFundPageState extends State<MutualFundPage>
+    with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
 
   final _fullNameCtrl = TextEditingController();
@@ -34,9 +35,20 @@ class _MutualFundPageState extends State<MutualFundPage> {
 
   bool _savingDraft = false;
   bool _finalSubmitting = false;
+  late final AnimationController _bgController;
+
+  @override
+  void initState() {
+    super.initState();
+    _bgController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 3500),
+    )..repeat(reverse: true);
+  }
 
   @override
   void dispose() {
+    _bgController.dispose();
     _fullNameCtrl.dispose();
     _dobCtrl.dispose();
     _mobileCtrl.dispose();
@@ -195,6 +207,81 @@ class _MutualFundPageState extends State<MutualFundPage> {
         child: ListView(
           padding: const EdgeInsets.all(12),
           children: [
+            AnimatedBuilder(
+              animation: _bgController,
+              builder: (context, child) {
+                final t = _bgController.value;
+                return Container(
+                  height: 150,
+                  margin: const EdgeInsets.only(bottom: 12),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(
+                      color: Color.lerp(
+                          const Color(0xFFE2E8F0), const Color(0xFFFCA5A5), t)!,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF8B0000)
+                            .withValues(alpha: 0.12 + (0.08 * t)),
+                        blurRadius: 10 + (8 * t),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(14),
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Transform.scale(
+                          scale: 1.0 + (0.06 * t),
+                          child: Image.asset(
+                            'assets/images/mutual funds.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withValues(alpha: 0.18),
+                                Colors.black.withValues(alpha: 0.42),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(14),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Mutual Fund Enrollment',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontFamily: 'Manrope-Bold',
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                'Complete the form to save draft or submit.',
+                                style: TextStyle(
+                                  color: Color(0xFFE2E8F0),
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
             TextFormField(
               controller: _fullNameCtrl,
               validator: _validateRequired,
